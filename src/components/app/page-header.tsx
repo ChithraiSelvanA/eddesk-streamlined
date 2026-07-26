@@ -24,9 +24,8 @@ export function PageHeader({
               {i > 0 && <ChevronRight className="h-3 w-3 opacity-60" />}
               {c.to ? (
                 <Link
-                  to={c.to as string}
-                  // @ts-expect-error params typing varies per route
-                  params={c.params}
+                  to={c.to as never}
+                  params={c.params as never}
                   className="rounded px-1 py-0.5 hover:bg-muted hover:text-foreground"
                 >
                   {c.label}
