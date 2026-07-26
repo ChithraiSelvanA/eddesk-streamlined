@@ -1,0 +1,50 @@
+import { Link } from "@tanstack/react-router";
+import { ChevronRight } from "lucide-react";
+import type { ReactNode } from "react";
+
+export type Crumb = { label: string; to?: string; params?: Record<string, string> };
+
+export function PageHeader({
+  crumbs,
+  title,
+  description,
+  actions,
+}: {
+  crumbs?: Crumb[];
+  title: string;
+  description?: string;
+  actions?: ReactNode;
+}) {
+  return (
+    <div className="border-b border-border/70 bg-background/60 px-8 pt-6 pb-5 backdrop-blur">
+      {crumbs && crumbs.length > 0 && (
+        <nav className="mb-3 flex items-center gap-1 text-xs text-muted-foreground">
+          {crumbs.map((c, i) => (
+            <span key={i} className="flex items-center gap-1">
+              {i > 0 && <ChevronRight className="h-3 w-3 opacity-60" />}
+              {c.to ? (
+                <Link
+                  to={c.to as string}
+                  // @ts-expect-error params typing varies per route
+                  params={c.params}
+                  className="rounded px-1 py-0.5 hover:bg-muted hover:text-foreground"
+                >
+                  {c.label}
+                </Link>
+              ) : (
+                <span className="px-1 py-0.5 text-foreground/80">{c.label}</span>
+              )}
+            </span>
+          ))}
+        </nav>
+      )}
+      <div className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-4 sm:flex sm:flex-wrap sm:items-center sm:justify-between">
+        <div className="min-w-0">
+          <h1 className="truncate text-2xl font-semibold tracking-tight">{title}</h1>
+          {description && <p className="mt-1 text-sm text-muted-foreground">{description}</p>}
+        </div>
+        {actions && <div className="flex shrink-0 items-center gap-2">{actions}</div>}
+      </div>
+    </div>
+  );
+}
