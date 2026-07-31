@@ -245,6 +245,7 @@ function StudentsIndex() {
                 key={c.id}
                 to="/students/$classId"
                 params={{ classId: c.id }}
+                search={{ new: undefined }}
                 className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3.5 py-1.5 text-sm hover:bg-muted"
               >
                 {c.name}–{c.section}

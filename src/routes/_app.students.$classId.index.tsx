@@ -42,7 +42,7 @@ function StudentList() {
 
   const closeForm = () => {
     setShowForm(false);
-    navigate({ to: "/students/$classId", params: { classId: cls.id }, search: {}, replace: true });
+    navigate({ to: "/students/$classId", params: { classId: cls.id }, search: { new: undefined }, replace: true });
   };
 
   return (
