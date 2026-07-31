@@ -2,7 +2,9 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageHeader } from "@/components/app/page-header";
 import { classes, students, smartGroupDefs, CURRENT_YEAR } from "@/data/mock";
 import { Button } from "@/components/ui/button";
-import { Plus, Search, ArrowRight, Users, Wallet, Bus, CalendarPlus, TrendingDown, AlertTriangle } from "lucide-react";
+import { NewAdmissionButton } from "@/components/app/new-admission-button";
+import { Search, ArrowRight, Users, Wallet, Bus, CalendarPlus, TrendingDown, AlertTriangle } from "lucide-react";
+
 import { AvatarMono } from "@/components/app/avatar-mono";
 import { useMemo, useState } from "react";
 import { Input } from "@/components/ui/input";
