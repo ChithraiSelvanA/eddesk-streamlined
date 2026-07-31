@@ -5,6 +5,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { AvatarMono } from "@/components/app/avatar-mono";
 import { Button } from "@/components/ui/button";
 import { StatusPill } from "@/components/app/status-pill";
+import { RecordPaymentDialog } from "@/components/app/record-payment-dialog";
 import {
   Printer, MessageSquare, ArrowRightLeft, Receipt, Pencil, MoreHorizontal,
   Phone, Mail, MapPin, Cake, IdCard, CalendarCheck2, Wallet, FileText, Activity, BookOpen, UsersRound,
@@ -47,11 +48,24 @@ function StudentProfile() {
             <Button variant="outline" size="sm"><Printer className="h-4 w-4" /> Print ID card</Button>
             <Button variant="outline" size="sm"><ArrowRightLeft className="h-4 w-4" /> Transfer</Button>
             <Button variant="outline" size="sm"><MessageSquare className="h-4 w-4" /> Message</Button>
-            <Button size="sm"><Receipt className="h-4 w-4" /> Record payment</Button>
+            {parent && (
+              <Button variant="outline" size="sm" asChild>
+                <Link to="/parents/$parentId" params={{ parentId: parent.id }}>
+                  <UsersRound className="h-4 w-4" /> Parent profile
+                </Link>
+              </Button>
+            )}
+            <RecordPaymentDialog
+              studentName={s.name}
+              admissionNo={s.admissionNo}
+              due={s.feeDue}
+              trigger={<Button size="sm"><Receipt className="h-4 w-4" /> Record payment</Button>}
+            />
             <Button variant="outline" size="sm"><MoreHorizontal className="h-4 w-4" /></Button>
           </>
         }
       />
+
 
       <div className="mx-auto max-w-[1400px] px-8 py-6">
         {/* Hero card */}
@@ -151,6 +165,11 @@ function StudentProfile() {
                     <FieldRow label="Mobile" value={parent.mobile} />
                     <FieldRow label="Email" value={parent.email} />
                     <FieldRow label="Occupation" value={parent.occupation} />
+                    <Button variant="outline" size="sm" className="mt-3" asChild>
+                      <Link to="/parents/$parentId" params={{ parentId: parent.id }}>
+                        <UsersRound className="h-4 w-4" /> Open parent profile
+                      </Link>
+                    </Button>
                   </>
                 )}
               </Panel>
@@ -196,7 +215,12 @@ function StudentProfile() {
                   <p className="text-xs text-muted-foreground">
                     {s.feeStatus === "paid" ? "All dues cleared" : `Next due: 10 Aug 2026`}
                   </p>
-                  <Button size="sm" className="mt-4"><Receipt className="h-4 w-4" /> Record payment</Button>
+                  <RecordPaymentDialog
+                    studentName={s.name}
+                    admissionNo={s.admissionNo}
+                    due={s.feeDue}
+                    trigger={<Button size="sm" className="mt-4"><Receipt className="h-4 w-4" /> Record payment</Button>}
+                  />
                 </div>
               </Panel>
               <div className="lg:col-span-2">

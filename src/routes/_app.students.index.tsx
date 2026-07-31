@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { PageHeader } from "@/components/app/page-header";
 import { classes, students, smartGroupDefs, CURRENT_YEAR } from "@/data/mock";
 import { Button } from "@/components/ui/button";
@@ -31,15 +31,29 @@ const groupIcons: Record<string, typeof Users> = {
 };
 
 function StudentsIndex() {
+  const [mode, setMode] = useState<"name" | "admission">("name");
   const [q, setQ] = useState("");
+  const navigate = useNavigate();
 
-  const matches = useMemo(() => {
-    const query = q.trim().toLowerCase();
-    if (!query) return [];
-    return students
-      .filter(s => s.name.toLowerCase().includes(query) || s.admissionNo.toLowerCase().includes(query))
-      .slice(0, 8);
-  }, [q]);
+  const query = q.trim().toLowerCase();
+
+  const nameMatches = useMemo(() => {
+    if (mode !== "name" || !query) return [];
+    return students.filter(s => s.name.toLowerCase().includes(query)).slice(0, 12);
+  }, [query, mode]);
+
+  const admissionMatch = useMemo(() => {
+    if (mode !== "admission" || !query) return null;
+    return students.find(s => s.admissionNo.toLowerCase() === query) ?? null;
+  }, [query, mode]);
+
+  const admissionSuggestions = useMemo(() => {
+    if (mode !== "admission" || !query || admissionMatch) return [];
+    return students.filter(s => s.admissionNo.toLowerCase().includes(query)).slice(0, 6);
+  }, [query, mode, admissionMatch]);
+
+  const openStudent = (s: (typeof students)[number]) =>
+    navigate({ to: "/students/$classId/$studentId", params: { classId: s.classId, studentId: s.id } });
 
   return (
     <div>
@@ -59,24 +73,55 @@ function StudentsIndex() {
         {/* Normal search */}
         <section className="card-soft p-6">
           <h2 className="text-sm font-medium">Normal search</h2>
-          <p className="mt-1 text-xs text-muted-foreground">Type a student name or admission number — pick a result to open their profile.</p>
-          <div className="relative mt-4 max-w-xl">
+          <p className="mt-1 text-xs text-muted-foreground">
+            Choose what you're searching by. Names return a list of matches; an admission number opens the profile directly.
+          </p>
+
+          <div className="mt-4 inline-flex rounded-lg border border-border bg-muted/50 p-0.5">
+            {([["name", "Student name"], ["admission", "Admission number"]] as const).map(([v, l]) => (
+              <button
+                key={v}
+                type="button"
+                onClick={() => { setMode(v); setQ(""); }}
+                className={
+                  "rounded-md px-3.5 py-1.5 text-sm transition-colors " +
+                  (mode === v ? "bg-card font-medium text-foreground shadow-[var(--shadow-soft)]" : "text-muted-foreground hover:text-foreground")
+                }
+              >
+                {l}
+              </button>
+            ))}
+          </div>
+
+          <form
+            className="relative mt-4 max-w-xl"
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (mode === "admission" && admissionMatch) openStudent(admissionMatch);
+              if (mode === "name" && nameMatches.length === 1) openStudent(nameMatches[0]);
+            }}
+          >
             <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <Input
               autoFocus
-              placeholder="e.g. Aanya Sharma or EDK-2025-1004"
+              placeholder={mode === "name" ? "e.g. Aanya Sharma" : "e.g. EDK-2025-1004"}
               value={q}
               onChange={(e) => setQ(e.target.value)}
               className="h-11 bg-surface pl-9"
             />
-          </div>
+          </form>
 
-          {q.trim() && (
+          {query && mode === "name" && (
             <div className="mt-4 max-w-xl overflow-hidden rounded-lg border border-border">
-              {matches.length === 0 && (
+              {nameMatches.length === 0 && (
                 <p className="px-4 py-6 text-center text-sm text-muted-foreground">No student matches “{q}”</p>
               )}
-              {matches.map(s => (
+              {nameMatches.length > 0 && (
+                <p className="border-b border-border/60 bg-muted/40 px-4 py-2 text-xs text-muted-foreground">
+                  {nameMatches.length} match{nameMatches.length > 1 ? "es" : ""} — open a profile
+                </p>
+              )}
+              {nameMatches.map(s => (
                 <Link
                   key={s.id}
                   to="/students/$classId/$studentId"
@@ -86,7 +131,7 @@ function StudentsIndex() {
                   <AvatarMono name={s.name} hue={s.avatarHue} size={32} />
                   <div className="min-w-0 flex-1">
                     <p className="truncate text-sm font-medium">{s.name}</p>
-                    <p className="truncate text-xs text-muted-foreground">{s.admissionNo} · {s.className}</p>
+                    <p className="truncate text-xs text-muted-foreground">{s.admissionNo} · {s.className} · Roll {s.rollNo}</p>
                   </div>
                   <StatusPill tone={s.feeStatus === "paid" ? "success" : s.feeStatus === "due" ? "warning" : "danger"}>
                     {s.feeStatus === "paid" ? "Paid" : `₹${s.feeDue.toLocaleString()}`}
@@ -96,7 +141,48 @@ function StudentsIndex() {
               ))}
             </div>
           )}
+
+          {query && mode === "admission" && (
+            <div className="mt-4 max-w-xl overflow-hidden rounded-lg border border-border">
+              {admissionMatch ? (
+                <Link
+                  to="/students/$classId/$studentId"
+                  params={{ classId: admissionMatch.classId, studentId: admissionMatch.id }}
+                  className="flex items-center gap-3 px-4 py-3 hover:bg-muted/50"
+                >
+                  <AvatarMono name={admissionMatch.name} hue={admissionMatch.avatarHue} size={32} />
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate text-sm font-medium">{admissionMatch.name}</p>
+                    <p className="truncate text-xs text-muted-foreground">Exact match · press Enter to open profile</p>
+                  </div>
+                  <ArrowRight className="h-4 w-4 text-muted-foreground" />
+                </Link>
+              ) : admissionSuggestions.length > 0 ? (
+                <>
+                  <p className="border-b border-border/60 bg-muted/40 px-4 py-2 text-xs text-muted-foreground">Partial matches</p>
+                  {admissionSuggestions.map(s => (
+                    <Link
+                      key={s.id}
+                      to="/students/$classId/$studentId"
+                      params={{ classId: s.classId, studentId: s.id }}
+                      className="flex items-center gap-3 border-b border-border/40 px-4 py-2.5 last:border-0 hover:bg-muted/50"
+                    >
+                      <AvatarMono name={s.name} hue={s.avatarHue} size={32} />
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate text-sm font-medium">{s.admissionNo}</p>
+                        <p className="truncate text-xs text-muted-foreground">{s.name} · {s.className}</p>
+                      </div>
+                      <ArrowRight className="h-4 w-4 text-muted-foreground" />
+                    </Link>
+                  ))}
+                </>
+              ) : (
+                <p className="px-4 py-6 text-center text-sm text-muted-foreground">No admission number matches “{q}”</p>
+              )}
+            </div>
+          )}
         </section>
+
 
         {/* Advanced search — smart groups */}
         <section className="mt-8">
