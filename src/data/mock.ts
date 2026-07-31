@@ -225,3 +225,23 @@ export function studentsInGroup(id: string) {
   const g = getSmartGroup(id);
   return g ? students.filter(g.match) : students;
 }
+
+// ---- Parent smart groups (advanced search) ----
+export function childrenOf(p: Parent) { return students.filter(s => p.childIds.includes(s.id)); }
+export function normalizeMobile(v: string) { return v.replace(/\D/g, ""); }
+
+export type ParentGroupId = "pending-dues" | "unread-chats" | "multiple-children" | "bus-children" | "new-parents";
+
+export const parentGroupDefs: { id: ParentGroupId; label: string; hint: string; match: (p: Parent) => boolean }[] = [
+  { id: "pending-dues", label: "Pending dues", hint: "Outstanding balance on any child", match: (p) => p.pendingTotal > 0 },
+  { id: "unread-chats", label: "Unread messages", hint: "Waiting for a staff reply", match: (p) => p.unreadChats > 0 },
+  { id: "multiple-children", label: "More than one child", hint: "Siblings across classrooms", match: (p) => p.childIds.length > 1 },
+  { id: "bus-children", label: "Bus travellers", hint: "At least one child on school transport", match: (p) => childrenOf(p).some(s => s.transport === "bus") },
+  { id: "new-parents", label: "New this year", hint: `A child admitted in ${CURRENT_YEAR}`, match: (p) => childrenOf(p).some(s => s.joinYear === CURRENT_YEAR) },
+];
+
+export function getParentGroup(id: string) { return parentGroupDefs.find(g => g.id === id); }
+export function parentsInGroup(id: string) {
+  const g = getParentGroup(id);
+  return g ? parents.filter(g.match) : parents;
+}
