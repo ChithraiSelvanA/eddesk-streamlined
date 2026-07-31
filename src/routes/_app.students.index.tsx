@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { PageHeader } from "@/components/app/page-header";
 import { classes, students, smartGroupDefs, CURRENT_YEAR } from "@/data/mock";
 import { Button } from "@/components/ui/button";
