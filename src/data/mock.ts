@@ -17,7 +17,11 @@ export type Student = {
   feeDue: number;
   attendance: number; // percent
   avatarHue: number;
+  transport: "bus" | "own";
+  busRoute?: string;
+  joinYear: number;
 };
+
 
 export type Parent = {
   id: string;
@@ -129,7 +133,11 @@ export const students: Student[] = Array.from({ length: 60 }, (_, i) => {
     feeDue: status === "paid" ? 0 : status === "due" ? 4500 : 12000,
     attendance: 78 + Math.floor(seeded(i) * 20),
     avatarHue: Math.floor(seeded(i * 3) * 360),
+    transport: i % 3 === 0 ? "bus" : "own",
+    busRoute: i % 3 === 0 ? `Route ${(i % 5) + 1}` : undefined,
+    joinYear: [2026, 2026, 2024, 2023, 2025, 2026, 2022][i % 7],
   };
+
   parent.childIds.push(student.id);
   return student;
 });
@@ -198,3 +206,22 @@ export const timetableSample = [
   { day: "Fri", slots: ["English", "SST", "Math", "Break", "Science", "Music"] },
   { day: "Sat", slots: ["Math", "Science", "—", "—", "—", "—"] },
 ];
+
+// ---- Smart groups (advanced search) ----
+export const CURRENT_YEAR = 2026;
+
+export type SmartGroupId = "pending-fees" | "overdue-fees" | "joined-this-year" | "bus" | "low-attendance";
+
+export const smartGroupDefs: { id: SmartGroupId; label: string; hint: string; match: (s: Student) => boolean }[] = [
+  { id: "pending-fees", label: "Pending fees", hint: "Any unpaid balance this cycle", match: (s) => s.feeStatus !== "paid" },
+  { id: "overdue-fees", label: "Overdue fees", hint: "Past the due date", match: (s) => s.feeStatus === "overdue" },
+  { id: "joined-this-year", label: "Joined this year", hint: `Admitted in ${CURRENT_YEAR}`, match: (s) => s.joinYear === CURRENT_YEAR },
+  { id: "bus", label: "Travels by bus", hint: "School transport users", match: (s) => s.transport === "bus" },
+  { id: "low-attendance", label: "Attendance below 85%", hint: "Needs follow-up", match: (s) => s.attendance < 85 },
+];
+
+export function getSmartGroup(id: string) { return smartGroupDefs.find(g => g.id === id); }
+export function studentsInGroup(id: string) {
+  const g = getSmartGroup(id);
+  return g ? students.filter(g.match) : students;
+}
