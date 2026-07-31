@@ -47,11 +47,24 @@ function StudentProfile() {
             <Button variant="outline" size="sm"><Printer className="h-4 w-4" /> Print ID card</Button>
             <Button variant="outline" size="sm"><ArrowRightLeft className="h-4 w-4" /> Transfer</Button>
             <Button variant="outline" size="sm"><MessageSquare className="h-4 w-4" /> Message</Button>
-            <Button size="sm"><Receipt className="h-4 w-4" /> Record payment</Button>
+            {parent && (
+              <Button variant="outline" size="sm" asChild>
+                <Link to="/parents/$parentId" params={{ parentId: parent.id }}>
+                  <UsersRound className="h-4 w-4" /> Parent profile
+                </Link>
+              </Button>
+            )}
+            <RecordPaymentDialog
+              studentName={s.name}
+              admissionNo={s.admissionNo}
+              due={s.feeDue}
+              trigger={<Button size="sm"><Receipt className="h-4 w-4" /> Record payment</Button>}
+            />
             <Button variant="outline" size="sm"><MoreHorizontal className="h-4 w-4" /></Button>
           </>
         }
       />
+
 
       <div className="mx-auto max-w-[1400px] px-8 py-6">
         {/* Hero card */}
