@@ -165,6 +165,11 @@ function StudentProfile() {
                     <FieldRow label="Mobile" value={parent.mobile} />
                     <FieldRow label="Email" value={parent.email} />
                     <FieldRow label="Occupation" value={parent.occupation} />
+                    <Button variant="outline" size="sm" className="mt-3" asChild>
+                      <Link to="/parents/$parentId" params={{ parentId: parent.id }}>
+                        <UsersRound className="h-4 w-4" /> Open parent profile
+                      </Link>
+                    </Button>
                   </>
                 )}
               </Panel>
