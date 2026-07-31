@@ -206,3 +206,22 @@ export const timetableSample = [
   { day: "Fri", slots: ["English", "SST", "Math", "Break", "Science", "Music"] },
   { day: "Sat", slots: ["Math", "Science", "—", "—", "—", "—"] },
 ];
+
+// ---- Smart groups (advanced search) ----
+export const CURRENT_YEAR = 2026;
+
+export type SmartGroupId = "pending-fees" | "overdue-fees" | "joined-this-year" | "bus" | "low-attendance";
+
+export const smartGroupDefs: { id: SmartGroupId; label: string; hint: string; match: (s: Student) => boolean }[] = [
+  { id: "pending-fees", label: "Pending fees", hint: "Any unpaid balance this cycle", match: (s) => s.feeStatus !== "paid" },
+  { id: "overdue-fees", label: "Overdue fees", hint: "Past the due date", match: (s) => s.feeStatus === "overdue" },
+  { id: "joined-this-year", label: "Joined this year", hint: `Admitted in ${CURRENT_YEAR}`, match: (s) => s.joinYear === CURRENT_YEAR },
+  { id: "bus", label: "Travels by bus", hint: "School transport users", match: (s) => s.transport === "bus" },
+  { id: "low-attendance", label: "Attendance below 85%", hint: "Needs follow-up", match: (s) => s.attendance < 85 },
+];
+
+export function getSmartGroup(id: string) { return smartGroupDefs.find(g => g.id === id); }
+export function studentsInGroup(id: string) {
+  const g = getSmartGroup(id);
+  return g ? students.filter(g.match) : students;
+}
