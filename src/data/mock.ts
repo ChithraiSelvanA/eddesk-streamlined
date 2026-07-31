@@ -133,7 +133,11 @@ export const students: Student[] = Array.from({ length: 60 }, (_, i) => {
     feeDue: status === "paid" ? 0 : status === "due" ? 4500 : 12000,
     attendance: 78 + Math.floor(seeded(i) * 20),
     avatarHue: Math.floor(seeded(i * 3) * 360),
+    transport: i % 3 === 0 ? "bus" : "own",
+    busRoute: i % 3 === 0 ? `Route ${(i % 5) + 1}` : undefined,
+    joinYear: [2026, 2026, 2024, 2023, 2025, 2026, 2022][i % 7],
   };
+
   parent.childIds.push(student.id);
   return student;
 });
