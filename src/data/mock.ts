@@ -17,7 +17,11 @@ export type Student = {
   feeDue: number;
   attendance: number; // percent
   avatarHue: number;
+  transport: "bus" | "own";
+  busRoute?: string;
+  joinYear: number;
 };
+
 
 export type Parent = {
   id: string;
