@@ -50,7 +50,7 @@ function StudentsIndex() {
         actions={
           <>
             <Button variant="outline" size="sm">Import CSV</Button>
-            <Button size="sm"><Plus className="h-4 w-4" /> New admission</Button>
+            <NewAdmissionButton />
           </>
         }
       />
