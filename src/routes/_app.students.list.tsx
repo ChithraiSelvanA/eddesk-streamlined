@@ -75,7 +75,7 @@ function FilteredList() {
               key={s.id}
               to="/students/$classId/$studentId"
               params={{ classId: s.classId, studentId: s.id }}
-              className="flex flex-col gap-1.5 md:grid md:grid-cols-[1fr_140px_110px_1fr_120px_90px_32px] md:items-center md:gap-3 border-b border-border/40 px-4 py-3 text-sm last:border-0 md:px-5 md:py-2.5 hover:bg-muted/50"
+              className="flex flex-col items-start gap-1.5 md:grid md:grid-cols-[1fr_140px_110px_1fr_120px_90px_32px] md:items-center md:gap-3 border-b border-border/40 px-4 py-3 text-sm last:border-0 md:px-5 md:py-2.5 hover:bg-muted/50"
             >
               <div className="flex min-w-0 items-center gap-3">
                 <AvatarMono name={s.name} hue={s.avatarHue} size={28} />

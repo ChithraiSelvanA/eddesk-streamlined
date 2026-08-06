@@ -140,7 +140,7 @@ function StudentList() {
               key={s.id}
               to="/students/$classId/$studentId"
               params={{ classId: cls.id, studentId: s.id }}
-              className="flex flex-col gap-1.5 md:grid md:grid-cols-[60px_1fr_140px_1fr_120px_80px_32px] md:items-center md:gap-3 border-b border-border/40 px-4 py-3 text-sm last:border-0 md:px-5 md:py-2.5 hover:bg-muted/50"
+              className="flex flex-col items-start gap-1.5 md:grid md:grid-cols-[60px_1fr_140px_1fr_120px_80px_32px] md:items-center md:gap-3 border-b border-border/40 px-4 py-3 text-sm last:border-0 md:px-5 md:py-2.5 hover:bg-muted/50"
             >
               <span className="text-muted-foreground tabular-nums">{s.rollNo}</span>
               <div className="flex min-w-0 items-center gap-3">
