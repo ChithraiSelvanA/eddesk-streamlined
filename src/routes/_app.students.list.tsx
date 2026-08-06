@@ -66,7 +66,7 @@ function FilteredList() {
         </div>
 
         <div className="card-soft overflow-hidden">
-          <div className="grid grid-cols-[1fr_140px_110px_1fr_120px_90px_32px] items-center gap-3 border-b border-border/60 px-5 py-2.5 text-xs font-medium uppercase tracking-wider text-muted-foreground">
+          <div className="hidden md:grid grid-cols-[1fr_140px_110px_1fr_120px_90px_32px] md:items-center gap-3 border-b border-border/60 px-5 py-2.5 text-xs font-medium uppercase tracking-wider text-muted-foreground">
             <span>Student</span><span>Admission no.</span><span>Class</span><span>Parent</span><span>Fees</span><span className="text-right">Att.</span><span />
           </div>
           {list.length === 0 && <p className="px-5 py-10 text-center text-sm text-muted-foreground">No students in this group.</p>}
@@ -75,7 +75,7 @@ function FilteredList() {
               key={s.id}
               to="/students/$classId/$studentId"
               params={{ classId: s.classId, studentId: s.id }}
-              className="grid grid-cols-[1fr_140px_110px_1fr_120px_90px_32px] items-center gap-3 border-b border-border/40 px-5 py-2.5 text-sm last:border-0 hover:bg-muted/50"
+              className="flex flex-col gap-1.5 md:grid md:grid-cols-[1fr_140px_110px_1fr_120px_90px_32px] md:items-center md:gap-3 border-b border-border/40 px-4 py-3 text-sm last:border-0 md:px-5 md:py-2.5 hover:bg-muted/50"
             >
               <div className="flex min-w-0 items-center gap-3">
                 <AvatarMono name={s.name} hue={s.avatarHue} size={28} />
@@ -92,7 +92,7 @@ function FilteredList() {
                 {s.feeStatus === "paid" ? "Paid" : `₹${s.feeDue.toLocaleString()}`}
               </StatusPill>
               <span className="text-right tabular-nums">{s.attendance}%</span>
-              <ChevronRight className="h-4 w-4 text-muted-foreground" />
+              <ChevronRight className="hidden h-4 w-4 text-muted-foreground md:block" />
             </Link>
           ))}
         </div>
