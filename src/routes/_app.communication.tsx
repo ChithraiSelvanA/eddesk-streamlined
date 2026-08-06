@@ -34,7 +34,7 @@ function Communication() {
         }
       />
 
-      <div className="mx-auto max-w-[1400px] px-8 py-6">
+      <div className="mx-auto max-w-[1400px] px-4 py-5 sm:px-6 md:px-8 md:py-6">
         <Tabs defaultValue="notices">
           <TabsList className="bg-transparent p-0 gap-1 h-auto border-b border-border rounded-none w-full justify-start">
             {[["notices","Notice board"],["events","Events"],["chat","Chat"],["requests","Requests"],["notifications","Notifications"]].map(([v,l]) => (

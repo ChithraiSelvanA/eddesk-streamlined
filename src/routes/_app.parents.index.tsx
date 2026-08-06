@@ -92,7 +92,7 @@ function ParentsIndex() {
         description={`${parents.length} parents linked to ${students.length} student accounts. Search directly, or start from a smart group.`}
       />
 
-      <div className="mx-auto max-w-[1400px] px-8 py-8">
+      <div className="mx-auto max-w-[1400px] px-4 py-6 sm:px-6 md:px-8 md:py-8">
         {/* Normal search */}
         <section className="card-soft p-6">
           <h2 className="text-sm font-medium">Normal search</h2>

@@ -53,7 +53,7 @@ function Reports() {
   return (
     <div>
       <PageHeader crumbs={[{ label: "Reports" }]} title="Reports" description="Pre-built reports for every module. Open one to drill down." />
-      <div className="mx-auto max-w-[1400px] px-8 py-6 space-y-8">
+      <div className="mx-auto max-w-[1400px] px-4 py-5 sm:px-6 md:px-8 md:py-6 space-y-8">
         {groups.map(g => (
           <section key={g.title}>
             <div className="mb-3 flex items-center gap-2">

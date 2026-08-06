@@ -44,7 +44,7 @@ function Dashboard() {
         }
       />
 
-      <div className="mx-auto max-w-[1400px] px-8 py-8 space-y-8">
+      <div className="mx-auto max-w-[1400px] px-4 py-6 sm:px-6 md:px-8 md:py-8 space-y-8">
         {/* At a glance */}
         <section className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
           <GlanceCard

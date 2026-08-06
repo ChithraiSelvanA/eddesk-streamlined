@@ -37,7 +37,7 @@ function Fees() {
         }
       />
 
-      <div className="mx-auto max-w-[1400px] px-8 py-6 space-y-6">
+      <div className="mx-auto max-w-[1400px] px-4 py-5 sm:px-6 md:px-8 md:py-6 space-y-6">
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
           <Stat title="Collected this month" value={`₹${collectedThisMonth.toLocaleString()}`} icon={<Wallet className="h-4 w-4" />} trend="+12%" />
           <Stat title="Pending" value={`₹${pendingTotal.toLocaleString()}`} icon={<Wallet className="h-4 w-4" />} trend="-8%" tone="warn" />

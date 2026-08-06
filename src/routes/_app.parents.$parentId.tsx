@@ -43,7 +43,7 @@ function ParentProfile() {
         }
       />
 
-      <div className="mx-auto max-w-[1400px] px-8 py-6">
+      <div className="mx-auto max-w-[1400px] px-4 py-5 sm:px-6 md:px-8 md:py-6">
         <div className="card-soft mb-6 flex flex-col gap-5 p-6 md:flex-row md:items-center">
           <AvatarMono name={p.name} hue={200} size={72} />
           <div className="flex-1">
