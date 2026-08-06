@@ -27,7 +27,7 @@ export function SidebarNav() {
   const pathname = useRouterState({ select: (r) => r.location.pathname });
 
   return (
-    <aside className="hidden md:flex md:w-60 md:shrink-0 md:flex-col md:border-r md:border-border/70 md:bg-sidebar">
+    <aside className="hidden md:sticky md:top-0 md:flex md:h-screen md:w-60 md:shrink-0 md:flex-col md:border-r md:border-border/70 md:bg-sidebar md:overflow-hidden">
       <div className="flex h-14 items-center gap-2 px-5">
         <div className="grid h-7 w-7 place-items-center rounded-md bg-primary text-primary-foreground">
           <Sparkles className="h-4 w-4" />
@@ -38,7 +38,7 @@ export function SidebarNav() {
         </div>
       </div>
 
-      <nav className="flex-1 space-y-0.5 px-3 py-3">
+      <nav className="flex-1 space-y-0.5 overflow-y-auto px-3 py-3">
         {nav.map((item) => {
           const active = item.exact ? pathname === item.to : pathname === item.to || pathname.startsWith(item.to + "/");
           const Icon = item.icon;
