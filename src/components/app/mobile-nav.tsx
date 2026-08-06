@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Menu } from "lucide-react";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { BrandMark, NavLinks, UserChip } from "./sidebar-nav";
 
 export function MobileNav() {
@@ -16,9 +16,10 @@ export function MobileNav() {
           <Menu className="h-4 w-4" />
         </button>
       </SheetTrigger>
-      <SheetContent side="left" className="w-[17rem] bg-sidebar p-0">
+      <SheetContent side="left" className="flex w-[17rem] flex-col bg-sidebar p-0">
         <div className="flex h-14 items-center border-b border-border/70 px-5">
           <BrandMark />
+          <SheetTitle className="sr-only">Navigation</SheetTitle>
         </div>
         <nav className="flex-1 space-y-0.5 overflow-y-auto px-3 py-3">
           <NavLinks onNavigate={() => setOpen(false)} />
