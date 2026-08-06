@@ -115,7 +115,7 @@ function FilteredParents() {
                 ) : (
                   <StatusPill tone="success">Cleared</StatusPill>
                 )}
-                <span className="text-right tabular-nums text-muted-foreground">{p.unreadChats || "—"}</span>
+                <span className="hidden text-right tabular-nums text-muted-foreground md:block">{p.unreadChats || "—"}</span>
                 <ChevronRight className="hidden h-4 w-4 text-muted-foreground md:block" />
               </Link>
             );

@@ -155,7 +155,7 @@ function StudentList() {
               <StatusPill tone={s.feeStatus === "paid" ? "success" : s.feeStatus === "due" ? "warning" : "danger"}>
                 {s.feeStatus === "paid" ? "Paid" : `₹${s.feeDue.toLocaleString()}`}
               </StatusPill>
-              <span className="text-right tabular-nums">{s.attendance}%</span>
+              <span className="text-xs text-muted-foreground md:text-right md:text-sm md:text-foreground md:tabular-nums"><span className="md:hidden">Attendance </span>{s.attendance}%</span>
               <ChevronRight className="hidden h-4 w-4 text-muted-foreground md:block" />
             </Link>
           ))}
