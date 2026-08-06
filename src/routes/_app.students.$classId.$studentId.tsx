@@ -67,7 +67,7 @@ function StudentProfile() {
       />
 
 
-      <div className="mx-auto max-w-[1400px] px-8 py-6">
+      <div className="mx-auto max-w-[1400px] px-4 py-5 sm:px-6 md:px-8 md:py-6">
         {/* Hero card */}
         <div className="card-soft mb-6 flex flex-col gap-5 p-6 md:flex-row md:items-center">
           <AvatarMono name={s.name} hue={s.avatarHue} size={72} />
@@ -89,7 +89,7 @@ function StudentProfile() {
         </div>
 
         <Tabs defaultValue="overview">
-          <TabsList className="bg-transparent p-0 gap-1 h-auto border-b border-border rounded-none w-full justify-start overflow-x-auto">
+          <TabsList className="bg-transparent p-0 gap-1 h-auto border-b border-border rounded-none w-full justify-start overflow-x-auto flex-nowrap">
             {[
               ["overview", "Overview"],
               ["parents", "Parents"],
@@ -101,7 +101,7 @@ function StudentProfile() {
               ["timeline", "Timeline"],
             ].map(([v, l]) => (
               <TabsTrigger key={v} value={v}
-                className="rounded-none border-b-2 border-transparent bg-transparent px-3 pb-2.5 pt-1 text-sm text-muted-foreground data-[state=active]:border-foreground data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none">
+                className="rounded-none border-b-2 border-transparent bg-transparent shrink-0 px-3 pb-2.5 pt-1 text-sm text-muted-foreground data-[state=active]:border-foreground data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none">
                 {l}
               </TabsTrigger>
             ))}

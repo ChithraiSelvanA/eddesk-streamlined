@@ -51,7 +51,7 @@ function FilteredParents() {
         actions={<Button variant="outline" size="sm"><Download className="h-4 w-4" /> Export</Button>}
       />
 
-      <div className="mx-auto max-w-[1400px] px-8 py-6">
+      <div className="mx-auto max-w-[1400px] px-4 py-5 sm:px-6 md:px-8 md:py-6">
         <div className="mb-4 flex flex-wrap items-center gap-2">
           {parentGroupDefs.map(g => (
             <Link
@@ -78,7 +78,7 @@ function FilteredParents() {
         </div>
 
         <div className="card-soft overflow-hidden">
-          <div className="grid grid-cols-[1fr_150px_1.4fr_120px_100px_32px] items-center gap-3 border-b border-border/60 px-5 py-2.5 text-xs font-medium uppercase tracking-wider text-muted-foreground">
+          <div className="hidden md:grid grid-cols-[1fr_150px_1.4fr_120px_100px_32px] md:items-center gap-3 border-b border-border/60 px-5 py-2.5 text-xs font-medium uppercase tracking-wider text-muted-foreground">
             <span>Parent</span><span>Mobile</span><span>Students &amp; class</span><span>Dues</span><span className="text-right">Chats</span><span />
           </div>
           {list.length === 0 && <p className="px-5 py-10 text-center text-sm text-muted-foreground">No parents in this group.</p>}
@@ -89,7 +89,7 @@ function FilteredParents() {
                 key={p.id}
                 to="/parents/$parentId"
                 params={{ parentId: p.id }}
-                className="grid grid-cols-[1fr_150px_1.4fr_120px_100px_32px] items-center gap-3 border-b border-border/40 px-5 py-2.5 text-sm last:border-0 hover:bg-muted/50"
+                className="flex flex-col items-start gap-1.5 md:grid md:grid-cols-[1fr_150px_1.4fr_120px_100px_32px] md:items-center md:gap-3 border-b border-border/40 px-4 py-3 text-sm last:border-0 md:px-5 md:py-2.5 hover:bg-muted/50"
               >
                 <div className="flex min-w-0 items-center gap-3">
                   <AvatarMono name={p.name} hue={200} size={28} />
@@ -115,8 +115,8 @@ function FilteredParents() {
                 ) : (
                   <StatusPill tone="success">Cleared</StatusPill>
                 )}
-                <span className="text-right tabular-nums text-muted-foreground">{p.unreadChats || "—"}</span>
-                <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                <span className="hidden text-right tabular-nums text-muted-foreground md:block">{p.unreadChats || "—"}</span>
+                <ChevronRight className="hidden h-4 w-4 text-muted-foreground md:block" />
               </Link>
             );
           })}

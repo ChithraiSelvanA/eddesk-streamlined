@@ -63,7 +63,7 @@ function StudentList() {
         }
       />
 
-      <div className="mx-auto max-w-[1400px] px-8 py-6">
+      <div className="mx-auto max-w-[1400px] px-4 py-5 sm:px-6 md:px-8 md:py-6">
         {showForm && (
           <form
             className="card-soft mb-6 p-6"
@@ -132,7 +132,7 @@ function StudentList() {
 
 
         <div className="card-soft overflow-hidden">
-          <div className="grid grid-cols-[60px_1fr_140px_1fr_120px_80px_32px] items-center gap-3 border-b border-border/60 px-5 py-2.5 text-xs font-medium uppercase tracking-wider text-muted-foreground">
+          <div className="hidden md:grid grid-cols-[60px_1fr_140px_1fr_120px_80px_32px] md:items-center gap-3 border-b border-border/60 px-5 py-2.5 text-xs font-medium uppercase tracking-wider text-muted-foreground">
             <span>Roll</span><span>Student</span><span>Admission no.</span><span>Parent</span><span>Fees</span><span className="text-right">Att.</span><span />
           </div>
           {list.map(s => (
@@ -140,7 +140,7 @@ function StudentList() {
               key={s.id}
               to="/students/$classId/$studentId"
               params={{ classId: cls.id, studentId: s.id }}
-              className="grid grid-cols-[60px_1fr_140px_1fr_120px_80px_32px] items-center gap-3 border-b border-border/40 px-5 py-2.5 text-sm last:border-0 hover:bg-muted/50"
+              className="flex flex-col items-start gap-1.5 md:grid md:grid-cols-[60px_1fr_140px_1fr_120px_80px_32px] md:items-center md:gap-3 border-b border-border/40 px-4 py-3 text-sm last:border-0 md:px-5 md:py-2.5 hover:bg-muted/50"
             >
               <span className="text-muted-foreground tabular-nums">{s.rollNo}</span>
               <div className="flex min-w-0 items-center gap-3">
@@ -155,8 +155,8 @@ function StudentList() {
               <StatusPill tone={s.feeStatus === "paid" ? "success" : s.feeStatus === "due" ? "warning" : "danger"}>
                 {s.feeStatus === "paid" ? "Paid" : `₹${s.feeDue.toLocaleString()}`}
               </StatusPill>
-              <span className="text-right tabular-nums">{s.attendance}%</span>
-              <ChevronRight className="h-4 w-4 text-muted-foreground" />
+              <span className="text-xs text-muted-foreground md:text-right md:text-sm md:text-foreground md:tabular-nums"><span className="md:hidden">Attendance </span>{s.attendance}%</span>
+              <ChevronRight className="hidden h-4 w-4 text-muted-foreground md:block" />
             </Link>
           ))}
         </div>

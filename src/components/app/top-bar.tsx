@@ -4,6 +4,7 @@ import { Search, Bell, Command, Plus } from "lucide-react";
 import { students, parents } from "@/data/mock";
 import { AvatarMono } from "./avatar-mono";
 import { Button } from "@/components/ui/button";
+import { MobileNav } from "./mobile-nav";
 
 export function TopBar() {
   const [q, setQ] = useState("");
@@ -40,8 +41,9 @@ export function TopBar() {
   }, [q]);
 
   return (
-    <header className="sticky top-0 z-30 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 border-b border-border/70 bg-background/80 px-6 backdrop-blur-md sm:px-8" style={{ height: 56 }}>
-      <div className="relative min-w-0 max-w-xl">
+    <header className="sticky top-0 z-30 flex items-center gap-2 border-b border-border/70 bg-background/80 px-3 backdrop-blur-md sm:gap-4 sm:px-6 md:px-8" style={{ height: 56 }}>
+      <MobileNav />
+      <div className="relative min-w-0 flex-1 max-w-xl">
         <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
         <input
           ref={inputRef}
@@ -49,10 +51,10 @@ export function TopBar() {
           onChange={(e) => { setQ(e.target.value); setOpen(true); }}
           onFocus={() => setOpen(true)}
           onBlur={() => setTimeout(() => setOpen(false), 150)}
-          placeholder="Search students, admission no., parents, mobile…"
-          className="h-9 w-full rounded-lg border border-border bg-surface pl-9 pr-16 text-sm outline-none placeholder:text-muted-foreground/70 focus:border-ring focus:ring-2 focus:ring-ring/20"
+          placeholder="Search students, admission no., parents…"
+          className="h-9 w-full rounded-lg border border-border bg-surface pl-9 pr-3 sm:pr-16 text-sm outline-none placeholder:text-muted-foreground/70 focus:border-ring focus:ring-2 focus:ring-ring/20"
         />
-        <span className="pointer-events-none absolute right-2.5 top-1/2 flex -translate-y-1/2 items-center gap-1 rounded border border-border bg-muted px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground">
+        <span className="pointer-events-none absolute right-2.5 top-1/2 hidden sm:flex -translate-y-1/2 items-center gap-1 rounded border border-border bg-muted px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground">
           <Command className="h-3 w-3" />K
         </span>
 

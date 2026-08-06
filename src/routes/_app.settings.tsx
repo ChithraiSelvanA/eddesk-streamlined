@@ -28,7 +28,7 @@ function Settings() {
   return (
     <div>
       <PageHeader crumbs={[{ label: "Settings" }]} title="Settings" description="Configure your school and workspace." />
-      <div className="mx-auto max-w-[1400px] px-8 py-6">
+      <div className="mx-auto max-w-[1400px] px-4 py-5 sm:px-6 md:px-8 md:py-6">
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {items.map(({ icon: Icon, title, desc }) => (
             <button key={title} className="card-soft group flex items-start gap-3 p-5 text-left hover:shadow-[var(--shadow-elevated)]">
