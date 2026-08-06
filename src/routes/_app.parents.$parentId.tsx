@@ -63,10 +63,10 @@ function ParentProfile() {
         </div>
 
         <Tabs defaultValue="children">
-          <TabsList className="bg-transparent p-0 gap-1 h-auto border-b border-border rounded-none w-full justify-start">
+          <TabsList className="bg-transparent p-0 gap-1 h-auto border-b border-border rounded-none w-full justify-start overflow-x-auto flex-nowrap">
             {[["children","Children"],["chats","Chats"],["requests","Requests"],["payments","Payment summary"]].map(([v,l]) => (
               <TabsTrigger key={v} value={v}
-                className="rounded-none border-b-2 border-transparent bg-transparent px-3 pb-2.5 pt-1 text-sm text-muted-foreground data-[state=active]:border-foreground data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none">
+                className="rounded-none border-b-2 border-transparent bg-transparent shrink-0 px-3 pb-2.5 pt-1 text-sm text-muted-foreground data-[state=active]:border-foreground data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none">
                 {l}
               </TabsTrigger>
             ))}
