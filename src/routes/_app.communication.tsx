@@ -78,9 +78,15 @@ function Communication() {
                   </div>
                 </div>
               ))}
-              <button className="card-soft flex flex-col items-center justify-center gap-2 border-dashed p-6 text-sm text-muted-foreground hover:bg-muted/40">
-                <Plus className="h-4 w-4" /> New notice
-              </button>
+              <CreateNoticeDialog
+                onCreate={addNotice}
+                trigger={
+                  <button className="card-soft flex flex-col items-center justify-center gap-2 border-dashed p-6 text-sm text-muted-foreground hover:bg-muted/40">
+                    <Plus className="h-4 w-4" /> New notice
+                  </button>
+                }
+              />
+
             </div>
           </TabsContent>
 
