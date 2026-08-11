@@ -1,11 +1,14 @@
+import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { PageHeader } from "@/components/app/page-header";
-import { notices, events, chats, leaveRequests } from "@/data/mock";
+import { notices as seedNotices, events as seedEvents, chats, leaveRequests, type Notice, type EventItem } from "@/data/mock";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { AvatarMono } from "@/components/app/avatar-mono";
 import { StatusPill } from "@/components/app/status-pill";
+import { CreateNoticeDialog, NewEventDialog } from "@/components/app/communication-dialogs";
 import { Megaphone, Plus, Bell, Calendar } from "lucide-react";
+
 
 export const Route = createFileRoute("/_app/communication")({
   head: () => ({
@@ -20,6 +23,13 @@ export const Route = createFileRoute("/_app/communication")({
 });
 
 function Communication() {
+  const [notices, setNotices] = useState<Notice[]>(seedNotices);
+  const [events, setEvents] = useState<EventItem[]>(seedEvents);
+
+  const addNotice = (n: Notice) => setNotices(prev => [n, ...prev]);
+  const upsertEvent = (e: EventItem) =>
+    setEvents(prev => (prev.some(x => x.id === e.id) ? prev.map(x => (x.id === e.id ? e : x)) : [...prev, e]));
+
   return (
     <div>
       <PageHeader
@@ -28,11 +38,18 @@ function Communication() {
         description="Notices, events, chat and requests — one clean workspace."
         actions={
           <>
-            <Button variant="outline" size="sm"><Calendar className="h-4 w-4" /> New event</Button>
-            <Button size="sm"><Megaphone className="h-4 w-4" /> Create notice</Button>
+            <NewEventDialog
+              onCreate={upsertEvent}
+              trigger={<Button variant="outline" size="sm"><Calendar className="h-4 w-4" /> New event</Button>}
+            />
+            <CreateNoticeDialog
+              onCreate={addNotice}
+              trigger={<Button size="sm"><Megaphone className="h-4 w-4" /> Create notice</Button>}
+            />
           </>
         }
       />
+
 
       <div className="mx-auto max-w-[1400px] px-4 py-5 sm:px-6 md:px-8 md:py-6">
         <Tabs defaultValue="notices">
@@ -61,9 +78,15 @@ function Communication() {
                   </div>
                 </div>
               ))}
-              <button className="card-soft flex flex-col items-center justify-center gap-2 border-dashed p-6 text-sm text-muted-foreground hover:bg-muted/40">
-                <Plus className="h-4 w-4" /> New notice
-              </button>
+              <CreateNoticeDialog
+                onCreate={addNotice}
+                trigger={
+                  <button className="card-soft flex flex-col items-center justify-center gap-2 border-dashed p-6 text-sm text-muted-foreground hover:bg-muted/40">
+                    <Plus className="h-4 w-4" /> New notice
+                  </button>
+                }
+              />
+
             </div>
           </TabsContent>
 
@@ -85,7 +108,12 @@ function Communication() {
                   </div>
                   <div className="mt-4 flex items-center justify-between">
                     <StatusPill tone="info">{e.category}</StatusPill>
-                    <Button size="sm" variant="outline" className="h-7 px-2 text-xs">Edit</Button>
+                    <NewEventDialog
+                      event={e}
+                      onCreate={upsertEvent}
+                      trigger={<Button size="sm" variant="outline" className="h-7 px-2 text-xs">Edit</Button>}
+                    />
+
                   </div>
                 </div>
               ))}
