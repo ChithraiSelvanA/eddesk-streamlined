@@ -108,7 +108,12 @@ function Communication() {
                   </div>
                   <div className="mt-4 flex items-center justify-between">
                     <StatusPill tone="info">{e.category}</StatusPill>
-                    <Button size="sm" variant="outline" className="h-7 px-2 text-xs">Edit</Button>
+                    <NewEventDialog
+                      event={e}
+                      onCreate={upsertEvent}
+                      trigger={<Button size="sm" variant="outline" className="h-7 px-2 text-xs">Edit</Button>}
+                    />
+
                   </div>
                 </div>
               ))}
