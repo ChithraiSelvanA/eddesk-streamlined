@@ -1,11 +1,14 @@
+import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { PageHeader } from "@/components/app/page-header";
-import { notices, events, chats, leaveRequests } from "@/data/mock";
+import { notices as seedNotices, events as seedEvents, chats, leaveRequests, type Notice, type EventItem } from "@/data/mock";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { AvatarMono } from "@/components/app/avatar-mono";
 import { StatusPill } from "@/components/app/status-pill";
+import { CreateNoticeDialog, NewEventDialog } from "@/components/app/communication-dialogs";
 import { Megaphone, Plus, Bell, Calendar } from "lucide-react";
+
 
 export const Route = createFileRoute("/_app/communication")({
   head: () => ({
