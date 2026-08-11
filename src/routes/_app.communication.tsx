@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { PageHeader } from "@/components/app/page-header";
-import { notices as seedNotices, events as seedEvents, chats, leaveRequests, type Notice, type EventItem } from "@/data/mock";
+import { notices as seedNotices, events as seedEvents, leaveRequests, type Notice, type EventItem } from "@/data/mock";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { AvatarMono } from "@/components/app/avatar-mono";
 import { StatusPill } from "@/components/app/status-pill";
 import { CreateNoticeDialog, NewEventDialog } from "@/components/app/communication-dialogs";
+import { ChatPanel } from "@/components/app/chat-panel";
 import { Megaphone, Plus, Bell, Calendar } from "lucide-react";
 
 
@@ -121,43 +121,9 @@ function Communication() {
           </TabsContent>
 
           <TabsContent value="chat" className="mt-6">
-            <div className="card-soft grid grid-cols-1 md:grid-cols-[320px_1fr] overflow-hidden">
-              <div className="border-b md:border-b-0 md:border-r border-border/60">
-                {chats.map((c, i) => (
-                  <button key={c.id} className={"w-full border-b border-border/40 px-4 py-3 text-left last:border-0 hover:bg-muted/50 " + (i === 0 ? "bg-muted/60" : "")}>
-                    <div className="flex items-start gap-3">
-                      <AvatarMono name={c.parentName} hue={c.hue} size={36} />
-                      <div className="min-w-0 flex-1">
-                        <div className="flex items-center justify-between gap-2">
-                          <p className="truncate text-sm font-medium">{c.parentName}</p>
-                          <span className="shrink-0 text-[11px] text-muted-foreground">{c.time}</span>
-                        </div>
-                        <p className="truncate text-xs text-muted-foreground">{c.classInfo}</p>
-                        <p className="mt-0.5 truncate text-xs text-muted-foreground">{c.lastMessage}</p>
-                      </div>
-                    </div>
-                  </button>
-                ))}
-              </div>
-              <div className="flex flex-col">
-                <div className="border-b border-border/60 px-5 py-3">
-                  <p className="text-sm font-medium">{chats[0].parentName}</p>
-                  <p className="text-xs text-muted-foreground">{chats[0].classInfo}</p>
-                </div>
-                <div className="flex-1 space-y-3 p-5">
-                  <Bubble mine={false}>Hi Rhea — could Aanya be excused early on Friday for a dental visit at 2 PM?</Bubble>
-                  <Bubble mine={true}>Absolutely, we'll note it down. Please share a note with the class teacher too.</Bubble>
-                  <Bubble mine={false}>Thanks so much!</Bubble>
-                </div>
-                <div className="border-t border-border/60 p-3">
-                  <div className="flex items-center gap-2 rounded-lg border border-border bg-surface px-3 py-2">
-                    <input placeholder="Reply…" className="flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground" />
-                    <Button size="sm">Send</Button>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <ChatPanel />
           </TabsContent>
+
 
           <TabsContent value="requests" className="mt-6">
             <div className="card-soft">
@@ -198,12 +164,3 @@ function Communication() {
   );
 }
 
-function Bubble({ mine, children }: { mine: boolean; children: React.ReactNode }) {
-  return (
-    <div className={"flex " + (mine ? "justify-end" : "justify-start")}>
-      <div className={"max-w-[80%] rounded-2xl px-3.5 py-2 text-sm " + (mine ? "bg-primary text-primary-foreground" : "bg-muted text-foreground")}>
-        {children}
-      </div>
-    </div>
-  );
-}
