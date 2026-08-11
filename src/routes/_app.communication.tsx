@@ -23,6 +23,13 @@ export const Route = createFileRoute("/_app/communication")({
 });
 
 function Communication() {
+  const [notices, setNotices] = useState<Notice[]>(seedNotices);
+  const [events, setEvents] = useState<EventItem[]>(seedEvents);
+
+  const addNotice = (n: Notice) => setNotices(prev => [n, ...prev]);
+  const upsertEvent = (e: EventItem) =>
+    setEvents(prev => (prev.some(x => x.id === e.id) ? prev.map(x => (x.id === e.id ? e : x)) : [...prev, e]));
+
   return (
     <div>
       <PageHeader
@@ -31,11 +38,18 @@ function Communication() {
         description="Notices, events, chat and requests — one clean workspace."
         actions={
           <>
-            <Button variant="outline" size="sm"><Calendar className="h-4 w-4" /> New event</Button>
-            <Button size="sm"><Megaphone className="h-4 w-4" /> Create notice</Button>
+            <NewEventDialog
+              onCreate={upsertEvent}
+              trigger={<Button variant="outline" size="sm"><Calendar className="h-4 w-4" /> New event</Button>}
+            />
+            <CreateNoticeDialog
+              onCreate={addNotice}
+              trigger={<Button size="sm"><Megaphone className="h-4 w-4" /> Create notice</Button>}
+            />
           </>
         }
       />
+
 
       <div className="mx-auto max-w-[1400px] px-4 py-5 sm:px-6 md:px-8 md:py-6">
         <Tabs defaultValue="notices">
