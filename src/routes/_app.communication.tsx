@@ -4,7 +4,6 @@ import { PageHeader } from "@/components/app/page-header";
 import { notices as seedNotices, events as seedEvents, leaveRequests, type Notice, type EventItem } from "@/data/mock";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { AvatarMono } from "@/components/app/avatar-mono";
 import { StatusPill } from "@/components/app/status-pill";
 import { CreateNoticeDialog, NewEventDialog } from "@/components/app/communication-dialogs";
 import { ChatPanel } from "@/components/app/chat-panel";
@@ -165,12 +164,3 @@ function Communication() {
   );
 }
 
-function Bubble({ mine, children }: { mine: boolean; children: React.ReactNode }) {
-  return (
-    <div className={"flex " + (mine ? "justify-end" : "justify-start")}>
-      <div className={"max-w-[80%] rounded-2xl px-3.5 py-2 text-sm " + (mine ? "bg-primary text-primary-foreground" : "bg-muted text-foreground")}>
-        {children}
-      </div>
-    </div>
-  );
-}
