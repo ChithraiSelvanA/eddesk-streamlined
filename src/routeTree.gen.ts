@@ -19,6 +19,7 @@ import { Route as AppStudentsIndexRouteImport } from './routes/_app.students.ind
 import { Route as AppSettingsIndexRouteImport } from './routes/_app.settings.index'
 import { Route as AppParentsIndexRouteImport } from './routes/_app.parents.index'
 import { Route as AppStudentsListRouteImport } from './routes/_app.students.list'
+import { Route as AppSettingsSchoolProfileRouteImport } from './routes/_app.settings.school-profile'
 import { Route as AppParentsListRouteImport } from './routes/_app.parents.list'
 import { Route as AppParentsParentIdRouteImport } from './routes/_app.parents.$parentId'
 import { Route as AppStudentsClassIdIndexRouteImport } from './routes/_app.students.$classId.index'
@@ -74,6 +75,12 @@ const AppStudentsListRoute = AppStudentsListRouteImport.update({
   path: '/students/list',
   getParentRoute: () => AppRoute,
 } as any)
+const AppSettingsSchoolProfileRoute =
+  AppSettingsSchoolProfileRouteImport.update({
+    id: '/settings/school-profile',
+    path: '/settings/school-profile',
+    getParentRoute: () => AppRoute,
+  } as any)
 const AppParentsListRoute = AppParentsListRouteImport.update({
   id: '/parents/list',
   path: '/parents/list',
@@ -110,6 +117,7 @@ export interface FileRoutesByFullPath {
   '/reports': typeof AppReportsRoute
   '/parents/$parentId': typeof AppParentsParentIdRoute
   '/parents/list': typeof AppParentsListRoute
+  '/settings/school-profile': typeof AppSettingsSchoolProfileRoute
   '/students/list': typeof AppStudentsListRoute
   '/parents/': typeof AppParentsIndexRoute
   '/settings/': typeof AppSettingsIndexRoute
@@ -126,6 +134,7 @@ export interface FileRoutesByTo {
   '/': typeof AppIndexRoute
   '/parents/$parentId': typeof AppParentsParentIdRoute
   '/parents/list': typeof AppParentsListRoute
+  '/settings/school-profile': typeof AppSettingsSchoolProfileRoute
   '/students/list': typeof AppStudentsListRoute
   '/parents': typeof AppParentsIndexRoute
   '/settings': typeof AppSettingsIndexRoute
@@ -144,6 +153,7 @@ export interface FileRoutesById {
   '/_app/': typeof AppIndexRoute
   '/_app/parents/$parentId': typeof AppParentsParentIdRoute
   '/_app/parents/list': typeof AppParentsListRoute
+  '/_app/settings/school-profile': typeof AppSettingsSchoolProfileRoute
   '/_app/students/list': typeof AppStudentsListRoute
   '/_app/parents/': typeof AppParentsIndexRoute
   '/_app/settings/': typeof AppSettingsIndexRoute
@@ -162,6 +172,7 @@ export interface FileRouteTypes {
     | '/reports'
     | '/parents/$parentId'
     | '/parents/list'
+    | '/settings/school-profile'
     | '/students/list'
     | '/parents/'
     | '/settings/'
@@ -178,6 +189,7 @@ export interface FileRouteTypes {
     | '/'
     | '/parents/$parentId'
     | '/parents/list'
+    | '/settings/school-profile'
     | '/students/list'
     | '/parents'
     | '/settings'
@@ -195,6 +207,7 @@ export interface FileRouteTypes {
     | '/_app/'
     | '/_app/parents/$parentId'
     | '/_app/parents/list'
+    | '/_app/settings/school-profile'
     | '/_app/students/list'
     | '/_app/parents/'
     | '/_app/settings/'
@@ -280,6 +293,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppStudentsListRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/settings/school-profile': {
+      id: '/_app/settings/school-profile'
+      path: '/settings/school-profile'
+      fullPath: '/settings/school-profile'
+      preLoaderRoute: typeof AppSettingsSchoolProfileRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/parents/list': {
       id: '/_app/parents/list'
       path: '/parents/list'
@@ -338,6 +358,7 @@ interface AppRouteChildren {
   AppIndexRoute: typeof AppIndexRoute
   AppParentsParentIdRoute: typeof AppParentsParentIdRoute
   AppParentsListRoute: typeof AppParentsListRoute
+  AppSettingsSchoolProfileRoute: typeof AppSettingsSchoolProfileRoute
   AppStudentsListRoute: typeof AppStudentsListRoute
   AppParentsIndexRoute: typeof AppParentsIndexRoute
   AppSettingsIndexRoute: typeof AppSettingsIndexRoute
@@ -354,6 +375,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppIndexRoute: AppIndexRoute,
   AppParentsParentIdRoute: AppParentsParentIdRoute,
   AppParentsListRoute: AppParentsListRoute,
+  AppSettingsSchoolProfileRoute: AppSettingsSchoolProfileRoute,
   AppStudentsListRoute: AppStudentsListRoute,
   AppParentsIndexRoute: AppParentsIndexRoute,
   AppSettingsIndexRoute: AppSettingsIndexRoute,
@@ -370,13 +392,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

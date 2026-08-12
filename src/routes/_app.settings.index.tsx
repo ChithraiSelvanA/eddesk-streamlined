@@ -1,4 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { toast } from "sonner";
 import { PageHeader } from "@/components/app/page-header";
 import { Building2, CalendarClock, Users, Shield, Palette, CreditCard, ArrowRight, Bell } from "lucide-react";
 
@@ -15,7 +16,7 @@ export const Route = createFileRoute("/_app/settings/")({
 });
 
 const items = [
-  { icon: Building2, title: "School profile", desc: "Name, address, contact and logo" },
+  { icon: Building2, title: "School profile", desc: "Name, address, contact and logo", to: "/settings/school-profile" },
   { icon: CalendarClock, title: "Academic year", desc: "Current session, terms and holidays" },
   { icon: Users, title: "Staff & access", desc: "Admins, teachers, roles and permissions" },
   { icon: Shield, title: "Security", desc: "Sign-in, sessions and audit log" },
@@ -23,6 +24,7 @@ const items = [
   { icon: CreditCard, title: "Billing", desc: "Plan, invoices and payment method" },
   { icon: Bell, title: "Notifications", desc: "SMS, email and app defaults" },
 ];
+
 
 function Settings() {
   return (
