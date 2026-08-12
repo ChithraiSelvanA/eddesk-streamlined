@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { PageHeader } from "@/components/app/page-header";
 import { Building2, CalendarClock, Users, Shield, Palette, CreditCard, ArrowRight, Bell } from "lucide-react";
 
-export const Route = createFileRoute("/_app/settings")({
+export const Route = createFileRoute("/_app/settings/")({
   head: () => ({
     meta: [
       { title: "Settings — EdDesk One" },
