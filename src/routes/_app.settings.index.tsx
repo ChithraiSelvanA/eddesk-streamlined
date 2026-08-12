@@ -1,8 +1,9 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { toast } from "sonner";
 import { PageHeader } from "@/components/app/page-header";
 import { Building2, CalendarClock, Users, Shield, Palette, CreditCard, ArrowRight, Bell } from "lucide-react";
 
-export const Route = createFileRoute("/_app/settings")({
+export const Route = createFileRoute("/_app/settings/")({
   head: () => ({
     meta: [
       { title: "Settings — EdDesk One" },
@@ -15,7 +16,7 @@ export const Route = createFileRoute("/_app/settings")({
 });
 
 const items = [
-  { icon: Building2, title: "School profile", desc: "Name, address, contact and logo" },
+  { icon: Building2, title: "School profile", desc: "Name, address, contact and logo", to: "/settings/school-profile" },
   { icon: CalendarClock, title: "Academic year", desc: "Current session, terms and holidays" },
   { icon: Users, title: "Staff & access", desc: "Admins, teachers, roles and permissions" },
   { icon: Shield, title: "Security", desc: "Sign-in, sessions and audit log" },
@@ -24,22 +25,32 @@ const items = [
   { icon: Bell, title: "Notifications", desc: "SMS, email and app defaults" },
 ];
 
+
 function Settings() {
   return (
     <div>
       <PageHeader crumbs={[{ label: "Settings" }]} title="Settings" description="Configure your school and workspace." />
       <div className="mx-auto max-w-[1400px] px-4 py-5 sm:px-6 md:px-8 md:py-6">
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {items.map(({ icon: Icon, title, desc }) => (
-            <button key={title} className="card-soft group flex items-start gap-3 p-5 text-left hover:shadow-[var(--shadow-elevated)]">
-              <div className="grid h-10 w-10 place-items-center rounded-md bg-muted"><Icon className="h-4 w-4 text-muted-foreground" /></div>
-              <div className="min-w-0 flex-1">
-                <p className="text-sm font-medium">{title}</p>
-                <p className="text-xs text-muted-foreground">{desc}</p>
-              </div>
-              <ArrowRight className="h-4 w-4 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
-            </button>
-          ))}
+          {items.map(({ icon: Icon, title, desc, to }) => {
+            const inner = (
+              <>
+                <div className="grid h-10 w-10 place-items-center rounded-md bg-muted"><Icon className="h-4 w-4 text-muted-foreground" /></div>
+                <div className="min-w-0 flex-1">
+                  <p className="text-sm font-medium">{title}</p>
+                  <p className="text-xs text-muted-foreground">{desc}</p>
+                </div>
+                <ArrowRight className="h-4 w-4 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
+              </>
+            );
+            const cls = "card-soft group flex items-start gap-3 p-5 text-left hover:shadow-[var(--shadow-elevated)]";
+            return to ? (
+              <Link key={title} to={to} className={cls}>{inner}</Link>
+            ) : (
+              <button key={title} className={cls} onClick={() => toast.info(`${title} settings are coming soon.`)}>{inner}</button>
+            );
+          })}
+
         </div>
       </div>
     </div>
