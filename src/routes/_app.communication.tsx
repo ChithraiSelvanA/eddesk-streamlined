@@ -12,6 +12,10 @@ import { Megaphone, Plus, Bell, Calendar, MessageSquare, Inbox } from "lucide-re
 
 
 export const Route = createFileRoute("/_app/communication")({
+  validateSearch: (search: Record<string, unknown>) => ({
+    tab: typeof search.tab === "string" ? search.tab : undefined,
+    chat: typeof search.chat === "string" ? search.chat : undefined,
+  }),
   head: () => ({
     meta: [
       { title: "Communication — EdDesk One" },
@@ -24,7 +28,8 @@ export const Route = createFileRoute("/_app/communication")({
 });
 
 function Communication() {
-  const [tab, setTab] = useState("notices");
+  const search = Route.useSearch();
+  const [tab, setTab] = useState(search.chat ? "chat" : search.tab ?? "notices");
   const [notices, setNotices] = useState<Notice[]>(seedNotices);
   const [events, setEvents] = useState<EventItem[]>(seedEvents);
 
@@ -134,7 +139,7 @@ function Communication() {
           </TabsContent>
 
           <TabsContent value="chat" className="mt-4 md:mt-6">
-            <ChatPanel />
+            <ChatPanel initialChatId={search.chat} />
           </TabsContent>
 
 

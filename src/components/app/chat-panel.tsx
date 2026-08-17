@@ -27,10 +27,11 @@ const threadMessages: Record<string, Msg[]> = {
   ],
 };
 
-export function ChatPanel() {
-  const [activeId, setActiveId] = useState(chats[0].id);
+export function ChatPanel({ initialChatId }: { initialChatId?: string }) {
+  const valid = initialChatId && chats.some((c) => c.id === initialChatId) ? initialChatId : undefined;
+  const [activeId, setActiveId] = useState(valid ?? chats[0].id);
   const [fullscreen, setFullscreen] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(Boolean(valid));
   const active = chats.find((c) => c.id === activeId) ?? chats[0];
   const messages = threadMessages[active.id] ?? [];
 
