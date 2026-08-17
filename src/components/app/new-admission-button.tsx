@@ -17,10 +17,12 @@ export function NewAdmissionButton({
   size = "sm",
   variant = "default",
   label = "New admission",
+  fab = false,
 }: {
   size?: "sm" | "default";
   variant?: "default" | "outline";
   label?: string;
+  fab?: boolean;
 }) {
   const [open, setOpen] = useState(false);
   const [q, setQ] = useState("");
@@ -37,10 +39,21 @@ export function NewAdmissionButton({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button size={size} variant={variant}>
-          <Plus className="h-4 w-4" /> {label}
-        </Button>
+        {fab ? (
+          <button
+            aria-label={label}
+            className="fixed right-4 z-40 grid h-14 w-14 place-items-center rounded-full bg-primary text-primary-foreground shadow-[0_12px_30px_-6px_oklch(0.2_0.02_260/0.45)] transition-transform active:scale-95 md:hidden"
+            style={{ bottom: "calc(4.75rem + env(safe-area-inset-bottom))" }}
+          >
+            <Plus className="h-6 w-6" />
+          </button>
+        ) : (
+          <Button size={size} variant={variant}>
+            <Plus className="h-4 w-4" /> {label}
+          </Button>
+        )}
       </DialogTrigger>
+
       <DialogContent className="sm:max-w-lg">
         <DialogHeader>
           <DialogTitle>Select a class</DialogTitle>
