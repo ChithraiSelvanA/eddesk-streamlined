@@ -10,6 +10,9 @@ import {
 import {
   pendingFeeStudents, chats, leaveRequests, recentAdmissions, events, students,
 } from "@/data/mock";
+import { NewAdmissionButton } from "@/components/app/new-admission-button";
+import { MobileSectionNav, dashboardSections } from "@/components/app/mobile-section-nav";
+
 
 export const Route = createFileRoute("/_app/")({
   head: () => ({
