@@ -1,11 +1,14 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { useState } from "react";
 import { PageHeader } from "@/components/app/page-header";
 import { getParent, students as allStudents, chats } from "@/data/mock";
 import { AvatarMono } from "@/components/app/avatar-mono";
 import { Button } from "@/components/ui/button";
 import { StatusPill } from "@/components/app/status-pill";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { Phone, Mail, MessageSquare, Wallet, ChevronRight } from "lucide-react";
+import { MobileTabNav } from "@/components/app/mobile-tab-nav";
+import { Phone, Mail, MessageSquare, Wallet, ChevronRight, Users, Inbox } from "lucide-react";
+
 
 export const Route = createFileRoute("/_app/parents/$parentId")({
   loader: ({ params }) => {
