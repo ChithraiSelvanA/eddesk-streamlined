@@ -32,7 +32,32 @@ const groupIcons: Record<string, typeof Users> = {
   "low-attendance": TrendingDown,
 };
 
+function ImportCsvButton({ className }: { className?: string }) {
+  const ref = useRef<HTMLInputElement>(null);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      const text = String(reader.result || "");
+      const rows = text.split(/\r?\n/).filter(Boolean).length - 1; // minus header
+      toast.success(`CSV imported`, { description: `${file.name} · ${Math.max(rows, 0)} students imported.` });
+    };
+    reader.readAsText(file);
+    e.target.value = "";
+  };
+  return (
+    <>
+      <input type="file" accept=".csv" ref={ref} className="hidden" onChange={handleChange} />
+      <Button type="button" variant="outline" size="sm" className={className} onClick={() => ref.current?.click()}>
+        <Upload className="h-4 w-4" /> Import CSV
+      </Button>
+    </>
+  );
+}
+
 function StudentsIndex() {
+
   const [mode, setMode] = useState<"name" | "admission">("name");
   const [q, setQ] = useState("");
   const navigate = useNavigate();
