@@ -77,12 +77,7 @@ function AcademicHome() {
           <TabsContent value="classes" className="mt-6">
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {classes.map(c => (
-                <Link
-                  key={c.id}
-                  to="/academic/classes/$classId"
-                  params={{ classId: c.id }}
-                  className="card-soft group p-5 transition-shadow hover:shadow-[var(--shadow-elevated)]"
-                >
+                <div key={c.id} className="card-soft group p-5 transition-shadow hover:shadow-[var(--shadow-elevated)]">
                   <div className="flex items-start justify-between">
                     <div>
                       <p className="text-xs uppercase tracking-wider text-muted-foreground">{c.room}</p>
@@ -100,12 +95,20 @@ function AcademicHome() {
                     <span className="text-muted-foreground">Subjects</span>
                     <span className="font-medium">{c.subjects.length}</span>
                   </div>
-                  <div className="mt-4 flex items-center justify-between border-t border-border/60 pt-3 text-xs text-muted-foreground">
-                    <span>View class</span>
-                    <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+                  <div className="mt-4 flex items-center justify-between gap-2 border-t border-border/60 pt-3">
+                    <Link
+                      to="/academic/classes/$classId"
+                      params={{ classId: c.id }}
+                      className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground"
+                    >
+                      View class
+                      <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+                    </Link>
+                    <ClassDialog mode="edit" classRoom={c} onSave={upsertClass} />
                   </div>
-                </Link>
+                </div>
               ))}
+
             </div>
           </TabsContent>
 
