@@ -42,12 +42,18 @@ function Dashboard() {
         title="Good morning, Rhea"
         description="Here's what needs your attention across Ridgeview Academy today."
         actions={
-          <>
-            <Button variant="outline" size="sm"><Megaphone className="h-4 w-4" /> Create notice</Button>
+          <div className="hidden md:flex items-center gap-2">
+            <CreateNoticeDialog
+              trigger={
+                <Button variant="outline" size="sm"><Megaphone className="h-4 w-4" /> Create notice</Button>
+              }
+              onCreate={() => {}}
+            />
             <NewAdmissionButton />
-          </>
+          </div>
         }
       />
+
 
       <div className="mx-auto max-w-[1400px] px-4 py-6 pb-28 sm:px-6 md:px-8 md:py-8 md:pb-8 space-y-8">
 
