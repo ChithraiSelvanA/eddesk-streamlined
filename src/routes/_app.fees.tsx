@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageHeader } from "@/components/app/page-header";
-import { pendingFeeStudents, recentPayments } from "@/data/mock";
+import { pendingFeeStudents, recentPayments, students as allStudents } from "@/data/mock";
 import { AvatarMono } from "@/components/app/avatar-mono";
 import { StatusPill } from "@/components/app/status-pill";
 import { Button } from "@/components/ui/button";
@@ -20,6 +20,10 @@ import { useMemo, useState } from "react";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/_app/fees")({
+  validateSearch: (search: Record<string, unknown>): { tab?: string; pay?: string } => ({
+    tab: typeof search.tab === "string" ? search.tab : undefined,
+    pay: typeof search.pay === "string" ? search.pay : undefined,
+  }),
   head: () => ({
     meta: [
       { title: "Fees — EdDesk One" },
@@ -112,13 +116,17 @@ function RecordPaymentButton({
   pendingStudents,
   onRecord,
   className,
+  preselectStudentId,
+  autoOpen,
 }: {
   pendingStudents: PendingStudent[];
   onRecord: (record: { student: PendingStudent; amount: number; method: string; note: string }) => void;
   className?: string;
+  preselectStudentId?: string;
+  autoOpen?: boolean;
 }) {
-  const [open, setOpen] = useState(false);
-  const [studentId, setStudentId] = useState("");
+  const [open, setOpen] = useState(Boolean(autoOpen));
+  const [studentId, setStudentId] = useState(preselectStudentId ?? "");
   const [amount, setAmount] = useState("");
   const [method, setMethod] = useState("upi");
   const [note, setNote] = useState("");
@@ -245,8 +253,16 @@ function RecordPaymentButton({
 }
 
 function Fees() {
-  const [tab, setTab] = useState("pending");
-  const [pending, setPending] = useState<PendingStudent[]>(() => [...pendingFeeStudents]);
+  const search = Route.useSearch();
+  const [tab, setTab] = useState(search.tab ?? "pending");
+  const [pending, setPending] = useState<PendingStudent[]>(() => {
+    const base = [...pendingFeeStudents];
+    if (search.pay && !base.some((s) => s.id === search.pay)) {
+      const extra = allStudents.find((s) => s.id === search.pay);
+      if (extra) base.unshift(extra as PendingStudent);
+    }
+    return base;
+  });
   const [payments, setPayments] = useState<Payment[]>(() => [...recentPayments]);
 
   const pendingTotal = pending.reduce((a, s) => a + s.feeDue, 0);
@@ -295,14 +311,14 @@ function Fees() {
         actions={
           <div className="hidden items-center gap-2 md:flex">
             <ExportButton tab={tab} pending={pending} payments={payments} />
-            <RecordPaymentButton pendingStudents={pending} onRecord={handleRecord} />
+            <RecordPaymentButton pendingStudents={pending} onRecord={handleRecord} preselectStudentId={search.pay} autoOpen={Boolean(search.pay)} />
           </div>
         }
       />
 
       <div className="sticky top-14 z-30 flex items-center gap-2 border-b border-border bg-background/95 p-2 backdrop-blur md:hidden">
         <ExportButton tab={tab} pending={pending} payments={payments} className="flex-1" />
-        <RecordPaymentButton pendingStudents={pending} onRecord={handleRecord} className="flex-1" />
+        <RecordPaymentButton pendingStudents={pending} onRecord={handleRecord} className="flex-1" preselectStudentId={search.pay} />
       </div>
 
       <div className="mx-auto max-w-[1400px] px-4 py-5 pb-24 sm:px-6 md:px-8 md:py-6 space-y-6 md:pb-6">

@@ -1,14 +1,13 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
 import { PageHeader } from "@/components/app/page-header";
-import { getParent, students as allStudents, chats } from "@/data/mock";
+import { getParent, students as allStudents, chats, normalizeMobile } from "@/data/mock";
 import { AvatarMono } from "@/components/app/avatar-mono";
 import { Button } from "@/components/ui/button";
 import { StatusPill } from "@/components/app/status-pill";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { MobileTabNav } from "@/components/app/mobile-tab-nav";
-import { RecordPaymentDialog } from "@/components/app/record-payment-dialog";
-import { Phone, Mail, MessageSquare, Wallet, ChevronRight, Users, Inbox } from "lucide-react";
+import { Phone, Mail, MessageSquare, Wallet, ChevronRight, Users, Inbox, MessageCircle } from "lucide-react";
 
 
 export const Route = createFileRoute("/_app/parents/$parentId")({
@@ -34,6 +33,11 @@ function ParentProfile() {
   const parentChats = chats.filter(c => c.parentName === p.name);
   const [tab, setTab] = useState("children");
   const payFor = children.find(c => (c.feeDue ?? 0) > 0) ?? children[0];
+  const chatId = parentChats[0]?.id;
+  const waNumber = normalizeMobile(p.mobile).replace(/^0+/, "");
+  const waHref = `https://wa.me/${waNumber.length > 10 ? waNumber : `91${waNumber}`}`;
+  const feesSearch = { tab: "pending", pay: payFor?.id };
+  const commSearch = { tab: "chat", chat: chatId };
 
   return (
     <div>
@@ -44,29 +48,40 @@ function ParentProfile() {
         actions={
           <div className="hidden items-center gap-2 md:flex">
             <Button variant="outline" size="sm" asChild>
-              <Link to="/communication"><MessageSquare className="h-4 w-4" /> Message</Link>
+              <a href={`tel:${normalizeMobile(p.mobile)}`}><Phone className="h-4 w-4" /> Call</a>
             </Button>
-            <RecordPaymentDialog
-              studentName={payFor?.name ?? p.name}
-              admissionNo={payFor?.admissionNo ?? "—"}
-              due={p.pendingTotal}
-              trigger={<Button size="sm"><Wallet className="h-4 w-4" /> Record payment</Button>}
-            />
+            <Button variant="outline" size="sm" asChild>
+              <a href={waHref} target="_blank" rel="noopener noreferrer"><MessageCircle className="h-4 w-4" /> WhatsApp</a>
+            </Button>
+            <Button variant="outline" size="sm" asChild>
+              <Link to="/communication" search={commSearch}><MessageSquare className="h-4 w-4" /> Message</Link>
+            </Button>
+            <Button size="sm" asChild>
+              <Link to="/fees" search={feesSearch}><Wallet className="h-4 w-4" /> Record payment</Link>
+            </Button>
           </div>
         }
       />
 
-      <div className="sticky top-14 z-30 flex items-center gap-2 border-b border-border bg-surface/95 p-2 backdrop-blur md:hidden">
-        <Button variant="outline" className="h-10 flex-1 text-xs" asChild>
-          <Link to="/communication"><MessageSquare className="h-4 w-4" /> Message</Link>
-        </Button>
-        <RecordPaymentDialog
-          studentName={payFor?.name ?? p.name}
-          admissionNo={payFor?.admissionNo ?? "—"}
-          due={p.pendingTotal}
-          trigger={<Button className="h-10 flex-1 text-xs"><Wallet className="h-4 w-4" /> Record payment</Button>}
-        />
+      <div className="sticky top-14 z-30 border-b border-border bg-surface/95 p-2 backdrop-blur md:hidden">
+        <div className="flex items-center gap-2">
+          <Button variant="outline" className="h-10 flex-1 text-xs" asChild>
+            <a href={`tel:${normalizeMobile(p.mobile)}`}><Phone className="h-4 w-4" /> Call</a>
+          </Button>
+          <Button variant="outline" className="h-10 flex-1 text-xs" asChild>
+            <a href={waHref} target="_blank" rel="noopener noreferrer"><MessageCircle className="h-4 w-4" /> WhatsApp</a>
+          </Button>
+        </div>
+        <div className="mt-2 flex items-center gap-2">
+          <Button variant="outline" className="h-10 flex-1 text-xs" asChild>
+            <Link to="/communication" search={commSearch}><MessageSquare className="h-4 w-4" /> Message</Link>
+          </Button>
+          <Button className="h-10 flex-1 text-xs" asChild>
+            <Link to="/fees" search={feesSearch}><Wallet className="h-4 w-4" /> Record payment</Link>
+          </Button>
+        </div>
       </div>
+
 
 
       <div className="mx-auto max-w-[1400px] px-3 py-4 pb-24 sm:px-6 md:px-8 md:py-6 md:pb-6">
