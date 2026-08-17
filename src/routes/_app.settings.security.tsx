@@ -217,6 +217,32 @@ function Security() {
             </dl>
           </section>
         </div>
+
+        <div className="fixed md:sticky bottom-0 left-0 right-0 z-50 border-t border-border bg-surface/95 p-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] shadow-[0_-4px_20px_-5px_rgba(0,0,0,0.08)] backdrop-blur md:bottom-0 md:mt-5 md:rounded-lg md:border md:pb-3 md:shadow-sm md:backdrop-blur-none">
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              className="flex-1"
+              onClick={() => {
+                setSessions((s) => s.filter((x) => x.current));
+                toast.success("All other devices signed out");
+              }}
+            >
+              <LogOut className="mr-2 h-4 w-4" /> Sign out others
+            </Button>
+            <Button
+              className="flex-1"
+              disabled={saved}
+              onClick={() => {
+                setSaved(true);
+                toast.success("Security settings saved");
+              }}
+            >
+              {saved ? <Check className="mr-2 h-4 w-4" /> : null}
+              {saved ? "Saved" : "Save changes"}
+            </Button>
+          </div>
+        </div>
       </div>
     </div>
   );
