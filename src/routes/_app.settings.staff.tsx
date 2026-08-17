@@ -181,9 +181,81 @@ function StaffAccess() {
         title="Staff & access"
         description="Invite your team, assign roles and control what each role can do."
         actions={
+          <div className="hidden md:flex items-center gap-2">
+            <Dialog open={inviteOpen} onOpenChange={setInviteOpen}>
+              <DialogTrigger asChild>
+                <Button size="sm">
+                  <MailPlus className="h-4 w-4" /> Invite staff
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-md">
+                <DialogHeader>
+                  <DialogTitle>Invite a staff member</DialogTitle>
+                  <DialogDescription>
+                    They'll receive an email invite and can set their own password.
+                  </DialogDescription>
+                </DialogHeader>
+                <div className="space-y-3">
+                  <div className="space-y-1.5">
+                    <Label className="text-xs text-muted-foreground">Full name</Label>
+                    <Input
+                      autoFocus
+                      value={invite.name}
+                      onChange={(e) => setInvite({ ...invite, name: e.target.value })}
+                      placeholder="e.g. Ananya Rao"
+                      className="bg-surface"
+                    />
+                  </div>
+                  <div className="space-y-1.5">
+                    <Label className="text-xs text-muted-foreground">Work email</Label>
+                    <Input
+                      type="email"
+                      value={invite.email}
+                      onChange={(e) => setInvite({ ...invite, email: e.target.value })}
+                      placeholder="name@school.edu"
+                      className="bg-surface"
+                    />
+                  </div>
+                  <div className="space-y-1.5">
+                    <Label className="text-xs text-muted-foreground">Role</Label>
+                    <Select
+                      value={invite.role}
+                      onValueChange={(v) => setInvite({ ...invite, role: v as Role })}
+                    >
+                      <SelectTrigger className="bg-surface">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {ROLES.map((r) => (
+                          <SelectItem key={r} value={r}>
+                            {r}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <p className="text-xs text-muted-foreground">
+                      {matrix[invite.role].length} of {PERMISSIONS.length} areas accessible
+                    </p>
+                  </div>
+                </div>
+                <DialogFooter>
+                  <Button variant="outline" onClick={() => setInviteOpen(false)}>
+                    Cancel
+                  </Button>
+                  <Button onClick={sendInvite}>Send invite</Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
+          </div>
+        }
+      />
+
+      {/* Mobile sticky invite bar */}
+      <div className="sticky top-14 z-20 border-b border-border bg-background px-4 py-2 sm:px-6 md:hidden">
+        <div className="mx-auto flex max-w-[1400px] items-center gap-2">
           <Dialog open={inviteOpen} onOpenChange={setInviteOpen}>
             <DialogTrigger asChild>
-              <Button size="sm">
+              <Button className="flex-1">
                 <MailPlus className="h-4 w-4" /> Invite staff
               </Button>
             </DialogTrigger>
@@ -245,8 +317,9 @@ function StaffAccess() {
               </DialogFooter>
             </DialogContent>
           </Dialog>
-        }
-      />
+        </div>
+      </div>
+
 
       <div className="mx-auto max-w-[1400px] space-y-6 px-4 py-4 sm:py-5 sm:px-6 md:px-8 md:py-6">
         <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
