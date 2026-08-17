@@ -126,7 +126,9 @@ function Dashboard() {
           </ActionCard>
 
           <ActionCard
+            id="parent-messages"
             title="Parent messages"
+
             hint={`${unreadCount} unread`}
             cta={{ label: "Open Chat", to: "/communication" }}
           >
