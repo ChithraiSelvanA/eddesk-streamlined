@@ -88,12 +88,12 @@ function Branding() {
 
       <div className="mx-auto grid max-w-[1400px] grid-cols-1 gap-3 px-3 py-3 pb-28 sm:gap-4 sm:px-4 sm:py-4 sm:pb-24 md:px-6 md:py-5 md:pb-8 lg:grid-cols-3 lg:px-8 lg:py-6">
         <div className="space-y-4 lg:col-span-2">
-          <section className="card-soft p-4 sm:p-5">
+          <section className="card-soft p-3 sm:p-4 md:p-5">
             <div className="mb-4 flex items-center gap-2">
               <Palette className="h-4 w-4 text-muted-foreground" />
               <h2 className="text-sm font-medium">Accent colour</h2>
             </div>
-            <div className="flex flex-wrap gap-2">
+            <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap">
               {ACCENTS.map((a) => (
                 <button
                   key={a.id}
@@ -110,7 +110,7 @@ function Branding() {
             </div>
           </section>
 
-          <section className="card-soft p-4 sm:p-5">
+          <section className="card-soft p-3 sm:p-4 md:p-5">
             <h2 className="mb-4 text-sm font-medium">Logo & identity</h2>
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
               <div
@@ -119,7 +119,7 @@ function Branding() {
               >
                 {initials || "S"}
               </div>
-              <div className="flex flex-wrap gap-2">
+              <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap">
                 <Button variant="outline" onClick={() => toast.info("Logo upload will open your file picker on the live site.")}>
                   <ImagePlus className="mr-2 h-4 w-4" /> Upload logo
                 </Button>
@@ -142,7 +142,7 @@ function Branding() {
             </div>
           </section>
 
-          <section className="card-soft p-4 sm:p-5">
+          <section className="card-soft p-3 sm:p-4 md:p-5">
             <h2 className="mb-4 text-sm font-medium">Receipt template</h2>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <Field label="Layout">
@@ -188,7 +188,7 @@ function Branding() {
         </div>
 
         <div className="space-y-4">
-          <section className="card-soft p-4 sm:p-5">
+          <section className="card-soft p-3 sm:p-4 md:p-5">
             <h2 className="mb-3 text-sm font-medium">Receipt preview</h2>
             <div className={`border border-border/70 p-4 ${form.roundedCorners ? "rounded-lg" : "rounded-none"}`}>
               <div className="flex items-center gap-3">
