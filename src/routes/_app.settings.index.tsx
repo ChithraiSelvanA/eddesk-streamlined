@@ -18,7 +18,7 @@ export const Route = createFileRoute("/_app/settings/")({
 const items = [
   { icon: Building2, title: "School profile", desc: "Name, address, contact and logo", to: "/settings/school-profile" },
   { icon: CalendarClock, title: "Academic year", desc: "Current session, terms and holidays", to: "/settings/academic-year" },
-  { icon: Users, title: "Staff & access", desc: "Admins, teachers, roles and permissions" },
+  { icon: Users, title: "Staff & access", desc: "Admins, teachers, roles and permissions", to: "/settings/staff" },
   { icon: Shield, title: "Security", desc: "Sign-in, sessions and audit log" },
   { icon: Palette, title: "Branding", desc: "Colors, logo and receipt template" },
   { icon: CreditCard, title: "Billing", desc: "Plan, invoices and payment method" },

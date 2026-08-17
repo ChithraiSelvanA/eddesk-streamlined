@@ -19,6 +19,7 @@ import { Route as AppStudentsIndexRouteImport } from './routes/_app.students.ind
 import { Route as AppSettingsIndexRouteImport } from './routes/_app.settings.index'
 import { Route as AppParentsIndexRouteImport } from './routes/_app.parents.index'
 import { Route as AppStudentsListRouteImport } from './routes/_app.students.list'
+import { Route as AppSettingsStaffRouteImport } from './routes/_app.settings.staff'
 import { Route as AppSettingsSchoolProfileRouteImport } from './routes/_app.settings.school-profile'
 import { Route as AppSettingsAcademicYearRouteImport } from './routes/_app.settings.academic-year'
 import { Route as AppParentsListRouteImport } from './routes/_app.parents.list'
@@ -76,6 +77,11 @@ const AppStudentsListRoute = AppStudentsListRouteImport.update({
   path: '/students/list',
   getParentRoute: () => AppRoute,
 } as any)
+const AppSettingsStaffRoute = AppSettingsStaffRouteImport.update({
+  id: '/settings/staff',
+  path: '/settings/staff',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppSettingsSchoolProfileRoute =
   AppSettingsSchoolProfileRouteImport.update({
     id: '/settings/school-profile',
@@ -125,6 +131,7 @@ export interface FileRoutesByFullPath {
   '/parents/list': typeof AppParentsListRoute
   '/settings/academic-year': typeof AppSettingsAcademicYearRoute
   '/settings/school-profile': typeof AppSettingsSchoolProfileRoute
+  '/settings/staff': typeof AppSettingsStaffRoute
   '/students/list': typeof AppStudentsListRoute
   '/parents/': typeof AppParentsIndexRoute
   '/settings/': typeof AppSettingsIndexRoute
@@ -143,6 +150,7 @@ export interface FileRoutesByTo {
   '/parents/list': typeof AppParentsListRoute
   '/settings/academic-year': typeof AppSettingsAcademicYearRoute
   '/settings/school-profile': typeof AppSettingsSchoolProfileRoute
+  '/settings/staff': typeof AppSettingsStaffRoute
   '/students/list': typeof AppStudentsListRoute
   '/parents': typeof AppParentsIndexRoute
   '/settings': typeof AppSettingsIndexRoute
@@ -163,6 +171,7 @@ export interface FileRoutesById {
   '/_app/parents/list': typeof AppParentsListRoute
   '/_app/settings/academic-year': typeof AppSettingsAcademicYearRoute
   '/_app/settings/school-profile': typeof AppSettingsSchoolProfileRoute
+  '/_app/settings/staff': typeof AppSettingsStaffRoute
   '/_app/students/list': typeof AppStudentsListRoute
   '/_app/parents/': typeof AppParentsIndexRoute
   '/_app/settings/': typeof AppSettingsIndexRoute
@@ -183,6 +192,7 @@ export interface FileRouteTypes {
     | '/parents/list'
     | '/settings/academic-year'
     | '/settings/school-profile'
+    | '/settings/staff'
     | '/students/list'
     | '/parents/'
     | '/settings/'
@@ -201,6 +211,7 @@ export interface FileRouteTypes {
     | '/parents/list'
     | '/settings/academic-year'
     | '/settings/school-profile'
+    | '/settings/staff'
     | '/students/list'
     | '/parents'
     | '/settings'
@@ -220,6 +231,7 @@ export interface FileRouteTypes {
     | '/_app/parents/list'
     | '/_app/settings/academic-year'
     | '/_app/settings/school-profile'
+    | '/_app/settings/staff'
     | '/_app/students/list'
     | '/_app/parents/'
     | '/_app/settings/'
@@ -305,6 +317,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppStudentsListRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/settings/staff': {
+      id: '/_app/settings/staff'
+      path: '/settings/staff'
+      fullPath: '/settings/staff'
+      preLoaderRoute: typeof AppSettingsStaffRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/settings/school-profile': {
       id: '/_app/settings/school-profile'
       path: '/settings/school-profile'
@@ -379,6 +398,7 @@ interface AppRouteChildren {
   AppParentsListRoute: typeof AppParentsListRoute
   AppSettingsAcademicYearRoute: typeof AppSettingsAcademicYearRoute
   AppSettingsSchoolProfileRoute: typeof AppSettingsSchoolProfileRoute
+  AppSettingsStaffRoute: typeof AppSettingsStaffRoute
   AppStudentsListRoute: typeof AppStudentsListRoute
   AppParentsIndexRoute: typeof AppParentsIndexRoute
   AppSettingsIndexRoute: typeof AppSettingsIndexRoute
@@ -397,6 +417,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppParentsListRoute: AppParentsListRoute,
   AppSettingsAcademicYearRoute: AppSettingsAcademicYearRoute,
   AppSettingsSchoolProfileRoute: AppSettingsSchoolProfileRoute,
+  AppSettingsStaffRoute: AppSettingsStaffRoute,
   AppStudentsListRoute: AppStudentsListRoute,
   AppParentsIndexRoute: AppParentsIndexRoute,
   AppSettingsIndexRoute: AppSettingsIndexRoute,
@@ -413,3 +434,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

@@ -1,12 +1,14 @@
 import { createFileRoute, Link, Outlet, useRouterState } from "@tanstack/react-router";
 import { PageHeader } from "@/components/app/page-header";
-import { classes, subjects, teachers, holidays } from "@/data/mock";
+import { classes as seedClasses, subjects, teachers, holidays, type ClassRoom } from "@/data/mock";
 import { Button } from "@/components/ui/button";
-import { Plus, ArrowRight, BookOpen, Users, Calendar, CalendarClock } from "lucide-react";
+import { ArrowRight, BookOpen, Users, Calendar, CalendarClock } from "lucide-react";
 import { StatusPill } from "@/components/app/status-pill";
 import { AvatarMono } from "@/components/app/avatar-mono";
+import { ClassDialog } from "@/components/app/class-dialog";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { useState } from "react";
+
 
 export const Route = createFileRoute("/_app/academic")({
   head: () => ({
@@ -29,6 +31,10 @@ function AcademicLayout() {
 
 function AcademicHome() {
   const [tab, setTab] = useState("classes");
+  const [classes, setClasses] = useState<ClassRoom[]>(seedClasses.map((c) => ({ ...c })));
+
+  const upsertClass = (c: ClassRoom) =>
+    setClasses((cur) => (cur.some((x) => x.id === c.id) ? cur.map((x) => (x.id === c.id ? c : x)) : [...cur, c]));
 
   return (
     <div>
@@ -38,8 +44,8 @@ function AcademicHome() {
         description="Academic year 2025–26 · Term 1"
         actions={
           <>
-            <Button variant="outline" size="sm"><CalendarClock className="h-4 w-4" /> Timetable</Button>
-            <Button size="sm"><Plus className="h-4 w-4" /> Add class</Button>
+            <Button variant="outline" size="sm" onClick={() => setTab("timetable")}><CalendarClock className="h-4 w-4" /> Timetable</Button>
+            <ClassDialog onSave={upsertClass} />
           </>
         }
       />
@@ -49,6 +55,7 @@ function AcademicHome() {
           <TabsList className="bg-transparent p-0 gap-1 h-auto border-b border-border rounded-none w-full justify-start overflow-x-auto flex-nowrap">
             {[
               ["classes", "Classes", classes.length],
+
               ["subjects", "Subjects", subjects.length],
               ["teachers", "Teachers", teachers.length],
               ["timetable", "Timetable"],
@@ -70,12 +77,7 @@ function AcademicHome() {
           <TabsContent value="classes" className="mt-6">
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {classes.map(c => (
-                <Link
-                  key={c.id}
-                  to="/academic/classes/$classId"
-                  params={{ classId: c.id }}
-                  className="card-soft group p-5 transition-shadow hover:shadow-[var(--shadow-elevated)]"
-                >
+                <div key={c.id} className="card-soft group p-5 transition-shadow hover:shadow-[var(--shadow-elevated)]">
                   <div className="flex items-start justify-between">
                     <div>
                       <p className="text-xs uppercase tracking-wider text-muted-foreground">{c.room}</p>
@@ -93,12 +95,20 @@ function AcademicHome() {
                     <span className="text-muted-foreground">Subjects</span>
                     <span className="font-medium">{c.subjects.length}</span>
                   </div>
-                  <div className="mt-4 flex items-center justify-between border-t border-border/60 pt-3 text-xs text-muted-foreground">
-                    <span>View class</span>
-                    <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+                  <div className="mt-4 flex items-center justify-between gap-2 border-t border-border/60 pt-3">
+                    <Link
+                      to="/academic/classes/$classId"
+                      params={{ classId: c.id }}
+                      className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground"
+                    >
+                      View class
+                      <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+                    </Link>
+                    <ClassDialog mode="edit" classRoom={c} onSave={upsertClass} />
                   </div>
-                </Link>
+                </div>
               ))}
+
             </div>
           </TabsContent>
 
