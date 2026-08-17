@@ -10,6 +10,9 @@ import {
 import {
   pendingFeeStudents, chats, leaveRequests, recentAdmissions, events, students,
 } from "@/data/mock";
+import { NewAdmissionButton } from "@/components/app/new-admission-button";
+import { MobileSectionNav, dashboardSections } from "@/components/app/mobile-section-nav";
+
 
 export const Route = createFileRoute("/_app/")({
   head: () => ({
@@ -39,12 +42,13 @@ function Dashboard() {
         actions={
           <>
             <Button variant="outline" size="sm"><Megaphone className="h-4 w-4" /> Create notice</Button>
-            <Button size="sm"><Plus className="h-4 w-4" /> New admission</Button>
+            <NewAdmissionButton />
           </>
         }
       />
 
-      <div className="mx-auto max-w-[1400px] px-4 py-6 sm:px-6 md:px-8 md:py-8 space-y-8">
+      <div className="mx-auto max-w-[1400px] px-4 py-6 pb-28 sm:px-6 md:px-8 md:py-8 md:pb-8 space-y-8">
+
         {/* At a glance */}
         <section className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
           <GlanceCard
@@ -77,7 +81,7 @@ function Dashboard() {
         </section>
 
         {/* Quick actions */}
-        <section>
+        <section id="quick-actions" className="scroll-mt-20">
           <SectionTitle title="Quick actions" />
           <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
             <QuickAction icon={<UserPlus className="h-4 w-4" />} label="New admission" to="/students" hint="Add a student and parent" />
@@ -90,6 +94,8 @@ function Dashboard() {
         {/* Actionable cards row */}
         <section className="grid grid-cols-1 gap-6 lg:grid-cols-3">
           <ActionCard
+            id="pending-fees"
+
             title="Pending fees"
             hint={`${pendingFeeStudents.length} students · ₹${(totalPending / 1000).toFixed(1)}k due`}
             cta={{ label: "Open Fees", to: "/fees" }}
@@ -120,7 +126,9 @@ function Dashboard() {
           </ActionCard>
 
           <ActionCard
+            id="parent-messages"
             title="Parent messages"
+
             hint={`${unreadCount} unread`}
             cta={{ label: "Open Chat", to: "/communication" }}
           >
@@ -146,7 +154,9 @@ function Dashboard() {
           </ActionCard>
 
           <ActionCard
+            id="leave-requests"
             title="Leave requests"
+
             hint={`${pendingLeaves} awaiting review`}
             cta={{ label: "Review all", to: "/communication" }}
           >
@@ -173,7 +183,9 @@ function Dashboard() {
         {/* Bottom row */}
         <section className="grid grid-cols-1 gap-6 lg:grid-cols-2">
           <ActionCard
+            id="recent-admissions"
             title="Recent admissions"
+
             hint="Last 5"
             cta={{ label: "All students", to: "/students" }}
           >
@@ -200,7 +212,9 @@ function Dashboard() {
           </ActionCard>
 
           <ActionCard
+            id="upcoming-events"
             title="Upcoming events"
+
             hint="Next 30 days"
             cta={{ label: "Open calendar", to: "/communication" }}
           >
@@ -224,7 +238,11 @@ function Dashboard() {
           </ActionCard>
         </section>
       </div>
+
+      <NewAdmissionButton fab label="New admission" />
+      <MobileSectionNav items={dashboardSections} />
     </div>
+
   );
 }
 
@@ -270,11 +288,12 @@ function SectionTitle({ title }: { title: string }) {
   );
 }
 
-function ActionCard({ title, hint, cta, children }: {
-  title: string; hint?: string; cta?: { label: string; to: string }; children: React.ReactNode;
+function ActionCard({ id, title, hint, cta, children }: {
+  id?: string; title: string; hint?: string; cta?: { label: string; to: string }; children: React.ReactNode;
 }) {
   return (
-    <div className="card-soft flex flex-col">
+    <div id={id} className="card-soft flex flex-col scroll-mt-20">
+
       <div className="flex items-start justify-between gap-3 border-b border-border/60 px-5 py-3.5">
         <div>
           <h3 className="text-sm font-semibold">{title}</h3>
