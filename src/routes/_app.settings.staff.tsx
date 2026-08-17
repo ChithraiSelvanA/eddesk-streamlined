@@ -310,9 +310,11 @@ function StaffAccess() {
                 {m.lastActive}
               </div>
 
-              <StatusPill tone={statusTone(m.status) as never}>
-                {m.status === "active" ? "Active" : m.status === "invited" ? "Invited" : "Disabled"}
-              </StatusPill>
+              <div className="self-start sm:self-auto">
+                <StatusPill tone={statusTone(m.status) as never}>
+                  {m.status === "active" ? "Active" : m.status === "invited" ? "Invited" : "Disabled"}
+                </StatusPill>
+              </div>
 
               <div className="flex flex-wrap items-center gap-2">
                 <Select value={m.role} onValueChange={(v) => setRole(m.id, v as Role)}>
