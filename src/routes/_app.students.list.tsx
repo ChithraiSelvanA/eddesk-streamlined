@@ -83,35 +83,47 @@ function FilteredList() {
               key={s.id}
               to="/students/$classId/$studentId"
               params={{ classId: s.classId, studentId: s.id }}
-              className="group flex flex-col gap-1 border-b border-border/40 px-3 py-3 text-sm last:border-0 hover:bg-muted/50 sm:px-4 md:grid md:grid-cols-[1fr_140px_110px_1fr_120px_90px_32px] md:items-center md:gap-3 md:px-5 md:py-2.5"
+              className="group block border-b border-border/40 px-3 py-2.5 text-sm last:border-0 active:bg-muted/60 hover:bg-muted/50 sm:px-4 md:grid md:grid-cols-[1fr_140px_110px_1fr_120px_90px_32px] md:items-center md:gap-3 md:px-5 md:py-2.5"
             >
-              <div className="flex items-center justify-between gap-2 md:contents">
-                <div className="flex min-w-0 items-center gap-3 md:contents">
-                  <div className="flex min-w-0 items-center gap-2 md:gap-3">
-                    <AvatarMono name={s.name} hue={s.avatarHue} size={28} />
-                    <span className="truncate font-medium">{s.name}</span>
+              {/* Mobile compact row */}
+              <div className="flex items-center gap-3 md:hidden">
+                <AvatarMono name={s.name} hue={s.avatarHue} size={40} />
+                <div className="min-w-0 flex-1">
+                  <p className="flex items-center gap-1.5 truncate text-[15px] font-medium leading-tight">
+                    <span className="truncate">{s.name}</span>
                     {s.transport === "bus" && <Bus className="h-3.5 w-3.5 shrink-0 text-muted-foreground" />}
-                  </div>
+                  </p>
+                  <p className="truncate text-[11px] text-muted-foreground">
+                    {s.className} · {s.admissionNo}
+                  </p>
+                  <p className="truncate text-[11px] text-muted-foreground/80">
+                    {s.parentName} · {s.parentMobile}
+                  </p>
                 </div>
-                <ChevronRight className="h-4 w-4 text-muted-foreground md:hidden" />
+                <div className="flex shrink-0 flex-col items-end gap-1">
+                  <StatusPill tone={s.feeStatus === "paid" ? "success" : s.feeStatus === "due" ? "warning" : "danger"}>
+                    {s.feeStatus === "paid" ? "Paid" : `₹${s.feeDue.toLocaleString()}`}
+                  </StatusPill>
+                  <span className="text-[11px] tabular-nums text-muted-foreground">{s.attendance}% att.</span>
+                </div>
+                <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground" />
               </div>
-              <div className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-xs text-muted-foreground md:contents md:text-sm">
-                <span className="md:hidden">Adm.</span>
-                <span className="truncate">{s.admissionNo}</span>
-                <span className="md:hidden">Class</span>
-                <span>{s.className}</span>
-                <span className="md:hidden">Parent</span>
-                <div className="min-w-0">
-                  <p className="truncate">{s.parentName}</p>
-                  <p className="truncate text-[10px] text-muted-foreground/80 md:hidden">{s.parentMobile}</p>
-                </div>
-                <span className="md:hidden">Fees</span>
+
+              {/* Desktop grid cells */}
+              <div className="hidden min-w-0 items-center gap-3 md:flex">
+                <AvatarMono name={s.name} hue={s.avatarHue} size={28} />
+                <span className="truncate font-medium">{s.name}</span>
+                {s.transport === "bus" && <Bus className="h-3.5 w-3.5 shrink-0 text-muted-foreground" />}
+              </div>
+              <span className="hidden truncate md:block">{s.admissionNo}</span>
+              <span className="hidden md:block">{s.className}</span>
+              <span className="hidden truncate md:block">{s.parentName}</span>
+              <div className="hidden md:block">
                 <StatusPill tone={s.feeStatus === "paid" ? "success" : s.feeStatus === "due" ? "warning" : "danger"}>
                   {s.feeStatus === "paid" ? "Paid" : `₹${s.feeDue.toLocaleString()}`}
                 </StatusPill>
-                <span className="md:hidden">Att.</span>
-                <span className="text-xs tabular-nums md:text-right md:text-sm md:text-foreground">{s.attendance}%</span>
               </div>
+              <span className="hidden tabular-nums md:block md:text-right">{s.attendance}%</span>
               <ChevronRight className="hidden h-4 w-4 text-muted-foreground md:block" />
             </Link>
           ))}
