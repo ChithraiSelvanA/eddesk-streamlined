@@ -69,9 +69,18 @@ function StudentsIndex() {
         }
       />
 
-      <div className="mx-auto max-w-[1400px] px-4 py-6 sm:px-6 md:px-8 md:py-8">
+      {/* Mobile sticky actions — pinned below the top bar */}
+      <div className="sticky top-14 z-40 border-b border-border/70 bg-background/90 backdrop-blur-xl px-4 py-2 md:hidden">
+        <div className="flex items-center gap-2">
+          <Button variant="outline" size="sm" className="flex-1">Import CSV</Button>
+          <NewAdmissionButton size="sm" variant="default" label="New admission" className="flex-1" />
+        </div>
+      </div>
+
+      <div className="mx-auto max-w-[1400px] px-4 py-6 pb-28 sm:px-6 md:px-8 md:py-8 md:pb-8">
         {/* Normal search */}
-        <section className="card-soft p-6">
+        <section id="student-search" className="card-soft scroll-mt-28 p-6">
+
           <h2 className="text-sm font-medium">Normal search</h2>
           <p className="mt-1 text-xs text-muted-foreground">
             Choose what you're searching by. Names return a list of matches; an admission number opens the profile directly.
