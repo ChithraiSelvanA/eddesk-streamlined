@@ -92,14 +92,14 @@ function ParentsIndex() {
         description={`${parents.length} parents linked to ${students.length} student accounts. Search directly, or start from a smart group.`}
       />
 
-      <div className="mx-auto max-w-[1400px] px-4 py-6 sm:px-6 md:px-8 md:py-8">
+      <div className="mx-auto max-w-[1400px] px-3 py-4 sm:px-6 md:px-8 md:py-8">
         {/* Normal search */}
-        <section className="card-soft p-6">
+        <section className="card-soft p-4 sm:p-5 md:p-6">
           <h2 className="text-sm font-medium">Normal search</h2>
           <p className="mt-1 text-xs text-muted-foreground">{active.hint}</p>
 
           <form
-            className="mt-4 flex max-w-2xl items-stretch overflow-hidden rounded-lg border border-border bg-surface focus-within:border-ring focus-within:ring-2 focus-within:ring-ring/20"
+            className="mt-3 flex max-w-2xl flex-col items-stretch overflow-hidden rounded-lg border border-border bg-surface focus-within:border-ring focus-within:ring-2 focus-within:ring-ring/20 sm:mt-4 sm:flex-row"
             onSubmit={(e) => {
               e.preventDefault();
               if (exactParent) openParent(exactParent.id);
@@ -111,7 +111,7 @@ function ParentsIndex() {
               value={mode}
               onChange={(e) => { setMode(e.target.value as Mode); setQ(""); }}
               aria-label="Search by"
-              className="h-11 shrink-0 border-r border-border bg-muted/60 px-3 text-sm text-foreground outline-none"
+              className="h-11 w-full shrink-0 border-b border-border bg-muted/60 px-3 text-sm text-foreground outline-none sm:w-auto sm:border-b-0 sm:border-r"
             >
               {modeOptions.map(m => (
                 <option key={m.value} value={m.value}>{m.label}</option>
@@ -120,14 +120,15 @@ function ParentsIndex() {
             <div className="relative min-w-0 flex-1">
               <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <Input
-                autoFocus
                 placeholder={active.placeholder}
                 value={q}
+                inputMode={mode === "mobile" ? "numeric" : "text"}
                 onChange={(e) => setQ(e.target.value)}
                 className="h-11 rounded-none border-0 bg-transparent pl-9 shadow-none focus-visible:ring-0"
               />
             </div>
           </form>
+
 
           {query && (
             <div className="mt-4 max-w-2xl overflow-hidden rounded-lg border border-border">
@@ -171,8 +172,13 @@ function ParentsIndex() {
                             {p.mobile} · {kids.map(k => `${k.name} (${k.className})`).join(", ") || "No students linked"}
                           </p>
                         </div>
-                        {p.pendingTotal > 0 && <StatusPill tone="warning">₹{p.pendingTotal.toLocaleString()} due</StatusPill>}
-                        <ArrowRight className="h-4 w-4 text-muted-foreground" />
+                        {p.pendingTotal > 0 && (
+                          <span className="hidden shrink-0 sm:block">
+                            <StatusPill tone="warning">₹{p.pendingTotal.toLocaleString()} due</StatusPill>
+                          </span>
+                        )}
+                        <ArrowRight className="h-4 w-4 shrink-0 text-muted-foreground" />
+
                       </Link>
                     );
                   })}
@@ -208,7 +214,7 @@ function ParentsIndex() {
         </section>
 
         {/* Advanced search — smart groups */}
-        <section className="mt-8">
+        <section className="mt-6 md:mt-8">
           <div className="flex flex-wrap items-end justify-between gap-2">
             <div>
               <h2 className="text-sm font-medium">Advanced search</h2>
@@ -217,7 +223,7 @@ function ParentsIndex() {
             <span className="text-xs text-muted-foreground">Academic year {CURRENT_YEAR}</span>
           </div>
 
-          <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-3 grid grid-cols-1 gap-2.5 sm:mt-4 sm:grid-cols-2 sm:gap-3 lg:grid-cols-3">
             {parentGroupDefs.map(g => {
               const list = parents.filter(g.match);
               const Icon = groupIcons[g.id] ?? Users;
@@ -227,22 +233,23 @@ function ParentsIndex() {
                   key={g.id}
                   to="/parents/list"
                   search={{ group: g.id }}
-                  className="card-soft group flex flex-col p-5 transition-shadow hover:shadow-[var(--shadow-elevated)]"
+                  className="card-soft group flex flex-col p-4 transition-shadow hover:shadow-[var(--shadow-elevated)] sm:p-5"
                 >
                   <div className="flex items-start justify-between">
                     <div className="grid h-9 w-9 place-items-center rounded-lg bg-muted text-foreground/70">
                       <Icon className="h-4 w-4" />
                     </div>
-                    <span className="text-2xl font-semibold tabular-nums tracking-tight">{list.length}</span>
+                    <span className="text-xl font-semibold tabular-nums tracking-tight sm:text-2xl">{list.length}</span>
                   </div>
-                  <h3 className="mt-4 text-sm font-medium">{g.label}</h3>
+                  <h3 className="mt-3 text-sm font-medium sm:mt-4">{g.label}</h3>
                   <p className="mt-0.5 text-xs text-muted-foreground">{g.hint}</p>
-                  <div className="mt-4 flex -space-x-2">
+                  <div className="mt-3 flex -space-x-2 sm:mt-4">
                     {preview.map(p => (
                       <div key={p.id} className="rounded-full ring-2 ring-[var(--color-card)]">
                         <AvatarMono name={p.name} hue={200} size={24} />
                       </div>
                     ))}
+
                     {list.length > preview.length && (
                       <div className="grid h-6 w-6 place-items-center rounded-full bg-muted text-[10px] font-medium text-muted-foreground ring-2 ring-[var(--color-card)]">
                         +{list.length - preview.length}
