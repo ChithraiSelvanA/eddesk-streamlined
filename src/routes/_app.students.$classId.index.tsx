@@ -56,17 +56,22 @@ function StudentList() {
         title={`${cls.name}-${cls.section}`}
         description={`${cls.studentCount} students · Class teacher ${cls.teacher}`}
         actions={
-          <>
+          <div className="hidden items-center gap-2 md:flex">
             <Button variant="outline" size="sm"><Download className="h-4 w-4" /> Export</Button>
             <Button size="sm" onClick={() => setShowForm(true)}><Plus className="h-4 w-4" /> New admission</Button>
-          </>
+          </div>
         }
       />
 
-      <div className="mx-auto max-w-[1400px] px-4 py-5 sm:px-6 md:px-8 md:py-6">
+      <div className="sticky top-14 z-30 flex items-center gap-2 border-b border-border bg-surface/95 p-2 backdrop-blur md:hidden">
+        <Button variant="outline" size="sm" className="h-10 flex-1 text-xs"><Download className="h-4 w-4" /> Export</Button>
+        <Button size="sm" className="h-10 flex-1 text-xs" onClick={() => setShowForm(true)}><Plus className="h-4 w-4" /> New admission</Button>
+      </div>
+
+      <div className="mx-auto max-w-[1400px] px-3 py-4 sm:px-4 md:px-8 md:py-6">
         {showForm && (
           <form
-            className="card-soft mb-6 p-6"
+            className="card-soft mb-4 p-4 sm:p-5 md:mb-6 md:p-6"
             onSubmit={(e) => {
               e.preventDefault();
               const name = new FormData(e.currentTarget).get("name");
@@ -75,43 +80,43 @@ function StudentList() {
             }}
           >
             <div className="flex items-start justify-between">
-              <div>
+              <div className="min-w-0">
                 <h2 className="text-sm font-medium">New admission — {cls.name}-{cls.section}</h2>
                 <p className="mt-1 text-xs text-muted-foreground">Class teacher {cls.teacher} · {cls.room}</p>
               </div>
-              <button type="button" onClick={closeForm} className="grid h-8 w-8 place-items-center rounded-md text-muted-foreground hover:bg-muted hover:text-foreground">
+              <button type="button" onClick={closeForm} className="grid h-8 w-8 shrink-0 place-items-center rounded-md text-muted-foreground hover:bg-muted hover:text-foreground">
                 <X className="h-4 w-4" />
               </button>
             </div>
 
-            <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 md:gap-4">
               <div className="space-y-1.5">
                 <Label htmlFor="na-name">Student name</Label>
-                <Input id="na-name" name="name" required placeholder="Full name" className="h-9 bg-surface" />
+                <Input id="na-name" name="name" required placeholder="Full name" className="h-10 bg-surface" />
               </div>
               <div className="space-y-1.5">
                 <Label htmlFor="na-adm">Admission no.</Label>
-                <Input id="na-adm" name="admissionNo" placeholder="EDK-2026-0001" className="h-9 bg-surface" />
+                <Input id="na-adm" name="admissionNo" placeholder="EDK-2026-0001" className="h-10 bg-surface" />
               </div>
               <div className="space-y-1.5">
                 <Label htmlFor="na-dob">Date of birth</Label>
-                <Input id="na-dob" name="dob" type="date" className="h-9 bg-surface" />
+                <Input id="na-dob" name="dob" type="date" className="h-10 bg-surface" />
               </div>
               <div className="space-y-1.5">
                 <Label htmlFor="na-parent">Parent name</Label>
-                <Input id="na-parent" name="parentName" placeholder="Parent / guardian" className="h-9 bg-surface" />
+                <Input id="na-parent" name="parentName" placeholder="Parent / guardian" className="h-10 bg-surface" />
               </div>
               <div className="space-y-1.5">
                 <Label htmlFor="na-mobile">Parent mobile</Label>
-                <Input id="na-mobile" name="parentMobile" placeholder="+91 …" className="h-9 bg-surface" />
+                <Input id="na-mobile" name="parentMobile" placeholder="+91 …" className="h-10 bg-surface" />
               </div>
               <div className="space-y-1.5">
                 <Label htmlFor="na-roll">Roll no.</Label>
-                <Input id="na-roll" name="rollNo" type="number" placeholder="Auto" className="h-9 bg-surface" />
+                <Input id="na-roll" name="rollNo" type="number" placeholder="Auto" className="h-10 bg-surface" />
               </div>
             </div>
 
-            <div className="mt-5 flex items-center gap-2 border-t border-border/60 pt-4">
+            <div className="mt-4 flex items-center gap-2 border-t border-border/60 pt-4 md:mt-5">
               <Button type="submit" size="sm">Add student</Button>
               <Button type="button" size="sm" variant="outline" onClick={closeForm}>Cancel</Button>
             </div>
@@ -124,9 +129,9 @@ function StudentList() {
           </p>
         )}
 
-        <div className="mb-4 flex flex-wrap items-center gap-2">
-          <Input placeholder="Search name or admission no." value={q} onChange={(e) => setQ(e.target.value)} className="h-9 max-w-sm bg-surface" />
-          <Button variant="outline" size="sm"><Filter className="h-4 w-4" /> Filter</Button>
+        <div className="mb-3 flex flex-wrap items-center gap-2 md:mb-4">
+          <Input placeholder="Search name or admission no." value={q} onChange={(e) => setQ(e.target.value)} className="h-10 flex-1 bg-surface md:max-w-sm" />
+          <Button variant="outline" size="sm" className="h-10"><Filter className="h-4 w-4" /> Filter</Button>
           <span className="ml-auto text-xs text-muted-foreground">{list.length} of {cls.studentCount}</span>
         </div>
 
@@ -135,27 +140,41 @@ function StudentList() {
           <div className="hidden md:grid grid-cols-[60px_1fr_140px_1fr_120px_80px_32px] md:items-center gap-3 border-b border-border/60 px-5 py-2.5 text-xs font-medium uppercase tracking-wider text-muted-foreground">
             <span>Roll</span><span>Student</span><span>Admission no.</span><span>Parent</span><span>Fees</span><span className="text-right">Att.</span><span />
           </div>
+          {list.length === 0 && <p className="px-5 py-10 text-center text-sm text-muted-foreground">No students found.</p>}
           {list.map(s => (
             <Link
               key={s.id}
               to="/students/$classId/$studentId"
               params={{ classId: cls.id, studentId: s.id }}
-              className="flex flex-col items-start gap-1.5 md:grid md:grid-cols-[60px_1fr_140px_1fr_120px_80px_32px] md:items-center md:gap-3 border-b border-border/40 px-4 py-3 text-sm last:border-0 md:px-5 md:py-2.5 hover:bg-muted/50"
+              className="group flex flex-col gap-1 border-b border-border/40 px-3 py-3 text-sm last:border-0 hover:bg-muted/50 sm:px-4 md:grid md:grid-cols-[60px_1fr_140px_1fr_120px_80px_32px] md:items-center md:gap-3 md:px-5 md:py-2.5"
             >
-              <span className="text-muted-foreground tabular-nums">{s.rollNo}</span>
-              <div className="flex min-w-0 items-center gap-3">
-                <AvatarMono name={s.name} hue={s.avatarHue} size={28} />
-                <span className="truncate font-medium">{s.name}</span>
+              <div className="flex items-center justify-between gap-2 md:contents">
+                <div className="flex min-w-0 items-center gap-3 md:contents">
+                  <span className="hidden text-muted-foreground tabular-nums md:block">{s.rollNo}</span>
+                  <div className="flex min-w-0 items-center gap-2 md:gap-3">
+                    <AvatarMono name={s.name} hue={s.avatarHue} size={28} />
+                    <span className="truncate font-medium">{s.name}</span>
+                  </div>
+                </div>
+                <ChevronRight className="h-4 w-4 text-muted-foreground md:hidden" />
               </div>
-              <span className="truncate text-muted-foreground">{s.admissionNo}</span>
-              <div className="min-w-0">
-                <p className="truncate">{s.parentName}</p>
-                <p className="truncate text-xs text-muted-foreground">{s.parentMobile}</p>
+              <div className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-xs text-muted-foreground md:contents md:text-sm">
+                <span className="md:hidden">Roll</span>
+                <span className="tabular-nums md:hidden">{s.rollNo}</span>
+                <span className="md:hidden">Adm.</span>
+                <span className="truncate">{s.admissionNo}</span>
+                <span className="md:hidden">Parent</span>
+                <div className="min-w-0">
+                  <p className="truncate">{s.parentName}</p>
+                  <p className="truncate text-[10px] text-muted-foreground/80 md:hidden">{s.parentMobile}</p>
+                </div>
+                <span className="md:hidden">Fees</span>
+                <StatusPill tone={s.feeStatus === "paid" ? "success" : s.feeStatus === "due" ? "warning" : "danger"}>
+                  {s.feeStatus === "paid" ? "Paid" : `₹${s.feeDue.toLocaleString()}`}
+                </StatusPill>
+                <span className="md:hidden">Att.</span>
+                <span className="text-xs tabular-nums md:text-right md:text-sm md:text-foreground">{s.attendance}%</span>
               </div>
-              <StatusPill tone={s.feeStatus === "paid" ? "success" : s.feeStatus === "due" ? "warning" : "danger"}>
-                {s.feeStatus === "paid" ? "Paid" : `₹${s.feeDue.toLocaleString()}`}
-              </StatusPill>
-              <span className="text-xs text-muted-foreground md:text-right md:text-sm md:text-foreground md:tabular-nums"><span className="md:hidden">Attendance </span>{s.attendance}%</span>
               <ChevronRight className="hidden h-4 w-4 text-muted-foreground md:block" />
             </Link>
           ))}

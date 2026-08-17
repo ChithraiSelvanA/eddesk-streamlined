@@ -41,17 +41,25 @@ function FilteredList() {
         crumbs={[{ label: "Students", to: "/students" }, { label: def?.label ?? "Filtered" }]}
         title={def?.label ?? "Filtered students"}
         description={`${base.length} students · ${def?.hint ?? "Custom filter"}`}
-        actions={<Button variant="outline" size="sm"><Download className="h-4 w-4" /> Export</Button>}
+        actions={
+          <div className="hidden items-center gap-2 md:flex">
+            <Button variant="outline" size="sm"><Download className="h-4 w-4" /> Export</Button>
+          </div>
+        }
       />
 
-      <div className="mx-auto max-w-[1400px] px-4 py-5 sm:px-6 md:px-8 md:py-6">
-        <div className="mb-4 flex flex-wrap items-center gap-2">
+      <div className="sticky top-14 z-30 flex items-center border-b border-border bg-surface/95 p-2 backdrop-blur md:hidden">
+        <Button variant="outline" size="sm" className="h-10 flex-1 text-xs"><Download className="h-4 w-4" /> Export</Button>
+      </div>
+
+      <div className="mx-auto max-w-[1400px] px-3 py-4 sm:px-4 md:px-8 md:py-6">
+        <div className="mb-3 flex flex-wrap items-center gap-2 md:mb-4">
           {smartGroupDefs.map(g => (
             <Link
               key={g.id}
               to="/students/list"
               search={{ group: g.id }}
-              className={`rounded-full border px-3 py-1.5 text-xs ${
+              className={`rounded-full border px-2.5 py-1 text-[11px] sm:px-3 sm:py-1.5 sm:text-xs ${
                 g.id === group ? "border-foreground bg-foreground text-[color:var(--color-background)]" : "border-border bg-surface hover:bg-muted"
               }`}
             >
@@ -60,8 +68,8 @@ function FilteredList() {
           ))}
         </div>
 
-        <div className="mb-4 flex flex-wrap items-center gap-2">
-          <Input placeholder="Search within this group…" value={q} onChange={(e) => setQ(e.target.value)} className="h-9 max-w-sm bg-surface" />
+        <div className="mb-3 flex flex-wrap items-center gap-2 md:mb-4">
+          <Input placeholder="Search within this group…" value={q} onChange={(e) => setQ(e.target.value)} className="h-10 flex-1 bg-surface md:max-w-sm" />
           <span className="ml-auto text-xs text-muted-foreground">{list.length} of {base.length}</span>
         </div>
 
@@ -75,23 +83,35 @@ function FilteredList() {
               key={s.id}
               to="/students/$classId/$studentId"
               params={{ classId: s.classId, studentId: s.id }}
-              className="flex flex-col items-start gap-1.5 md:grid md:grid-cols-[1fr_140px_110px_1fr_120px_90px_32px] md:items-center md:gap-3 border-b border-border/40 px-4 py-3 text-sm last:border-0 md:px-5 md:py-2.5 hover:bg-muted/50"
+              className="group flex flex-col gap-1 border-b border-border/40 px-3 py-3 text-sm last:border-0 hover:bg-muted/50 sm:px-4 md:grid md:grid-cols-[1fr_140px_110px_1fr_120px_90px_32px] md:items-center md:gap-3 md:px-5 md:py-2.5"
             >
-              <div className="flex min-w-0 items-center gap-3">
-                <AvatarMono name={s.name} hue={s.avatarHue} size={28} />
-                <span className="truncate font-medium">{s.name}</span>
-                {s.transport === "bus" && <Bus className="h-3.5 w-3.5 shrink-0 text-muted-foreground" />}
+              <div className="flex items-center justify-between gap-2 md:contents">
+                <div className="flex min-w-0 items-center gap-3 md:contents">
+                  <div className="flex min-w-0 items-center gap-2 md:gap-3">
+                    <AvatarMono name={s.name} hue={s.avatarHue} size={28} />
+                    <span className="truncate font-medium">{s.name}</span>
+                    {s.transport === "bus" && <Bus className="h-3.5 w-3.5 shrink-0 text-muted-foreground" />}
+                  </div>
+                </div>
+                <ChevronRight className="h-4 w-4 text-muted-foreground md:hidden" />
               </div>
-              <span className="truncate text-muted-foreground">{s.admissionNo}</span>
-              <span className="text-muted-foreground">{s.className}</span>
-              <div className="min-w-0">
-                <p className="truncate">{s.parentName}</p>
-                <p className="truncate text-xs text-muted-foreground">{s.parentMobile}</p>
+              <div className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-xs text-muted-foreground md:contents md:text-sm">
+                <span className="md:hidden">Adm.</span>
+                <span className="truncate">{s.admissionNo}</span>
+                <span className="md:hidden">Class</span>
+                <span>{s.className}</span>
+                <span className="md:hidden">Parent</span>
+                <div className="min-w-0">
+                  <p className="truncate">{s.parentName}</p>
+                  <p className="truncate text-[10px] text-muted-foreground/80 md:hidden">{s.parentMobile}</p>
+                </div>
+                <span className="md:hidden">Fees</span>
+                <StatusPill tone={s.feeStatus === "paid" ? "success" : s.feeStatus === "due" ? "warning" : "danger"}>
+                  {s.feeStatus === "paid" ? "Paid" : `₹${s.feeDue.toLocaleString()}`}
+                </StatusPill>
+                <span className="md:hidden">Att.</span>
+                <span className="text-xs tabular-nums md:text-right md:text-sm md:text-foreground">{s.attendance}%</span>
               </div>
-              <StatusPill tone={s.feeStatus === "paid" ? "success" : s.feeStatus === "due" ? "warning" : "danger"}>
-                {s.feeStatus === "paid" ? "Paid" : `₹${s.feeDue.toLocaleString()}`}
-              </StatusPill>
-              <span className="text-xs text-muted-foreground md:text-right md:text-sm md:text-foreground md:tabular-nums"><span className="md:hidden">Attendance </span>{s.attendance}%</span>
               <ChevronRight className="hidden h-4 w-4 text-muted-foreground md:block" />
             </Link>
           ))}
