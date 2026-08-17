@@ -99,27 +99,27 @@ function StudentsIndex() {
       />
 
       <div className="sticky top-14 z-30 flex items-center gap-2 border-b border-border bg-surface/95 p-2 backdrop-blur md:hidden">
-        <ImportCsvButton className="flex-1" />
-        <NewAdmissionButton className="flex-1" />
+        <ImportCsvButton className="h-10 flex-1 text-xs" />
+        <NewAdmissionButton className="h-10 flex-1 text-xs" />
       </div>
 
-      <div className="mx-auto max-w-[1400px] px-4 py-6 sm:px-6 md:px-8 md:py-8">
+      <div className="mx-auto max-w-[1400px] px-3 py-4 sm:px-4 md:px-8 md:py-8">
 
         {/* Normal search */}
-        <section className="card-soft p-6">
+        <section className="card-soft p-4 sm:p-5 md:p-6">
           <h2 className="text-sm font-medium">Normal search</h2>
           <p className="mt-1 text-xs text-muted-foreground">
             Choose what you're searching by. Names return a list of matches; an admission number opens the profile directly.
           </p>
 
-          <div className="mt-4 inline-flex rounded-lg border border-border bg-muted/50 p-0.5">
+          <div className="mt-3 flex w-full rounded-lg border border-border bg-muted/50 p-0.5 sm:mt-4 sm:inline-flex sm:w-auto">
             {([["name", "Student name"], ["admission", "Admission number"]] as const).map(([v, l]) => (
               <button
                 key={v}
                 type="button"
-                onClick={() => { setMode(v); setQ(""); }}
+                onClick={() => { setMode(v); setQ(""); inputRef.current?.focus(); }}
                 className={
-                  "rounded-md px-3.5 py-1.5 text-sm transition-colors " +
+                  "flex-1 rounded-md px-3 py-1.5 text-xs transition-colors sm:flex-initial sm:px-3.5 sm:text-sm " +
                   (mode === v ? "bg-card font-medium text-foreground shadow-[var(--shadow-soft)]" : "text-muted-foreground hover:text-foreground")
                 }
               >
@@ -129,7 +129,7 @@ function StudentsIndex() {
           </div>
 
           <form
-            className="relative mt-4 max-w-xl"
+            className="relative mt-3 max-w-xl sm:mt-4"
             onSubmit={(e) => {
               e.preventDefault();
               if (mode === "admission" && admissionMatch) openStudent(admissionMatch);
@@ -138,6 +138,7 @@ function StudentsIndex() {
           >
             <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <Input
+              ref={inputRef}
               autoFocus
               placeholder={mode === "name" ? "e.g. Aanya Sharma" : "e.g. EDK-2025-1004"}
               value={q}
@@ -147,7 +148,7 @@ function StudentsIndex() {
           </form>
 
           {query && mode === "name" && (
-            <div className="mt-4 max-w-xl overflow-hidden rounded-lg border border-border">
+            <div className="mt-3 max-w-xl overflow-hidden rounded-lg border border-border sm:mt-4">
               {nameMatches.length === 0 && (
                 <p className="px-4 py-6 text-center text-sm text-muted-foreground">No student matches “{q}”</p>
               )}
@@ -161,7 +162,7 @@ function StudentsIndex() {
                   key={s.id}
                   to="/students/$classId/$studentId"
                   params={{ classId: s.classId, studentId: s.id }}
-                  className="flex items-center gap-3 border-b border-border/40 px-4 py-2.5 last:border-0 hover:bg-muted/50"
+                  className="flex items-center gap-3 border-b border-border/40 px-3 py-2.5 last:border-0 hover:bg-muted/50 sm:px-4"
                 >
                   <AvatarMono name={s.name} hue={s.avatarHue} size={32} />
                   <div className="min-w-0 flex-1">
@@ -178,7 +179,7 @@ function StudentsIndex() {
           )}
 
           {query && mode === "admission" && (
-            <div className="mt-4 max-w-xl overflow-hidden rounded-lg border border-border">
+            <div className="mt-3 max-w-xl overflow-hidden rounded-lg border border-border sm:mt-4">
               {admissionMatch ? (
                 <Link
                   to="/students/$classId/$studentId"
@@ -200,7 +201,7 @@ function StudentsIndex() {
                       key={s.id}
                       to="/students/$classId/$studentId"
                       params={{ classId: s.classId, studentId: s.id }}
-                      className="flex items-center gap-3 border-b border-border/40 px-4 py-2.5 last:border-0 hover:bg-muted/50"
+                      className="flex items-center gap-3 border-b border-border/40 px-3 py-2.5 last:border-0 hover:bg-muted/50 sm:px-4"
                     >
                       <AvatarMono name={s.name} hue={s.avatarHue} size={32} />
                       <div className="min-w-0 flex-1">
@@ -220,7 +221,7 @@ function StudentsIndex() {
 
 
         {/* Advanced search — smart groups */}
-        <section className="mt-8">
+        <section className="mt-6 md:mt-8">
           <div className="flex flex-wrap items-end justify-between gap-2">
             <div>
               <h2 className="text-sm font-medium">Advanced search</h2>
@@ -229,7 +230,7 @@ function StudentsIndex() {
             <span className="text-xs text-muted-foreground">Academic year {CURRENT_YEAR}</span>
           </div>
 
-          <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {smartGroupDefs.map(g => {
               const list = students.filter(g.match);
               const Icon = groupIcons[g.id] ?? Users;
@@ -239,7 +240,7 @@ function StudentsIndex() {
                   key={g.id}
                   to="/students/list"
                   search={{ group: g.id }}
-                  className="card-soft group flex flex-col p-5 transition-shadow hover:shadow-[var(--shadow-elevated)]"
+                  className="card-soft group flex flex-col p-4 transition-shadow hover:shadow-[var(--shadow-elevated)] md:p-5"
                 >
                   <div className="flex items-start justify-between">
                     <div className="grid h-9 w-9 place-items-center rounded-lg bg-muted text-foreground/70">
@@ -247,9 +248,9 @@ function StudentsIndex() {
                     </div>
                     <span className="text-2xl font-semibold tabular-nums tracking-tight">{list.length}</span>
                   </div>
-                  <h3 className="mt-4 text-sm font-medium">{g.label}</h3>
+                  <h3 className="mt-3 text-sm font-medium md:mt-4">{g.label}</h3>
                   <p className="mt-0.5 text-xs text-muted-foreground">{g.hint}</p>
-                  <div className="mt-4 flex -space-x-2">
+                  <div className="mt-3 flex -space-x-2 md:mt-4">
                     {preview.map(s => (
                       <div key={s.id} className="rounded-full ring-2 ring-[var(--color-card)]">
                         <AvatarMono name={s.name} hue={s.avatarHue} size={24} />
@@ -261,7 +262,7 @@ function StudentsIndex() {
                       </div>
                     )}
                   </div>
-                  <div className="mt-4 flex items-center justify-between border-t border-border/60 pt-3 text-xs text-muted-foreground">
+                  <div className="mt-3 flex items-center justify-between border-t border-border/60 pt-3 text-xs text-muted-foreground md:mt-4">
                     <span>View students</span>
                     <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
                   </div>
@@ -272,7 +273,7 @@ function StudentsIndex() {
         </section>
 
         {/* Browse by classroom */}
-        <section className="mt-8">
+        <section className="mt-6 md:mt-8">
           <h2 className="text-sm font-medium">Or browse by classroom</h2>
           <div className="mt-3 flex flex-wrap gap-2">
             {classes.map(c => (
@@ -281,7 +282,7 @@ function StudentsIndex() {
                 to="/students/$classId"
                 params={{ classId: c.id }}
                 search={{ new: undefined }}
-                className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3.5 py-1.5 text-sm hover:bg-muted"
+                className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3 py-1.5 text-xs hover:bg-muted sm:text-sm"
               >
                 {c.name}–{c.section}
                 <span className="text-xs text-muted-foreground">{c.studentCount}</span>
