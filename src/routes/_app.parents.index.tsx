@@ -1,6 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { PageHeader } from "@/components/app/page-header";
+import { ParentsMobileNav } from "@/components/app/parents-mobile-nav";
 import {
   parents,
   students,

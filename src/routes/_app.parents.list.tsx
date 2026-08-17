@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { PageHeader } from "@/components/app/page-header";
+import { ParentsMobileNav } from "@/components/app/parents-mobile-nav";
 import { getParentGroup, parentsInGroup, parentGroupDefs, childrenOf, normalizeMobile } from "@/data/mock";
 import { AvatarMono } from "@/components/app/avatar-mono";
 import { StatusPill } from "@/components/app/status-pill";
