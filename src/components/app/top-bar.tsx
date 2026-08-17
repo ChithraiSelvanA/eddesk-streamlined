@@ -1,10 +1,12 @@
 import { useMemo, useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
-import { Search, Bell, Command, Plus } from "lucide-react";
+import { Search, Command, Plus } from "lucide-react";
 import { students, parents } from "@/data/mock";
 import { AvatarMono } from "./avatar-mono";
 import { Button } from "@/components/ui/button";
 import { MobileNav } from "./mobile-nav";
+import { NotificationsMenu } from "./notifications-menu";
+
 
 export function TopBar() {
   const [q, setQ] = useState("");
