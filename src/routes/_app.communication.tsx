@@ -12,7 +12,7 @@ import { Megaphone, Plus, Bell, Calendar, MessageSquare, Inbox } from "lucide-re
 
 
 export const Route = createFileRoute("/_app/communication")({
-  validateSearch: (search: Record<string, unknown>) => ({
+  validateSearch: (search: Record<string, unknown>): { tab?: string; chat?: string } => ({
     tab: typeof search.tab === "string" ? search.tab : undefined,
     chat: typeof search.chat === "string" ? search.chat : undefined,
   }),

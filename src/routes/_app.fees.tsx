@@ -20,7 +20,7 @@ import { useMemo, useState } from "react";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/_app/fees")({
-  validateSearch: (search: Record<string, unknown>) => ({
+  validateSearch: (search: Record<string, unknown>): { tab?: string; pay?: string } => ({
     tab: typeof search.tab === "string" ? search.tab : undefined,
     pay: typeof search.pay === "string" ? search.pay : undefined,
   }),
