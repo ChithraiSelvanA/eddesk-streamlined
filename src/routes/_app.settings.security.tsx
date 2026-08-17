@@ -89,28 +89,6 @@ function Security() {
         crumbs={[{ label: "Settings", to: "/settings" }, { label: "Security" }]}
         title="Security"
         description="Sign-in rules, two-step verification, sessions and audit trail."
-        actions={
-          <>
-            <Button
-              variant="outline"
-              onClick={() => {
-                setSessions((s) => s.filter((x) => x.current));
-                toast.success("All other devices signed out");
-              }}
-            >
-              <LogOut className="mr-2 h-4 w-4" /> Sign out others
-            </Button>
-            <Button
-              onClick={() => {
-                setSaved(true);
-                toast.success("Security settings saved");
-              }}
-            >
-              {saved ? <Check className="mr-2 h-4 w-4" /> : null}
-              {saved ? "Saved" : "Save changes"}
-            </Button>
-          </>
-        }
       />
 
       <div className="mx-auto grid max-w-[1400px] grid-cols-1 gap-4 px-4 py-4 sm:py-5 sm:px-6 md:px-8 md:py-6 lg:grid-cols-3">
