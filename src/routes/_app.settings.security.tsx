@@ -89,31 +89,9 @@ function Security() {
         crumbs={[{ label: "Settings", to: "/settings" }, { label: "Security" }]}
         title="Security"
         description="Sign-in rules, two-step verification, sessions and audit trail."
-        actions={
-          <>
-            <Button
-              variant="outline"
-              onClick={() => {
-                setSessions((s) => s.filter((x) => x.current));
-                toast.success("All other devices signed out");
-              }}
-            >
-              <LogOut className="mr-2 h-4 w-4" /> Sign out others
-            </Button>
-            <Button
-              onClick={() => {
-                setSaved(true);
-                toast.success("Security settings saved");
-              }}
-            >
-              {saved ? <Check className="mr-2 h-4 w-4" /> : null}
-              {saved ? "Saved" : "Save changes"}
-            </Button>
-          </>
-        }
       />
 
-      <div className="mx-auto grid max-w-[1400px] grid-cols-1 gap-4 px-4 py-4 sm:py-5 sm:px-6 md:px-8 md:py-6 lg:grid-cols-3">
+      <div className="mx-auto grid max-w-[1400px] grid-cols-1 gap-3 px-3 py-3 pb-28 sm:gap-4 sm:px-4 sm:py-4 sm:pb-24 md:px-6 md:py-5 md:pb-8 lg:grid-cols-3 lg:px-8 lg:py-6">
         <div className="space-y-4 lg:col-span-2">
           <section className="card-soft p-4 sm:p-5">
             <div className="mb-1 flex items-center gap-2">
@@ -238,6 +216,32 @@ function Security() {
               <div className="flex justify-between"><dt className="text-muted-foreground">Network lock</dt><dd>{ipLock ? "Campus only" : "Anywhere"}</dd></div>
             </dl>
           </section>
+        </div>
+
+        <div className="col-span-full fixed md:sticky bottom-0 left-0 right-0 z-50 border-t border-border bg-surface/95 p-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] shadow-[0_-4px_20px_-5px_rgba(0,0,0,0.08)] backdrop-blur md:bottom-0 md:mt-5 md:rounded-lg md:border md:pb-3 md:shadow-sm md:backdrop-blur-none">
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              className="flex-1"
+              onClick={() => {
+                setSessions((s) => s.filter((x) => x.current));
+                toast.success("All other devices signed out");
+              }}
+            >
+              <LogOut className="mr-2 h-4 w-4" /> Sign out others
+            </Button>
+            <Button
+              className="flex-1"
+              disabled={saved}
+              onClick={() => {
+                setSaved(true);
+                toast.success("Security settings saved");
+              }}
+            >
+              {saved ? <Check className="mr-2 h-4 w-4" /> : null}
+              {saved ? "Saved" : "Save changes"}
+            </Button>
+          </div>
         </div>
       </div>
     </div>
