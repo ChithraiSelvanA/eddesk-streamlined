@@ -44,7 +44,7 @@ function ParentProfile() {
         actions={
           <div className="hidden items-center gap-2 md:flex">
             <Button variant="outline" size="sm" asChild>
-              <Link to="/communication" search={{ tab: "chat" }}><MessageSquare className="h-4 w-4" /> Message</Link>
+              <Link to="/communication"><MessageSquare className="h-4 w-4" /> Message</Link>
             </Button>
             <RecordPaymentDialog
               studentName={payFor?.name ?? p.name}
@@ -58,7 +58,7 @@ function ParentProfile() {
 
       <div className="sticky top-14 z-30 flex items-center gap-2 border-b border-border bg-surface/95 p-2 backdrop-blur md:hidden">
         <Button variant="outline" className="h-10 flex-1 text-xs" asChild>
-          <Link to="/communication" search={{ tab: "chat" }}><MessageSquare className="h-4 w-4" /> Message</Link>
+          <Link to="/communication"><MessageSquare className="h-4 w-4" /> Message</Link>
         </Button>
         <RecordPaymentDialog
           studentName={payFor?.name ?? p.name}
