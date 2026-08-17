@@ -93,7 +93,7 @@ function ParentProfile() {
                   params={{ classId: s.classId, studentId: s.id }}
                   className="card-soft flex items-center gap-3 p-3.5 hover:shadow-[var(--shadow-elevated)] sm:gap-4 sm:p-4"
                 >
-                  <AvatarMono name={s.name} hue={s.avatarHue} size={44} className="h-10 w-10 sm:h-11 sm:w-11" />
+                  <AvatarMono name={s.name} hue={s.avatarHue} size={40} />
                   <div className="min-w-0 flex-1">
                     <p className="truncate text-sm font-medium">{s.name}</p>
                     <p className="truncate text-xs text-muted-foreground">{s.className} · Roll {s.rollNo}</p>

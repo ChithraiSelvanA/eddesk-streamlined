@@ -97,7 +97,7 @@ function FilteredParents() {
                 className="flex flex-col gap-2.5 border-b border-border/40 px-4 py-3.5 text-sm last:border-0 hover:bg-muted/50 md:grid md:grid-cols-[1fr_150px_1.4fr_120px_100px_32px] md:items-center md:gap-3 md:px-5 md:py-2.5"
               >
                 <div className="flex min-w-0 items-center gap-3">
-                  <AvatarMono name={p.name} hue={200} size={36} className="md:h-7 md:w-7" />
+                  <AvatarMono name={p.name} hue={200} size={36} />
                   <div className="min-w-0 flex-1">
                     <p className="truncate font-medium">{p.name}</p>
                     <p className="truncate text-xs text-muted-foreground">{p.occupation}</p>
