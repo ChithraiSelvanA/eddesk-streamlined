@@ -81,11 +81,11 @@ export function ClassDialog({
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         {mode === "add" ? (
-          <Button size="sm">
+          <Button size="sm" className={className}>
             <Plus className="h-4 w-4" /> Add class
           </Button>
         ) : (
-          <Button variant="outline" size="sm">
+          <Button variant="outline" size="sm" className={className}>
             <Pencil className="h-3.5 w-3.5" /> Edit
           </Button>
         )}
