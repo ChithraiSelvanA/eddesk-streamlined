@@ -70,10 +70,11 @@ function Dashboard() {
         </div>
       </div>
 
-      <div className="mx-auto max-w-[1400px] px-4 py-6 pb-28 sm:px-6 md:px-8 md:py-8 md:pb-8 space-y-8">
+      <div className="mx-auto max-w-[1400px] px-4 py-5 pb-28 sm:px-6 md:px-8 md:py-8 md:pb-8 space-y-6 md:space-y-8">
 
         {/* At a glance */}
-        <section className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <section className="grid grid-cols-2 gap-2.5 sm:gap-3 lg:grid-cols-4">
+
           <GlanceCard
             label="Attendance today"
             value={`${attendancePct}%`}
@@ -106,7 +107,7 @@ function Dashboard() {
         {/* Quick actions */}
         <section id="quick-actions" className="scroll-mt-20">
           <SectionTitle title="Quick actions" />
-          <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+          <div className="grid grid-cols-2 gap-2.5 sm:gap-3 lg:grid-cols-4">
             <QuickAction icon={<UserPlus className="h-4 w-4" />} label="New admission" to="/students" hint="Add a student and parent" />
             <QuickAction icon={<Receipt className="h-4 w-4" />} label="Record payment" to="/fees" hint="Log a fee payment" />
             <QuickAction icon={<Megaphone className="h-4 w-4" />} label="Create notice" to="/communication" hint="Announce to parents" />
@@ -115,7 +116,7 @@ function Dashboard() {
         </section>
 
         {/* Actionable cards row */}
-        <section className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+        <section className="grid grid-cols-1 gap-4 md:gap-6 lg:grid-cols-3">
           <ActionCard
             id="pending-fees"
 
@@ -204,7 +205,7 @@ function Dashboard() {
         </section>
 
         {/* Bottom row */}
-        <section className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <section className="grid grid-cols-1 gap-4 md:gap-6 lg:grid-cols-2">
           <ActionCard
             id="recent-admissions"
             title="Recent admissions"
@@ -262,7 +263,8 @@ function Dashboard() {
         </section>
 
         {/* lets the last sections scroll up under the bottom nav */}
-        <div aria-hidden className="h-[65vh] md:hidden" />
+        <div aria-hidden className="h-[38vh] md:hidden" />
+
       </div>
 
       <MobileSectionNav items={dashboardSections} />
@@ -277,34 +279,35 @@ function GlanceCard({ label, value, hint, trend, trendTone = "good", icon }: {
   label: string; value: string; hint: string; trend?: string; trendTone?: "good" | "bad"; icon: React.ReactNode;
 }) {
   return (
-    <div className="card-soft p-5">
-      <div className="flex items-center justify-between">
-        <div className="grid h-8 w-8 place-items-center rounded-md bg-muted text-muted-foreground">{icon}</div>
+    <div className="card-soft p-4 md:p-5">
+      <div className="flex items-center justify-between gap-2">
+        <div className="grid h-8 w-8 shrink-0 place-items-center rounded-md bg-muted text-muted-foreground">{icon}</div>
         {trend && (
-          <span className={"inline-flex items-center gap-0.5 text-xs font-medium " + (trendTone === "good" ? "text-[color:var(--color-success)]" : "text-[color:var(--color-destructive)]")}>
+          <span className={"inline-flex items-center gap-0.5 text-[11px] font-medium md:text-xs " + (trendTone === "good" ? "text-[color:var(--color-success)]" : "text-[color:var(--color-destructive)]")}>
             <TrendingUp className="h-3 w-3" /> {trend}
           </span>
         )}
       </div>
-      <p className="mt-4 text-3xl font-semibold tracking-tight tabular-nums">{value}</p>
-      <p className="mt-1 text-sm text-foreground/70">{label}</p>
-      <p className="mt-0.5 text-xs text-muted-foreground">{hint}</p>
+      <p className="mt-3 text-2xl font-semibold tracking-tight tabular-nums md:mt-4 md:text-3xl">{value}</p>
+      <p className="mt-1 text-[13px] text-foreground/70 md:text-sm">{label}</p>
+      <p className="mt-0.5 text-[11px] text-muted-foreground md:text-xs">{hint}</p>
     </div>
   );
 }
 
 function QuickAction({ icon, label, hint, to }: { icon: React.ReactNode; label: string; hint: string; to: string }) {
   return (
-    <Link to={to} className="card-soft group flex items-center gap-3 p-4 transition-shadow hover:shadow-[var(--shadow-elevated)]">
-      <div className="grid h-9 w-9 place-items-center rounded-md bg-primary text-primary-foreground">{icon}</div>
+    <Link to={to} className="card-soft group flex items-center gap-3 p-3.5 transition-shadow hover:shadow-[var(--shadow-elevated)] md:p-4">
+      <div className="grid h-9 w-9 shrink-0 place-items-center rounded-md bg-primary text-primary-foreground">{icon}</div>
       <div className="min-w-0 flex-1">
-        <p className="truncate text-sm font-medium">{label}</p>
-        <p className="truncate text-xs text-muted-foreground">{hint}</p>
+        <p className="truncate text-[13px] font-medium md:text-sm">{label}</p>
+        <p className="truncate text-[11px] text-muted-foreground md:text-xs">{hint}</p>
       </div>
-      <ArrowUpRight className="h-4 w-4 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+      <ArrowUpRight className="hidden h-4 w-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 sm:block" />
     </Link>
   );
 }
+
 
 function SectionTitle({ title }: { title: string }) {
   return (
@@ -319,21 +322,22 @@ function ActionCard({ id, title, hint, cta, children }: {
   id?: string; title: string; hint?: string; cta?: { label: string; to: string }; children: React.ReactNode;
 }) {
   return (
-    <div id={id} className="card-soft flex flex-col scroll-mt-20">
+    <div id={id} className="card-soft flex flex-col scroll-mt-32 md:scroll-mt-20">
 
-      <div className="flex items-start justify-between gap-3 border-b border-border/60 px-5 py-3.5">
-        <div>
-          <h3 className="text-sm font-semibold">{title}</h3>
-          {hint && <p className="mt-0.5 text-xs text-muted-foreground">{hint}</p>}
+      <div className="flex items-start justify-between gap-3 border-b border-border/60 px-4 py-3 md:px-5 md:py-3.5">
+        <div className="min-w-0">
+          <h3 className="truncate text-sm font-semibold">{title}</h3>
+          {hint && <p className="mt-0.5 truncate text-xs text-muted-foreground">{hint}</p>}
         </div>
         {cta && (
-          <Link to={cta.to} className="text-xs font-medium text-foreground/70 hover:text-foreground">
+          <Link to={cta.to} className="shrink-0 text-xs font-medium text-foreground/70 hover:text-foreground">
             {cta.label} →
           </Link>
         )}
       </div>
-      <div className="px-5 py-2">{children}</div>
+      <div className="px-4 py-2 md:px-5">{children}</div>
     </div>
+
   );
 }
 
