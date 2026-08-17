@@ -22,6 +22,7 @@ import { Route as AppStudentsListRouteImport } from './routes/_app.students.list
 import { Route as AppSettingsStaffRouteImport } from './routes/_app.settings.staff'
 import { Route as AppSettingsSecurityRouteImport } from './routes/_app.settings.security'
 import { Route as AppSettingsSchoolProfileRouteImport } from './routes/_app.settings.school-profile'
+import { Route as AppSettingsBrandingRouteImport } from './routes/_app.settings.branding'
 import { Route as AppSettingsAcademicYearRouteImport } from './routes/_app.settings.academic-year'
 import { Route as AppParentsListRouteImport } from './routes/_app.parents.list'
 import { Route as AppParentsParentIdRouteImport } from './routes/_app.parents.$parentId'
@@ -94,6 +95,11 @@ const AppSettingsSchoolProfileRoute =
     path: '/settings/school-profile',
     getParentRoute: () => AppRoute,
   } as any)
+const AppSettingsBrandingRoute = AppSettingsBrandingRouteImport.update({
+  id: '/settings/branding',
+  path: '/settings/branding',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppSettingsAcademicYearRoute = AppSettingsAcademicYearRouteImport.update({
   id: '/settings/academic-year',
   path: '/settings/academic-year',
@@ -136,6 +142,7 @@ export interface FileRoutesByFullPath {
   '/parents/$parentId': typeof AppParentsParentIdRoute
   '/parents/list': typeof AppParentsListRoute
   '/settings/academic-year': typeof AppSettingsAcademicYearRoute
+  '/settings/branding': typeof AppSettingsBrandingRoute
   '/settings/school-profile': typeof AppSettingsSchoolProfileRoute
   '/settings/security': typeof AppSettingsSecurityRoute
   '/settings/staff': typeof AppSettingsStaffRoute
@@ -156,6 +163,7 @@ export interface FileRoutesByTo {
   '/parents/$parentId': typeof AppParentsParentIdRoute
   '/parents/list': typeof AppParentsListRoute
   '/settings/academic-year': typeof AppSettingsAcademicYearRoute
+  '/settings/branding': typeof AppSettingsBrandingRoute
   '/settings/school-profile': typeof AppSettingsSchoolProfileRoute
   '/settings/security': typeof AppSettingsSecurityRoute
   '/settings/staff': typeof AppSettingsStaffRoute
@@ -178,6 +186,7 @@ export interface FileRoutesById {
   '/_app/parents/$parentId': typeof AppParentsParentIdRoute
   '/_app/parents/list': typeof AppParentsListRoute
   '/_app/settings/academic-year': typeof AppSettingsAcademicYearRoute
+  '/_app/settings/branding': typeof AppSettingsBrandingRoute
   '/_app/settings/school-profile': typeof AppSettingsSchoolProfileRoute
   '/_app/settings/security': typeof AppSettingsSecurityRoute
   '/_app/settings/staff': typeof AppSettingsStaffRoute
@@ -200,6 +209,7 @@ export interface FileRouteTypes {
     | '/parents/$parentId'
     | '/parents/list'
     | '/settings/academic-year'
+    | '/settings/branding'
     | '/settings/school-profile'
     | '/settings/security'
     | '/settings/staff'
@@ -220,6 +230,7 @@ export interface FileRouteTypes {
     | '/parents/$parentId'
     | '/parents/list'
     | '/settings/academic-year'
+    | '/settings/branding'
     | '/settings/school-profile'
     | '/settings/security'
     | '/settings/staff'
@@ -241,6 +252,7 @@ export interface FileRouteTypes {
     | '/_app/parents/$parentId'
     | '/_app/parents/list'
     | '/_app/settings/academic-year'
+    | '/_app/settings/branding'
     | '/_app/settings/school-profile'
     | '/_app/settings/security'
     | '/_app/settings/staff'
@@ -350,6 +362,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppSettingsSchoolProfileRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/settings/branding': {
+      id: '/_app/settings/branding'
+      path: '/settings/branding'
+      fullPath: '/settings/branding'
+      preLoaderRoute: typeof AppSettingsBrandingRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/settings/academic-year': {
       id: '/_app/settings/academic-year'
       path: '/settings/academic-year'
@@ -416,6 +435,7 @@ interface AppRouteChildren {
   AppParentsParentIdRoute: typeof AppParentsParentIdRoute
   AppParentsListRoute: typeof AppParentsListRoute
   AppSettingsAcademicYearRoute: typeof AppSettingsAcademicYearRoute
+  AppSettingsBrandingRoute: typeof AppSettingsBrandingRoute
   AppSettingsSchoolProfileRoute: typeof AppSettingsSchoolProfileRoute
   AppSettingsSecurityRoute: typeof AppSettingsSecurityRoute
   AppSettingsStaffRoute: typeof AppSettingsStaffRoute
@@ -436,6 +456,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppParentsParentIdRoute: AppParentsParentIdRoute,
   AppParentsListRoute: AppParentsListRoute,
   AppSettingsAcademicYearRoute: AppSettingsAcademicYearRoute,
+  AppSettingsBrandingRoute: AppSettingsBrandingRoute,
   AppSettingsSchoolProfileRoute: AppSettingsSchoolProfileRoute,
   AppSettingsSecurityRoute: AppSettingsSecurityRoute,
   AppSettingsStaffRoute: AppSettingsStaffRoute,
