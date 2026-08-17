@@ -321,25 +321,25 @@ function StaffAccess() {
       </div>
 
 
-      <div className="mx-auto max-w-[1400px] space-y-6 px-4 py-4 sm:py-5 sm:px-6 md:px-8 md:py-6">
+      <div className="mx-auto max-w-[1400px] space-y-6 px-4 py-4 pb-24 sm:py-5 sm:px-6 md:px-8 md:py-6 md:pb-6">
         <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
           {counts.map(({ role, n }) => (
             <button
               key={role}
               onClick={() => setRoleFilter(roleFilter === role ? "all" : role)}
               className={
-                "card-soft p-4 text-left transition-shadow hover:shadow-[var(--shadow-elevated)] " +
+                "card-soft p-3 text-left transition-shadow hover:shadow-[var(--shadow-elevated)] sm:p-4 " +
                 (roleFilter === role ? "ring-1 ring-foreground/20" : "")
               }
             >
               <p className="text-xs text-muted-foreground">{role}</p>
-              <p className="mt-1 text-2xl font-semibold tabular-nums">{n}</p>
+              <p className="mt-1 text-xl font-semibold tabular-nums sm:text-2xl">{n}</p>
             </button>
           ))}
         </div>
 
         <div className="card-soft overflow-hidden">
-          <div className="flex flex-col gap-3 border-b border-border/60 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-5">
+          <div className="flex flex-col gap-3 border-b border-border/60 px-3 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-5">
             <div className="relative w-full sm:max-w-xs">
               <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <Input
@@ -369,7 +369,7 @@ function StaffAccess() {
           {list.map((m) => (
             <div
               key={m.id}
-              className="flex flex-col gap-3 border-b border-border/40 px-4 py-3.5 last:border-0 hover:bg-muted/40 sm:flex-row sm:items-center sm:gap-4 sm:px-5"
+              className="flex flex-col gap-3 border-b border-border/40 px-3 py-3.5 last:border-0 hover:bg-muted/40 sm:flex-row sm:items-center sm:gap-4 sm:px-5"
             >
               <div className="flex min-w-0 flex-1 items-center gap-3">
                 <AvatarMono name={m.name} hue={m.hue} size={38} />
@@ -383,15 +383,15 @@ function StaffAccess() {
                 {m.lastActive}
               </div>
 
-              <div className="self-start sm:self-auto">
-                <StatusPill tone={statusTone(m.status) as never}>
-                  {m.status === "active" ? "Active" : m.status === "invited" ? "Invited" : "Disabled"}
-                </StatusPill>
-              </div>
+              <div className="flex items-center gap-2 sm:gap-3">
+                <div className="self-start sm:self-auto">
+                  <StatusPill tone={statusTone(m.status) as never}>
+                    {m.status === "active" ? "Active" : m.status === "invited" ? "Invited" : "Disabled"}
+                  </StatusPill>
+                </div>
 
-              <div className="flex flex-wrap items-center gap-2">
                 <Select value={m.role} onValueChange={(v) => setRole(m.id, v as Role)}>
-                  <SelectTrigger className="h-8 min-w-[8rem] flex-1 bg-surface text-xs sm:w-[150px] sm:flex-none">
+                  <SelectTrigger className="h-8 min-w-[7rem] flex-1 bg-surface text-xs sm:w-[150px] sm:flex-none">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -423,6 +423,7 @@ function StaffAccess() {
             </div>
           ))}
         </div>
+
 
         <div className="grid grid-cols-1 gap-3 lg:grid-cols-3">
           <div className="card-soft p-4 sm:p-5 lg:col-span-2">
