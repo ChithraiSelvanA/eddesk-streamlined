@@ -1,14 +1,13 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
 import { PageHeader } from "@/components/app/page-header";
-import { getParent, students as allStudents, chats } from "@/data/mock";
+import { getParent, students as allStudents, chats, normalizeMobile } from "@/data/mock";
 import { AvatarMono } from "@/components/app/avatar-mono";
 import { Button } from "@/components/ui/button";
 import { StatusPill } from "@/components/app/status-pill";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { MobileTabNav } from "@/components/app/mobile-tab-nav";
-import { RecordPaymentDialog } from "@/components/app/record-payment-dialog";
-import { Phone, Mail, MessageSquare, Wallet, ChevronRight, Users, Inbox } from "lucide-react";
+import { Phone, Mail, MessageSquare, Wallet, ChevronRight, Users, Inbox, MessageCircle } from "lucide-react";
 
 
 export const Route = createFileRoute("/_app/parents/$parentId")({
@@ -37,8 +36,8 @@ function ParentProfile() {
   const chatId = parentChats[0]?.id;
   const waNumber = normalizeMobile(p.mobile).replace(/^0+/, "");
   const waHref = `https://wa.me/${waNumber.length > 10 ? waNumber : `91${waNumber}`}`;
-  const feesSearch = { tab: "pending", ...(payFor ? { pay: payFor.id } : {}) } as const;
-  const commSearch = { tab: "chat", ...(chatId ? { chat: chatId } : {}) } as const;
+  const feesSearch = { tab: "pending", pay: payFor?.id };
+  const commSearch = { tab: "chat", chat: chatId };
 
   return (
     <div>

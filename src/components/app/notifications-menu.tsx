@@ -152,7 +152,7 @@ export function NotificationsMenu() {
             variant="ghost"
             size="sm"
             className="w-full"
-            onClick={() => { setOpen(false); navigate({ to: "/communication" }); }}
+            onClick={() => { setOpen(false); navigate({ to: "/communication", search: { tab: undefined, chat: undefined } }); }}
           >
             Open communication hub
           </Button>
