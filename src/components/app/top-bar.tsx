@@ -101,10 +101,8 @@ export function TopBar() {
         <Button size="sm" variant="outline" className="hidden sm:inline-flex" onClick={() => navigate({ to: "/students" })}>
           <Plus className="h-4 w-4" /> New admission
         </Button>
-        <button className="relative grid h-9 w-9 place-items-center rounded-md border border-border bg-surface text-muted-foreground hover:text-foreground">
-          <Bell className="h-4 w-4" />
-          <span className="absolute right-1.5 top-1.5 h-1.5 w-1.5 rounded-full bg-[color:var(--color-destructive)]" />
-        </button>
+        <NotificationsMenu />
+
       </div>
     </header>
   );
