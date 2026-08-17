@@ -48,17 +48,22 @@ function FilteredParents() {
         crumbs={[{ label: "Parents", to: "/parents" }, { label: def?.label ?? "Filtered" }]}
         title={def?.label ?? "Filtered parents"}
         description={`${base.length} parents · ${def?.hint ?? "Custom filter"}`}
-        actions={<Button variant="outline" size="sm"><Download className="h-4 w-4" /> Export</Button>}
+        actions={<Button variant="outline" size="sm" className="hidden md:inline-flex"><Download className="h-4 w-4" /> Export</Button>}
       />
 
-      <div className="mx-auto max-w-[1400px] px-4 py-5 sm:px-6 md:px-8 md:py-6">
-        <div className="mb-4 flex flex-wrap items-center gap-2">
+      <div className="sticky top-14 z-30 flex items-center gap-2 border-b border-border bg-surface/95 p-2 backdrop-blur md:hidden">
+        <Button variant="outline" className="h-10 flex-1 text-xs"><Download className="h-4 w-4" /> Export</Button>
+        <span className="shrink-0 pr-1 text-xs text-muted-foreground">{list.length}/{base.length}</span>
+      </div>
+
+      <div className="mx-auto max-w-[1400px] px-3 py-4 sm:px-6 md:px-8 md:py-6">
+        <div className="-mx-3 mb-3 flex gap-2 overflow-x-auto px-3 pb-1 [scrollbar-width:none] md:mx-0 md:mb-4 md:flex-wrap md:px-0 [&::-webkit-scrollbar]:hidden">
           {parentGroupDefs.map(g => (
             <Link
               key={g.id}
               to="/parents/list"
               search={{ group: g.id }}
-              className={`rounded-full border px-3 py-1.5 text-xs ${
+              className={`shrink-0 rounded-full border px-3 py-1.5 text-xs ${
                 g.id === group ? "border-foreground bg-foreground text-[color:var(--color-background)]" : "border-border bg-surface hover:bg-muted"
               }`}
             >
@@ -67,14 +72,14 @@ function FilteredParents() {
           ))}
         </div>
 
-        <div className="mb-4 flex flex-wrap items-center gap-2">
+        <div className="mb-3 flex flex-wrap items-center gap-2 md:mb-4">
           <Input
-            placeholder="Search within this group — parent, mobile, student or admission no.…"
+            placeholder="Search parent, mobile, student or admission no.…"
             value={q}
             onChange={(e) => setQ(e.target.value)}
-            className="h-9 max-w-md bg-surface"
+            className="h-10 w-full bg-surface md:h-9 md:max-w-md"
           />
-          <span className="ml-auto text-xs text-muted-foreground">{list.length} of {base.length}</span>
+          <span className="ml-auto hidden text-xs text-muted-foreground md:block">{list.length} of {base.length}</span>
         </div>
 
         <div className="card-soft overflow-hidden">
@@ -89,17 +94,29 @@ function FilteredParents() {
                 key={p.id}
                 to="/parents/$parentId"
                 params={{ parentId: p.id }}
-                className="flex flex-col items-start gap-1.5 md:grid md:grid-cols-[1fr_150px_1.4fr_120px_100px_32px] md:items-center md:gap-3 border-b border-border/40 px-4 py-3 text-sm last:border-0 md:px-5 md:py-2.5 hover:bg-muted/50"
+                className="flex flex-col gap-2.5 border-b border-border/40 px-4 py-3.5 text-sm last:border-0 hover:bg-muted/50 md:grid md:grid-cols-[1fr_150px_1.4fr_120px_100px_32px] md:items-center md:gap-3 md:px-5 md:py-2.5"
               >
                 <div className="flex min-w-0 items-center gap-3">
-                  <AvatarMono name={p.name} hue={200} size={28} />
-                  <div className="min-w-0">
+                  <AvatarMono name={p.name} hue={200} size={36} className="md:h-7 md:w-7" />
+                  <div className="min-w-0 flex-1">
                     <p className="truncate font-medium">{p.name}</p>
                     <p className="truncate text-xs text-muted-foreground">{p.occupation}</p>
                   </div>
+                  <div className="shrink-0 md:hidden">
+                    {p.pendingTotal > 0 ? (
+                      <StatusPill tone="warning">₹{p.pendingTotal.toLocaleString()}</StatusPill>
+                    ) : (
+                      <StatusPill tone="success">Cleared</StatusPill>
+                    )}
+                  </div>
                 </div>
-                <span className="truncate text-muted-foreground">{p.mobile}</span>
-                <div className="min-w-0 space-y-0.5">
+
+                <span className="hidden truncate text-muted-foreground md:block">{p.mobile}</span>
+
+                <div className="min-w-0 rounded-lg bg-muted/40 p-2.5 md:rounded-none md:bg-transparent md:p-0 md:space-y-0.5">
+                  <p className="mb-1 text-[11px] uppercase tracking-wide text-muted-foreground md:hidden">
+                    {p.mobile} · {kids.length} student{kids.length === 1 ? "" : "s"}
+                  </p>
                   {kids.slice(0, 3).map(s => (
                     <p key={s.id} className="truncate text-xs">
                       <span className="font-medium">{s.name}</span>
@@ -110,11 +127,14 @@ function FilteredParents() {
                   {kids.length > 3 && <p className="text-xs text-muted-foreground">+{kids.length - 3} more</p>}
                   {kids.length === 0 && <p className="text-xs text-muted-foreground">No students linked</p>}
                 </div>
-                {p.pendingTotal > 0 ? (
-                  <StatusPill tone="warning">₹{p.pendingTotal.toLocaleString()}</StatusPill>
-                ) : (
-                  <StatusPill tone="success">Cleared</StatusPill>
-                )}
+
+                <div className="hidden md:block">
+                  {p.pendingTotal > 0 ? (
+                    <StatusPill tone="warning">₹{p.pendingTotal.toLocaleString()}</StatusPill>
+                  ) : (
+                    <StatusPill tone="success">Cleared</StatusPill>
+                  )}
+                </div>
                 <span className="hidden text-right tabular-nums text-muted-foreground md:block">{p.unreadChats || "—"}</span>
                 <ChevronRight className="hidden h-4 w-4 text-muted-foreground md:block" />
               </Link>
@@ -125,3 +145,4 @@ function FilteredParents() {
     </div>
   );
 }
+
