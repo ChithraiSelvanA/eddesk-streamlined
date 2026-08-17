@@ -39,12 +39,13 @@ function Dashboard() {
         actions={
           <>
             <Button variant="outline" size="sm"><Megaphone className="h-4 w-4" /> Create notice</Button>
-            <Button size="sm"><Plus className="h-4 w-4" /> New admission</Button>
+            <NewAdmissionButton />
           </>
         }
       />
 
-      <div className="mx-auto max-w-[1400px] px-4 py-6 sm:px-6 md:px-8 md:py-8 space-y-8">
+      <div className="mx-auto max-w-[1400px] px-4 py-6 pb-28 sm:px-6 md:px-8 md:py-8 md:pb-8 space-y-8">
+
         {/* At a glance */}
         <section className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
           <GlanceCard
