@@ -237,7 +237,11 @@ function Dashboard() {
             </ul>
           </ActionCard>
         </section>
+
+        {/* lets the last sections scroll up under the bottom nav */}
+        <div aria-hidden className="h-[65vh] md:hidden" />
       </div>
+
 
       <NewAdmissionButton fab label="New admission" />
       <MobileSectionNav items={dashboardSections} />
