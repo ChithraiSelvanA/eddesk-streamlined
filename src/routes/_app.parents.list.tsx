@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { PageHeader } from "@/components/app/page-header";
+import { ParentsMobileNav } from "@/components/app/parents-mobile-nav";
 import { getParentGroup, parentsInGroup, parentGroupDefs, childrenOf, normalizeMobile } from "@/data/mock";
 import { AvatarMono } from "@/components/app/avatar-mono";
 import { StatusPill } from "@/components/app/status-pill";
@@ -56,7 +57,7 @@ function FilteredParents() {
         <span className="shrink-0 pr-1 text-xs text-muted-foreground">{list.length}/{base.length}</span>
       </div>
 
-      <div className="mx-auto max-w-[1400px] px-3 py-4 sm:px-6 md:px-8 md:py-6">
+      <div className="mx-auto max-w-[1400px] px-3 py-4 pb-24 sm:px-6 md:px-8 md:py-6 md:pb-6">
         <div className="-mx-3 mb-3 flex gap-2 overflow-x-auto px-3 pb-1 [scrollbar-width:none] md:mx-0 md:mb-4 md:flex-wrap md:px-0 [&::-webkit-scrollbar]:hidden">
           {parentGroupDefs.map(g => (
             <Link
@@ -142,6 +143,7 @@ function FilteredParents() {
           })}
         </div>
       </div>
+      <ParentsMobileNav activeGroup={group} />
     </div>
   );
 }
