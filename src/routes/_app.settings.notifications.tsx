@@ -15,7 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Bell, Check, Mail, MessageSquare, Smartphone } from "lucide-react";
+import { Bell, Check, Mail, MessageSquare, Smartphone, RotateCcw } from "lucide-react";
 
 export const Route = createFileRoute("/_app/settings/notifications")({
   head: () => ({
@@ -53,42 +53,51 @@ function Notifications() {
   const [language, setLanguage] = useState("en");
   const [digest, setDigest] = useState("daily");
   const [signature, setSignature] = useState("— Greenwood Public School, Office");
-  const [saved, setSaved] = useState(true);
+  const [saved, setSaved] = useState(false);
 
   const toggle = (id: string, ch: keyof Channels) => {
     setEvents((list) => list.map((e) => (e.id === id ? { ...e, channels: { ...e.channels, [ch]: !e.channels[ch] } } : e)));
     setSaved(false);
   };
 
+  const handleSave = () => {
+    setSaved(true);
+    toast.success("Notification settings saved", { description: `${smsCount} alerts go out over SMS` });
+    setTimeout(() => setSaved(false), 2000);
+  };
+
+  const handleReset = () => {
+    setEvents(initialEvents);
+    setSenderId("GRNWDS");
+    setReplyTo("office@greenwood.edu.in");
+    setQuietHours(true);
+    setQuietFrom("20:00");
+    setQuietTo("07:30");
+    setLanguage("en");
+    setDigest("daily");
+    setSignature("— Greenwood Public School, Office");
+    setSaved(false);
+    toast.info("Notification settings reset");
+  };
+
   const smsCount = events.filter((e) => e.channels.sms).length;
 
   return (
-    <div>
+    <div className="pb-28 sm:pb-0">
       <PageHeader
         crumbs={[{ label: "Settings", to: "/settings" }, { label: "Notifications" }]}
         title="Notifications"
         description="Decide what parents and staff hear about, and how."
-        actions={
-          <>
-            <Button variant="outline" onClick={() => toast.success("Test alert sent to your mobile and email")}>
-              Send test
-            </Button>
-            <Button onClick={() => { setSaved(true); toast.success("Notification settings saved", { description: `${smsCount} alerts go out over SMS` }); }}>
-              {saved ? <Check className="mr-2 h-4 w-4" /> : null}
-              {saved ? "Saved" : "Save changes"}
-            </Button>
-          </>
-        }
       />
 
-      <div className="mx-auto grid max-w-[1400px] grid-cols-1 gap-4 px-4 py-4 sm:py-5 sm:px-6 md:px-8 md:py-6 lg:grid-cols-3">
+      <div className="mx-auto grid max-w-[1400px] grid-cols-1 gap-4 px-3 py-3 sm:px-6 sm:py-5 md:px-8 md:py-6 lg:grid-cols-3">
         <div className="space-y-4 lg:col-span-2">
-          <section className="card-soft p-4 sm:p-5">
+          <section className="card-soft p-3 sm:p-4 md:p-5">
             <div className="mb-1 flex items-center gap-2">
               <Bell className="h-4 w-4 text-muted-foreground" />
               <h2 className="text-sm font-medium">Alerts</h2>
             </div>
-            <p className="mb-4 text-xs text-muted-foreground">Turn each channel on or off per alert.</p>
+            <p className="mb-3 text-xs text-muted-foreground sm:mb-4">Turn each channel on or off per alert.</p>
 
             <div className="hidden grid-cols-[1fr_repeat(3,4.5rem)] items-center gap-2 border-b border-border/70 pb-2 text-xs text-muted-foreground sm:grid">
               <span>Alert</span>
@@ -99,13 +108,13 @@ function Notifications() {
 
             <div className="divide-y divide-border/70">
               {events.map((e) => (
-                <div key={e.id} className="grid grid-cols-1 gap-2 py-3.5 sm:grid-cols-[1fr_repeat(3,4.5rem)] sm:items-center">
+                <div key={e.id} className="grid grid-cols-1 gap-2 py-3 sm:grid-cols-[1fr_repeat(3,4.5rem)] sm:items-center">
                   <div className="min-w-0">
                     <p className="text-sm font-medium">{e.title}</p>
                     <p className="text-xs text-muted-foreground">{e.desc}</p>
                   </div>
                   {(["sms", "email", "app"] as const).map((ch) => (
-                    <div key={ch} className="flex items-center gap-2 sm:justify-center">
+                    <div key={ch} className="flex items-center justify-between gap-2 sm:justify-center">
                       <span className="text-xs text-muted-foreground sm:hidden">
                         {ch === "sms" ? "SMS" : ch === "email" ? "Email" : "App"}
                       </span>
@@ -117,9 +126,9 @@ function Notifications() {
             </div>
           </section>
 
-          <section className="card-soft p-4 sm:p-5">
-            <h2 className="mb-4 text-sm font-medium">Delivery</h2>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <section className="card-soft p-3 sm:p-4 md:p-5">
+            <h2 className="mb-3 text-sm font-medium sm:mb-4">Delivery</h2>
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
               <div className="space-y-1.5">
                 <Label className="text-xs font-medium text-muted-foreground">SMS sender ID</Label>
                 <Input value={senderId} onChange={(e) => { setSenderId(e.target.value); setSaved(false); }} />
@@ -151,7 +160,7 @@ function Notifications() {
                 </Select>
               </div>
             </div>
-            <Separator className="my-5" />
+            <Separator className="my-4 md:my-5" />
             <div className="flex items-start justify-between gap-4">
               <div>
                 <p className="text-sm font-medium">Quiet hours</p>
@@ -160,7 +169,7 @@ function Notifications() {
               <Switch checked={quietHours} onCheckedChange={(v) => { setQuietHours(v); setSaved(false); }} />
             </div>
             {quietHours && (
-              <div className="mt-4 grid grid-cols-2 gap-4 sm:max-w-sm">
+              <div className="mt-3 grid grid-cols-2 gap-3 sm:mt-4 sm:max-w-sm sm:gap-4">
                 <div className="space-y-1.5">
                   <Label className="text-xs font-medium text-muted-foreground">From</Label>
                   <Input type="time" value={quietFrom} onChange={(e) => { setQuietFrom(e.target.value); setSaved(false); }} />
@@ -171,7 +180,7 @@ function Notifications() {
                 </div>
               </div>
             )}
-            <div className="mt-5 space-y-1.5">
+            <div className="mt-4 space-y-1.5 sm:mt-5">
               <Label className="text-xs font-medium text-muted-foreground">Message signature</Label>
               <Textarea rows={2} value={signature} onChange={(e) => { setSignature(e.target.value); setSaved(false); }} />
             </div>
@@ -179,7 +188,7 @@ function Notifications() {
         </div>
 
         <div className="space-y-4">
-          <section className="card-soft p-4 sm:p-5">
+          <section className="card-soft p-3 sm:p-4 md:p-5">
             <h2 className="mb-3 text-sm font-medium">Preview</h2>
             <div className="rounded-lg border border-border/70 p-3">
               <p className="text-xs text-muted-foreground">SMS · {senderId || "SENDER"}</p>
@@ -190,7 +199,7 @@ function Notifications() {
             </div>
           </section>
 
-          <section className="card-soft p-4 sm:p-5">
+          <section className="card-soft p-3 sm:p-4 md:p-5">
             <h2 className="mb-3 text-sm font-medium">Channel summary</h2>
             <div className="space-y-3 text-sm">
               <div className="flex items-center justify-between">
@@ -212,6 +221,18 @@ function Notifications() {
               </div>
             </div>
           </section>
+        </div>
+      </div>
+
+      <div className="fixed bottom-0 left-0 right-0 z-40 border-t border-border/70 bg-background/95 p-3 backdrop-blur sm:static sm:mt-6 sm:border-t-0 sm:bg-transparent sm:p-0 sm:backdrop-blur-none">
+        <div className="mx-auto flex max-w-[1400px] gap-3 sm:justify-end sm:px-6 md:px-8">
+          <Button variant="outline" className="flex-1 sm:flex-initial" onClick={handleReset}>
+            <RotateCcw className="mr-2 h-4 w-4" /> Reset
+          </Button>
+          <Button className="flex-1 sm:flex-initial" disabled={saved} onClick={handleSave}>
+            {saved ? <Check className="mr-2 h-4 w-4" /> : null}
+            {saved ? "Saved" : "Save changes"}
+          </Button>
         </div>
       </div>
     </div>
