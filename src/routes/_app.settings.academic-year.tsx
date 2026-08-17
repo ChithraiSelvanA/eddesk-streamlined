@@ -31,6 +31,8 @@ export const Route = createFileRoute("/_app/settings/academic-year")({
         property: "og:description",
         content: "Active session, term dates, working days and the holiday calendar.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: AcademicYear,
@@ -53,7 +55,7 @@ const initialSession = {
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
-    <div className="space-y-1.5">
+    <div className="space-y-1">
       <Label className="text-xs font-medium text-muted-foreground">{label}</Label>
       {children}
     </div>
@@ -129,41 +131,17 @@ function AcademicYear() {
         crumbs={[{ label: "Settings", to: "/settings" }, { label: "Academic year" }]}
         title="Academic year"
         description="Session dates, terms, working days and the holiday calendar."
-        actions={
-          <>
-            <Button
-              variant="outline"
-              onClick={() => {
-                setSession(initialSession);
-                setHolidays(seedHolidays.map((h) => ({ ...h })));
-                setWorkingDays(["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]);
-                setSaved(true);
-              }}
-            >
-              Reset
-            </Button>
-            <Button onClick={save} disabled={saved}>
-              {saved ? (
-                <>
-                  <Check className="h-4 w-4" /> Saved
-                </>
-              ) : (
-                "Save changes"
-              )}
-            </Button>
-          </>
-        }
       />
 
-      <div className="mx-auto max-w-[1400px] px-4 py-4 sm:py-5 sm:px-6 md:px-8 md:py-6">
-        <div className="grid grid-cols-1 gap-5 lg:grid-cols-[minmax(0,1fr)_20rem]">
-          <div className="space-y-5">
-            <section className="card-soft p-4 sm:p-5">
+      <div className="mx-auto max-w-[1400px] px-3 py-3 pb-28 sm:px-4 sm:py-4 sm:pb-24 md:px-6 md:py-5 md:pb-8 lg:px-8 lg:py-6">
+        <div className="grid grid-cols-1 gap-3 sm:gap-4 lg:grid-cols-[minmax(0,1fr)_20rem]">
+          <div className="space-y-3 sm:space-y-4">
+            <section className="card-soft p-3 sm:p-4 md:p-5">
               <h2 className="text-sm font-medium">Active session</h2>
-              <p className="mb-4 text-xs text-muted-foreground">
+              <p className="mb-3 text-xs text-muted-foreground sm:mb-4">
                 Drives fee cycles, attendance and report cards.
               </p>
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
                 <Field label="Session label">
                   <Input
                     value={session.label}
@@ -200,8 +178,8 @@ function AcademicYear() {
               </div>
             </section>
 
-            <section className="card-soft p-4 sm:p-5">
-              <div className="mb-4 flex items-center justify-between gap-3">
+            <section className="card-soft p-3 sm:p-4 md:p-5">
+              <div className="mb-3 flex items-center justify-between gap-3 sm:mb-4">
                 <div>
                   <h2 className="text-sm font-medium">Terms</h2>
                   <p className="text-xs text-muted-foreground">
@@ -213,11 +191,11 @@ function AcademicYear() {
                 </Button>
               </div>
 
-              <div className="space-y-3">
+              <div className="space-y-2 sm:space-y-3">
                 {session.terms.map((t) => (
                   <div
                     key={t.id}
-                    className="flex flex-col gap-3 rounded-md border border-border/70 p-3 sm:flex-row sm:items-end"
+                    className="flex flex-col gap-2 rounded-md border border-border/70 p-2.5 sm:flex-row sm:items-end sm:gap-3 sm:p-3"
                   >
                     <div className="sm:w-40">
                       <Field label="Name">
@@ -253,9 +231,9 @@ function AcademicYear() {
               </div>
             </section>
 
-            <section className="card-soft p-4 sm:p-5">
+            <section className="card-soft p-3 sm:p-4 md:p-5">
               <h2 className="text-sm font-medium">Holiday calendar</h2>
-              <p className="mb-4 text-xs text-muted-foreground">
+              <p className="mb-3 text-xs text-muted-foreground sm:mb-4">
                 Excluded from attendance and timetable generation.
               </p>
 
@@ -284,9 +262,9 @@ function AcademicYear() {
                 ))}
               </ul>
 
-              <Separator className="my-4" />
+              <Separator className="my-3 sm:my-4" />
 
-              <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:gap-3">
                 <div className="flex-1">
                   <Field label="Holiday name">
                     <Input
@@ -323,17 +301,17 @@ function AcademicYear() {
                     </Select>
                   </Field>
                 </div>
-                <Button onClick={addHoliday}>
+                <Button onClick={addHoliday} size="sm" className="h-9">
                   <Plus className="h-4 w-4" /> Add
                 </Button>
               </div>
             </section>
           </div>
 
-          <aside className="space-y-5">
-            <section className="card-soft p-4 sm:p-5">
+          <aside className="space-y-3 sm:space-y-4">
+            <section className="card-soft p-3 sm:p-4 md:p-5">
               <h2 className="text-sm font-medium">Working days</h2>
-              <p className="mb-4 text-xs text-muted-foreground">Used for attendance registers.</p>
+              <p className="mb-3 text-xs text-muted-foreground sm:mb-4">Used for attendance registers.</p>
               <div className="flex flex-wrap gap-2">
                 {WEEKDAYS.map((d) => {
                   const on = workingDays.includes(d);
@@ -358,9 +336,9 @@ function AcademicYear() {
               </p>
             </section>
 
-            <section className="card-soft p-4 sm:p-5">
+            <section className="card-soft p-3 sm:p-4 md:p-5">
               <h2 className="text-sm font-medium">Rules</h2>
-              <div className="mt-4 space-y-4">
+              <div className="mt-3 space-y-4 sm:mt-4">
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0">
                     <p className="text-sm">Lock past terms</p>
@@ -388,7 +366,7 @@ function AcademicYear() {
               </div>
             </section>
 
-            <section className="card-soft p-4 sm:p-5">
+            <section className="card-soft p-3 sm:p-4 md:p-5">
               <h2 className="text-sm font-medium">Summary</h2>
               <dl className="mt-3 space-y-2 text-xs">
                 <div className="flex items-center justify-between">
@@ -410,6 +388,36 @@ function AcademicYear() {
               </dl>
             </section>
           </aside>
+        </div>
+
+        <div className="fixed md:sticky bottom-0 left-0 right-0 z-50 border-t border-border bg-surface/95 p-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] shadow-[0_-4px_20px_-5px_rgba(0,0,0,0.08)] backdrop-blur md:bottom-0 md:mt-5 md:rounded-lg md:border md:pb-3 md:shadow-sm md:backdrop-blur-none">
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              className="flex-1"
+              onClick={() => {
+                setSession(initialSession);
+                setHolidays(seedHolidays.map((h) => ({ ...h })));
+                setWorkingDays(["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]);
+                setSaved(true);
+              }}
+            >
+              Reset
+            </Button>
+            <Button
+              className="flex-1"
+              onClick={save}
+              disabled={saved}
+            >
+              {saved ? (
+                <>
+                  <Check className="h-4 w-4" /> Saved
+                </>
+              ) : (
+                "Save changes"
+              )}
+            </Button>
+          </div>
         </div>
       </div>
     </div>
