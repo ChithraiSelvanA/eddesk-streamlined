@@ -81,9 +81,9 @@ function Notifications() {
         }
       />
 
-      <div className="mx-auto grid max-w-[1400px] grid-cols-1 gap-4 px-4 py-5 sm:px-6 md:px-8 md:py-6 lg:grid-cols-3">
+      <div className="mx-auto grid max-w-[1400px] grid-cols-1 gap-4 px-4 py-4 sm:py-5 sm:px-6 md:px-8 md:py-6 lg:grid-cols-3">
         <div className="space-y-4 lg:col-span-2">
-          <section className="card-soft p-5">
+          <section className="card-soft p-4 sm:p-5">
             <div className="mb-1 flex items-center gap-2">
               <Bell className="h-4 w-4 text-muted-foreground" />
               <h2 className="text-sm font-medium">Alerts</h2>
@@ -117,7 +117,7 @@ function Notifications() {
             </div>
           </section>
 
-          <section className="card-soft p-5">
+          <section className="card-soft p-4 sm:p-5">
             <h2 className="mb-4 text-sm font-medium">Delivery</h2>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-1.5">
@@ -179,7 +179,7 @@ function Notifications() {
         </div>
 
         <div className="space-y-4">
-          <section className="card-soft p-5">
+          <section className="card-soft p-4 sm:p-5">
             <h2 className="mb-3 text-sm font-medium">Preview</h2>
             <div className="rounded-lg border border-border/70 p-3">
               <p className="text-xs text-muted-foreground">SMS · {senderId || "SENDER"}</p>
@@ -190,7 +190,7 @@ function Notifications() {
             </div>
           </section>
 
-          <section className="card-soft p-5">
+          <section className="card-soft p-4 sm:p-5">
             <h2 className="mb-3 text-sm font-medium">Channel summary</h2>
             <div className="space-y-3 text-sm">
               <div className="flex items-center justify-between">

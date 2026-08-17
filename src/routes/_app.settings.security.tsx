@@ -113,9 +113,9 @@ function Security() {
         }
       />
 
-      <div className="mx-auto grid max-w-[1400px] grid-cols-1 gap-4 px-4 py-5 sm:px-6 md:px-8 md:py-6 lg:grid-cols-3">
+      <div className="mx-auto grid max-w-[1400px] grid-cols-1 gap-4 px-4 py-4 sm:py-5 sm:px-6 md:px-8 md:py-6 lg:grid-cols-3">
         <div className="space-y-4 lg:col-span-2">
-          <section className="card-soft p-5">
+          <section className="card-soft p-4 sm:p-5">
             <div className="mb-1 flex items-center gap-2">
               <Shield className="h-4 w-4 text-muted-foreground" />
               <h2 className="text-sm font-medium">Sign-in rules</h2>
@@ -143,7 +143,7 @@ function Security() {
             </Row>
           </section>
 
-          <section className="card-soft p-5">
+          <section className="card-soft p-4 sm:p-5">
             <div className="mb-4 flex items-center gap-2">
               <KeyRound className="h-4 w-4 text-muted-foreground" />
               <h2 className="text-sm font-medium">Password policy</h2>
@@ -183,7 +183,7 @@ function Security() {
             </div>
           </section>
 
-          <section className="card-soft p-5">
+          <section className="card-soft p-4 sm:p-5">
             <h2 className="mb-1 text-sm font-medium">Audit log</h2>
             <p className="mb-2 text-xs text-muted-foreground">Every money and settings change is recorded.</p>
             <div className="divide-y divide-border/70">
@@ -204,7 +204,7 @@ function Security() {
         </div>
 
         <div className="space-y-4">
-          <section className="card-soft p-5">
+          <section className="card-soft p-4 sm:p-5">
             <h2 className="mb-1 text-sm font-medium">Active sessions</h2>
             <p className="mb-3 text-xs text-muted-foreground">{sessions.length} device{sessions.length === 1 ? "" : "s"} signed in.</p>
             <div className="space-y-3">
@@ -229,7 +229,7 @@ function Security() {
             </div>
           </section>
 
-          <section className="card-soft p-5">
+          <section className="card-soft p-4 sm:p-5">
             <h2 className="mb-2 text-sm font-medium">Security summary</h2>
             <dl className="space-y-2 text-sm">
               <div className="flex justify-between"><dt className="text-muted-foreground">Two-step</dt><dd>{twoStep ? "On" : "Off"}</dd></div>

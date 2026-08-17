@@ -120,10 +120,10 @@ function SchoolProfile() {
         }
       />
 
-      <div className="mx-auto max-w-[1400px] px-4 py-5 sm:px-6 md:px-8 md:py-6">
+      <div className="mx-auto max-w-[1400px] px-4 py-4 sm:py-5 sm:px-6 md:px-8 md:py-6">
         <div className="grid grid-cols-1 gap-5 lg:grid-cols-[minmax(0,1fr)_20rem]">
           <div className="space-y-5">
-            <section className="card-soft p-5">
+            <section className="card-soft p-4 sm:p-5">
               <h2 className="text-sm font-medium">Identity</h2>
               <p className="mb-4 text-xs text-muted-foreground">
                 How the school is named across the workspace.
@@ -160,7 +160,7 @@ function SchoolProfile() {
               </div>
             </section>
 
-            <section className="card-soft p-5">
+            <section className="card-soft p-4 sm:p-5">
               <h2 className="text-sm font-medium">Contact</h2>
               <p className="mb-4 text-xs text-muted-foreground">
                 Where parents reach the front office.
@@ -180,7 +180,7 @@ function SchoolProfile() {
               </div>
             </section>
 
-            <section className="card-soft p-5">
+            <section className="card-soft p-4 sm:p-5">
               <h2 className="text-sm font-medium">Address</h2>
               <p className="mb-4 text-xs text-muted-foreground">Printed on official documents.</p>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -206,7 +206,7 @@ function SchoolProfile() {
               </div>
             </section>
 
-            <section className="card-soft p-5">
+            <section className="card-soft p-4 sm:p-5">
               <h2 className="text-sm font-medium">About</h2>
               <p className="mb-4 text-xs text-muted-foreground">
                 A short description used on the parent portal.
@@ -220,7 +220,7 @@ function SchoolProfile() {
           </div>
 
           <aside className="space-y-5">
-            <section className="card-soft p-5">
+            <section className="card-soft p-4 sm:p-5">
               <h2 className="text-sm font-medium">Logo</h2>
               <p className="mb-4 text-xs text-muted-foreground">PNG or SVG, at least 256×256.</p>
               <div className="flex items-center gap-3">
@@ -236,7 +236,7 @@ function SchoolProfile() {
               </div>
             </section>
 
-            <section className="card-soft p-5">
+            <section className="card-soft p-4 sm:p-5">
               <h2 className="text-sm font-medium">Preview</h2>
               <p className="mb-4 text-xs text-muted-foreground">Receipt header</p>
               <div className="rounded-md border border-border/70 p-4">

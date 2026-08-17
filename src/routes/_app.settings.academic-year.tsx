@@ -155,10 +155,10 @@ function AcademicYear() {
         }
       />
 
-      <div className="mx-auto max-w-[1400px] px-4 py-5 sm:px-6 md:px-8 md:py-6">
+      <div className="mx-auto max-w-[1400px] px-4 py-4 sm:py-5 sm:px-6 md:px-8 md:py-6">
         <div className="grid grid-cols-1 gap-5 lg:grid-cols-[minmax(0,1fr)_20rem]">
           <div className="space-y-5">
-            <section className="card-soft p-5">
+            <section className="card-soft p-4 sm:p-5">
               <h2 className="text-sm font-medium">Active session</h2>
               <p className="mb-4 text-xs text-muted-foreground">
                 Drives fee cycles, attendance and report cards.
@@ -200,7 +200,7 @@ function AcademicYear() {
               </div>
             </section>
 
-            <section className="card-soft p-5">
+            <section className="card-soft p-4 sm:p-5">
               <div className="mb-4 flex items-center justify-between gap-3">
                 <div>
                   <h2 className="text-sm font-medium">Terms</h2>
@@ -253,7 +253,7 @@ function AcademicYear() {
               </div>
             </section>
 
-            <section className="card-soft p-5">
+            <section className="card-soft p-4 sm:p-5">
               <h2 className="text-sm font-medium">Holiday calendar</h2>
               <p className="mb-4 text-xs text-muted-foreground">
                 Excluded from attendance and timetable generation.
@@ -331,7 +331,7 @@ function AcademicYear() {
           </div>
 
           <aside className="space-y-5">
-            <section className="card-soft p-5">
+            <section className="card-soft p-4 sm:p-5">
               <h2 className="text-sm font-medium">Working days</h2>
               <p className="mb-4 text-xs text-muted-foreground">Used for attendance registers.</p>
               <div className="flex flex-wrap gap-2">
@@ -358,7 +358,7 @@ function AcademicYear() {
               </p>
             </section>
 
-            <section className="card-soft p-5">
+            <section className="card-soft p-4 sm:p-5">
               <h2 className="text-sm font-medium">Rules</h2>
               <div className="mt-4 space-y-4">
                 <div className="flex items-start justify-between gap-3">
@@ -388,7 +388,7 @@ function AcademicYear() {
               </div>
             </section>
 
-            <section className="card-soft p-5">
+            <section className="card-soft p-4 sm:p-5">
               <h2 className="text-sm font-medium">Summary</h2>
               <dl className="mt-3 space-y-2 text-xs">
                 <div className="flex items-center justify-between">
