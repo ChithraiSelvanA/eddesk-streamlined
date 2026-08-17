@@ -157,21 +157,18 @@ function AcademicYear() {
                 </Field>
                 <Field label="Session starts">
                   <DateField
-                    label=""
                     value={session.start}
                     onChange={(v) => { setSession((s) => ({ ...s, start: v })); touch(); }}
                   />
                 </Field>
                 <Field label="Session ends">
                   <DateField
-                    label=""
                     value={session.end}
                     onChange={(v) => { setSession((s) => ({ ...s, end: v })); touch(); }}
                   />
                 </Field>
                 <Field label="Result day">
                   <DateField
-                    label=""
                     value={session.resultDay}
                     onChange={(v) => { setSession((s) => ({ ...s, resultDay: v })); touch(); }}
                   />
@@ -206,7 +203,6 @@ function AcademicYear() {
                     <div className="flex-1">
                       <Field label="Starts">
                         <DateField
-                          label=""
                           value={t.start}
                           onChange={(v) => setTerm(t.id, "start", v)}
                         />
@@ -215,7 +211,6 @@ function AcademicYear() {
                     <div className="flex-1">
                       <Field label="Ends">
                         <DateField
-                          label=""
                           value={t.end}
                           onChange={(v) => setTerm(t.id, "end", v)}
                         />
