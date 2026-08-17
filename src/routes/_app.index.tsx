@@ -81,7 +81,7 @@ function Dashboard() {
         </section>
 
         {/* Quick actions */}
-        <section>
+        <section id="quick-actions" className="scroll-mt-20">
           <SectionTitle title="Quick actions" />
           <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
             <QuickAction icon={<UserPlus className="h-4 w-4" />} label="New admission" to="/students" hint="Add a student and parent" />
