@@ -37,7 +37,15 @@ function ParentProfile() {
   const waNumber = normalizeMobile(p.mobile).replace(/^0+/, "");
   const waHref = `https://wa.me/${waNumber.length > 10 ? waNumber : `91${waNumber}`}`;
   const feesSearch = { tab: "pending", pay: payFor?.id };
-  const commSearch = { tab: "chat", chat: chatId };
+  const commSearch = {
+    tab: "chat",
+    chat: chatId,
+    parent: p.name,
+    parentInfo: children.length
+      ? `Parent of ${children.map(c => c.name.split(" ")[0]).join(", ")}`
+      : p.occupation,
+  };
+  const openWhatsApp = () => window.open(waHref, "_blank", "noopener,noreferrer");
 
   return (
     <div>
@@ -50,8 +58,8 @@ function ParentProfile() {
             <Button variant="outline" size="sm" asChild>
               <a href={`tel:${normalizeMobile(p.mobile)}`}><Phone className="h-4 w-4" /> Call</a>
             </Button>
-            <Button variant="outline" size="sm" asChild>
-              <a href={waHref} target="_blank" rel="noopener noreferrer"><MessageCircle className="h-4 w-4" /> WhatsApp</a>
+            <Button variant="outline" size="sm" onClick={openWhatsApp}>
+              <MessageCircle className="h-4 w-4" /> WhatsApp
             </Button>
             <Button variant="outline" size="sm" asChild>
               <Link to="/communication" search={commSearch}><MessageSquare className="h-4 w-4" /> Message</Link>
@@ -68,8 +76,8 @@ function ParentProfile() {
           <Button variant="outline" className="h-10 flex-1 text-xs" asChild>
             <a href={`tel:${normalizeMobile(p.mobile)}`}><Phone className="h-4 w-4" /> Call</a>
           </Button>
-          <Button variant="outline" className="h-10 flex-1 text-xs" asChild>
-            <a href={waHref} target="_blank" rel="noopener noreferrer"><MessageCircle className="h-4 w-4" /> WhatsApp</a>
+          <Button variant="outline" className="h-10 flex-1 text-xs" onClick={openWhatsApp}>
+            <MessageCircle className="h-4 w-4" /> WhatsApp
           </Button>
         </div>
         <div className="mt-2 flex items-center gap-2">

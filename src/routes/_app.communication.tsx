@@ -12,9 +12,11 @@ import { Megaphone, Plus, Bell, Calendar, MessageSquare, Inbox } from "lucide-re
 
 
 export const Route = createFileRoute("/_app/communication")({
-  validateSearch: (search: Record<string, unknown>): { tab?: string; chat?: string } => ({
+  validateSearch: (search: Record<string, unknown>): { tab?: string; chat?: string; parent?: string; parentInfo?: string } => ({
     tab: typeof search.tab === "string" ? search.tab : undefined,
     chat: typeof search.chat === "string" ? search.chat : undefined,
+    parent: typeof search.parent === "string" ? search.parent : undefined,
+    parentInfo: typeof search.parentInfo === "string" ? search.parentInfo : undefined,
   }),
   head: () => ({
     meta: [
@@ -29,7 +31,7 @@ export const Route = createFileRoute("/_app/communication")({
 
 function Communication() {
   const search = Route.useSearch();
-  const [tab, setTab] = useState(search.chat ? "chat" : search.tab ?? "notices");
+  const [tab, setTab] = useState(search.chat || search.parent ? "chat" : search.tab ?? "notices");
   const [notices, setNotices] = useState<Notice[]>(seedNotices);
   const [events, setEvents] = useState<EventItem[]>(seedEvents);
 
@@ -139,7 +141,7 @@ function Communication() {
           </TabsContent>
 
           <TabsContent value="chat" className="mt-4 md:mt-6">
-            <ChatPanel initialChatId={search.chat} />
+            <ChatPanel initialChatId={search.chat} initialParent={search.parent} initialParentInfo={search.parentInfo} />
           </TabsContent>
 
 

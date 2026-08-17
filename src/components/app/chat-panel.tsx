@@ -27,12 +27,35 @@ const threadMessages: Record<string, Msg[]> = {
   ],
 };
 
-export function ChatPanel({ initialChatId }: { initialChatId?: string }) {
-  const valid = initialChatId && chats.some((c) => c.id === initialChatId) ? initialChatId : undefined;
-  const [activeId, setActiveId] = useState(valid ?? chats[0].id);
+export function ChatPanel({
+  initialChatId,
+  initialParent,
+  initialParentInfo,
+}: {
+  initialChatId?: string;
+  initialParent?: string;
+  initialParentInfo?: string;
+}) {
+  const matched =
+    (initialChatId ? chats.find((c) => c.id === initialChatId) : undefined) ??
+    (initialParent ? chats.find((c) => c.parentName === initialParent) : undefined);
+  const synthetic =
+    !matched && initialParent
+      ? {
+          id: `new-${initialParent}`,
+          parentName: initialParent,
+          classInfo: initialParentInfo ?? "New conversation",
+          lastMessage: "No messages yet — say hello",
+          time: "now",
+          unread: 0,
+          hue: 265,
+        }
+      : undefined;
+  const threads = synthetic ? [synthetic, ...chats] : chats;
+  const [activeId, setActiveId] = useState(matched?.id ?? synthetic?.id ?? chats[0].id);
   const [fullscreen, setFullscreen] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(Boolean(valid));
-  const active = chats.find((c) => c.id === activeId) ?? chats[0];
+  const [mobileOpen, setMobileOpen] = useState(Boolean(matched || synthetic));
+  const active = threads.find((c) => c.id === activeId) ?? threads[0];
   const messages = threadMessages[active.id] ?? [];
 
   return (
@@ -43,6 +66,7 @@ export function ChatPanel({ initialChatId }: { initialChatId?: string }) {
           <MessengerThread thread={active} messages={messages} onBack={() => setMobileOpen(false)} />
         ) : (
           <MessengerList
+            threads={threads}
             activeId={activeId}
             onOpen={(id) => {
               setActiveId(id);
@@ -66,7 +90,7 @@ export function ChatPanel({ initialChatId }: { initialChatId?: string }) {
           )}
         >
           <div className="overflow-y-auto border-r border-border/60">
-            {chats.map((c) => (
+            {threads.map((c) => (
               <button
                 key={c.id}
                 onClick={() => setActiveId(c.id)}
@@ -168,7 +192,15 @@ function Composer({ rounded }: { rounded?: boolean }) {
 
 /* ---------- Mobile: Messenger ---------- */
 
-function MessengerList({ activeId, onOpen }: { activeId: string; onOpen: (id: string) => void }) {
+function MessengerList({
+  threads,
+  activeId,
+  onOpen,
+}: {
+  threads: (typeof chats)[number][];
+  activeId: string;
+  onOpen: (id: string) => void;
+}) {
   return (
     <div className="-mx-1">
       <div className="px-1 pb-3">
@@ -177,7 +209,7 @@ function MessengerList({ activeId, onOpen }: { activeId: string; onOpen: (id: st
         </div>
       </div>
       <ul>
-        {chats.map((c) => (
+        {threads.map((c) => (
           <li key={c.id}>
             <button
               onClick={() => onOpen(c.id)}
