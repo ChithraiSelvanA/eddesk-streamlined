@@ -23,6 +23,7 @@ import { Route as AppSettingsStaffRouteImport } from './routes/_app.settings.sta
 import { Route as AppSettingsSecurityRouteImport } from './routes/_app.settings.security'
 import { Route as AppSettingsSchoolProfileRouteImport } from './routes/_app.settings.school-profile'
 import { Route as AppSettingsBrandingRouteImport } from './routes/_app.settings.branding'
+import { Route as AppSettingsBillingRouteImport } from './routes/_app.settings.billing'
 import { Route as AppSettingsAcademicYearRouteImport } from './routes/_app.settings.academic-year'
 import { Route as AppParentsListRouteImport } from './routes/_app.parents.list'
 import { Route as AppParentsParentIdRouteImport } from './routes/_app.parents.$parentId'
@@ -100,6 +101,11 @@ const AppSettingsBrandingRoute = AppSettingsBrandingRouteImport.update({
   path: '/settings/branding',
   getParentRoute: () => AppRoute,
 } as any)
+const AppSettingsBillingRoute = AppSettingsBillingRouteImport.update({
+  id: '/settings/billing',
+  path: '/settings/billing',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppSettingsAcademicYearRoute = AppSettingsAcademicYearRouteImport.update({
   id: '/settings/academic-year',
   path: '/settings/academic-year',
@@ -142,6 +148,7 @@ export interface FileRoutesByFullPath {
   '/parents/$parentId': typeof AppParentsParentIdRoute
   '/parents/list': typeof AppParentsListRoute
   '/settings/academic-year': typeof AppSettingsAcademicYearRoute
+  '/settings/billing': typeof AppSettingsBillingRoute
   '/settings/branding': typeof AppSettingsBrandingRoute
   '/settings/school-profile': typeof AppSettingsSchoolProfileRoute
   '/settings/security': typeof AppSettingsSecurityRoute
@@ -163,6 +170,7 @@ export interface FileRoutesByTo {
   '/parents/$parentId': typeof AppParentsParentIdRoute
   '/parents/list': typeof AppParentsListRoute
   '/settings/academic-year': typeof AppSettingsAcademicYearRoute
+  '/settings/billing': typeof AppSettingsBillingRoute
   '/settings/branding': typeof AppSettingsBrandingRoute
   '/settings/school-profile': typeof AppSettingsSchoolProfileRoute
   '/settings/security': typeof AppSettingsSecurityRoute
@@ -186,6 +194,7 @@ export interface FileRoutesById {
   '/_app/parents/$parentId': typeof AppParentsParentIdRoute
   '/_app/parents/list': typeof AppParentsListRoute
   '/_app/settings/academic-year': typeof AppSettingsAcademicYearRoute
+  '/_app/settings/billing': typeof AppSettingsBillingRoute
   '/_app/settings/branding': typeof AppSettingsBrandingRoute
   '/_app/settings/school-profile': typeof AppSettingsSchoolProfileRoute
   '/_app/settings/security': typeof AppSettingsSecurityRoute
@@ -209,6 +218,7 @@ export interface FileRouteTypes {
     | '/parents/$parentId'
     | '/parents/list'
     | '/settings/academic-year'
+    | '/settings/billing'
     | '/settings/branding'
     | '/settings/school-profile'
     | '/settings/security'
@@ -230,6 +240,7 @@ export interface FileRouteTypes {
     | '/parents/$parentId'
     | '/parents/list'
     | '/settings/academic-year'
+    | '/settings/billing'
     | '/settings/branding'
     | '/settings/school-profile'
     | '/settings/security'
@@ -252,6 +263,7 @@ export interface FileRouteTypes {
     | '/_app/parents/$parentId'
     | '/_app/parents/list'
     | '/_app/settings/academic-year'
+    | '/_app/settings/billing'
     | '/_app/settings/branding'
     | '/_app/settings/school-profile'
     | '/_app/settings/security'
@@ -369,6 +381,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppSettingsBrandingRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/settings/billing': {
+      id: '/_app/settings/billing'
+      path: '/settings/billing'
+      fullPath: '/settings/billing'
+      preLoaderRoute: typeof AppSettingsBillingRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/settings/academic-year': {
       id: '/_app/settings/academic-year'
       path: '/settings/academic-year'
@@ -435,6 +454,7 @@ interface AppRouteChildren {
   AppParentsParentIdRoute: typeof AppParentsParentIdRoute
   AppParentsListRoute: typeof AppParentsListRoute
   AppSettingsAcademicYearRoute: typeof AppSettingsAcademicYearRoute
+  AppSettingsBillingRoute: typeof AppSettingsBillingRoute
   AppSettingsBrandingRoute: typeof AppSettingsBrandingRoute
   AppSettingsSchoolProfileRoute: typeof AppSettingsSchoolProfileRoute
   AppSettingsSecurityRoute: typeof AppSettingsSecurityRoute
@@ -456,6 +476,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppParentsParentIdRoute: AppParentsParentIdRoute,
   AppParentsListRoute: AppParentsListRoute,
   AppSettingsAcademicYearRoute: AppSettingsAcademicYearRoute,
+  AppSettingsBillingRoute: AppSettingsBillingRoute,
   AppSettingsBrandingRoute: AppSettingsBrandingRoute,
   AppSettingsSchoolProfileRoute: AppSettingsSchoolProfileRoute,
   AppSettingsSecurityRoute: AppSettingsSecurityRoute,
