@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { StatusPill } from "@/components/app/status-pill";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { MobileTabNav } from "@/components/app/mobile-tab-nav";
+import { RecordPaymentDialog } from "@/components/app/record-payment-dialog";
 import { Phone, Mail, MessageSquare, Wallet, ChevronRight, Users, Inbox } from "lucide-react";
 
 
@@ -32,6 +33,7 @@ function ParentProfile() {
   const children = allStudents.filter(s => p.childIds.includes(s.id));
   const parentChats = chats.filter(c => c.parentName === p.name);
   const [tab, setTab] = useState("children");
+  const payFor = children.find(c => (c.feeDue ?? 0) > 0) ?? children[0];
 
   return (
     <div>
@@ -41,16 +43,31 @@ function ParentProfile() {
         description={`${p.occupation} · ${p.mobile}`}
         actions={
           <div className="hidden items-center gap-2 md:flex">
-            <Button variant="outline" size="sm"><MessageSquare className="h-4 w-4" /> Message</Button>
-            <Button size="sm"><Wallet className="h-4 w-4" /> Record payment</Button>
+            <Button variant="outline" size="sm" asChild>
+              <Link to="/communication"><MessageSquare className="h-4 w-4" /> Message</Link>
+            </Button>
+            <RecordPaymentDialog
+              studentName={payFor?.name ?? p.name}
+              admissionNo={payFor?.admissionNo ?? "—"}
+              due={p.pendingTotal}
+              trigger={<Button size="sm"><Wallet className="h-4 w-4" /> Record payment</Button>}
+            />
           </div>
         }
       />
 
       <div className="sticky top-14 z-30 flex items-center gap-2 border-b border-border bg-surface/95 p-2 backdrop-blur md:hidden">
-        <Button variant="outline" className="h-10 flex-1 text-xs"><MessageSquare className="h-4 w-4" /> Message</Button>
-        <Button className="h-10 flex-1 text-xs"><Wallet className="h-4 w-4" /> Record payment</Button>
+        <Button variant="outline" className="h-10 flex-1 text-xs" asChild>
+          <Link to="/communication"><MessageSquare className="h-4 w-4" /> Message</Link>
+        </Button>
+        <RecordPaymentDialog
+          studentName={payFor?.name ?? p.name}
+          admissionNo={payFor?.admissionNo ?? "—"}
+          due={p.pendingTotal}
+          trigger={<Button className="h-10 flex-1 text-xs"><Wallet className="h-4 w-4" /> Record payment</Button>}
+        />
       </div>
+
 
       <div className="mx-auto max-w-[1400px] px-3 py-4 pb-24 sm:px-6 md:px-8 md:py-6 md:pb-6">
         <div className="card-soft mb-4 flex flex-col gap-4 p-4 sm:p-6 md:mb-6 md:flex-row md:items-center md:gap-5">
