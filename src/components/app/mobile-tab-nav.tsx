@@ -1,14 +1,29 @@
+import { scrollToId } from "@/lib/scroll-to";
+
 export type TabItem = { value: string; label: string; icon: React.ReactNode };
 
 export function MobileTabNav({
   items,
   value,
   onChange,
+  scrollTargetId,
+  scrollOffset = 108,
 }: {
   items: TabItem[];
   value: string;
   onChange: (v: string) => void;
+  /** id of the element to scroll into view after switching tab */
+  scrollTargetId?: string;
+  scrollOffset?: number;
 }) {
+  const handle = (v: string) => {
+    onChange(v);
+    if (scrollTargetId) {
+      // let the new panel mount before measuring
+      requestAnimationFrame(() => scrollToId(scrollTargetId, scrollOffset));
+    }
+  };
+
   return (
     <nav
       aria-label="Sections"
@@ -23,7 +38,7 @@ export function MobileTabNav({
               <button
                 key={i.value}
                 type="button"
-                onClick={() => onChange(i.value)}
+                onClick={() => handle(i.value)}
                 aria-current={on ? "true" : undefined}
                 className={
                   "flex min-w-[4.25rem] flex-1 flex-col items-center gap-1 rounded-xl px-2 py-1.5 text-[10px] font-medium transition-colors " +
