@@ -3,12 +3,14 @@ import { PageHeader } from "@/components/app/page-header";
 import { classes, students, smartGroupDefs, CURRENT_YEAR } from "@/data/mock";
 import { Button } from "@/components/ui/button";
 import { NewAdmissionButton } from "@/components/app/new-admission-button";
-import { Search, ArrowRight, Users, Wallet, Bus, CalendarPlus, TrendingDown, AlertTriangle } from "lucide-react";
+import { Search, ArrowRight, Users, Wallet, Bus, CalendarPlus, TrendingDown, AlertTriangle, Upload } from "lucide-react";
+import { toast } from "sonner";
 
 import { AvatarMono } from "@/components/app/avatar-mono";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { StatusPill } from "@/components/app/status-pill";
+
 
 export const Route = createFileRoute("/_app/students/")({
   head: () => ({
@@ -30,7 +32,32 @@ const groupIcons: Record<string, typeof Users> = {
   "low-attendance": TrendingDown,
 };
 
+function ImportCsvButton({ className }: { className?: string }) {
+  const ref = useRef<HTMLInputElement>(null);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      const text = String(reader.result || "");
+      const rows = text.split(/\r?\n/).filter(Boolean).length - 1; // minus header
+      toast.success(`CSV imported`, { description: `${file.name} · ${Math.max(rows, 0)} students imported.` });
+    };
+    reader.readAsText(file);
+    e.target.value = "";
+  };
+  return (
+    <>
+      <input type="file" accept=".csv" ref={ref} className="hidden" onChange={handleChange} />
+      <Button type="button" variant="outline" size="sm" className={className} onClick={() => ref.current?.click()}>
+        <Upload className="h-4 w-4" /> Import CSV
+      </Button>
+    </>
+  );
+}
+
 function StudentsIndex() {
+
   const [mode, setMode] = useState<"name" | "admission">("name");
   const [q, setQ] = useState("");
   const navigate = useNavigate();
@@ -55,6 +82,8 @@ function StudentsIndex() {
   const openStudent = (s: (typeof students)[number]) =>
     navigate({ to: "/students/$classId/$studentId", params: { classId: s.classId, studentId: s.id } });
 
+  const inputRef = useRef<HTMLInputElement>(null);
+
   return (
     <div>
       <PageHeader
@@ -62,14 +91,20 @@ function StudentsIndex() {
         title="Find a student"
         description={`${students.length.toLocaleString()} students · ${classes.length} classrooms. Search directly, or start from a smart group.`}
         actions={
-          <>
-            <Button variant="outline" size="sm">Import CSV</Button>
+          <div className="hidden items-center gap-2 md:flex">
+            <ImportCsvButton />
             <NewAdmissionButton />
-          </>
+          </div>
         }
       />
 
+      <div className="sticky top-14 z-30 flex items-center gap-2 border-b border-border bg-surface/95 p-2 backdrop-blur md:hidden">
+        <ImportCsvButton className="flex-1" />
+        <NewAdmissionButton className="flex-1" />
+      </div>
+
       <div className="mx-auto max-w-[1400px] px-4 py-6 sm:px-6 md:px-8 md:py-8">
+
         {/* Normal search */}
         <section className="card-soft p-6">
           <h2 className="text-sm font-medium">Normal search</h2>
