@@ -427,7 +427,7 @@ function StaffAccess() {
 
         <div className="grid grid-cols-1 gap-3 lg:grid-cols-3">
           <div className="card-soft p-4 sm:p-5 lg:col-span-2">
-            <div className="flex flex-wrap items-center justify-between gap-3">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <h2 className="text-sm font-semibold">Role permissions</h2>
                 <p className="text-xs text-muted-foreground">
@@ -435,7 +435,7 @@ function StaffAccess() {
                 </p>
               </div>
               <Select value={activeRole} onValueChange={(v) => setActiveRole(v as Role)}>
-                <SelectTrigger className="h-9 w-[170px] bg-surface">
+                <SelectTrigger className="h-9 w-full bg-surface sm:w-[170px]">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -468,7 +468,7 @@ function StaffAccess() {
             </div>
           </div>
 
-          <div className="card-soft space-y-4 p-5">
+          <div className="card-soft space-y-4 p-4 sm:p-5">
             <div className="flex items-center gap-2">
               <Shield className="h-4 w-4 text-muted-foreground" />
               <h2 className="text-sm font-semibold">Access rules</h2>
@@ -500,6 +500,7 @@ function StaffAccess() {
             </Button>
           </div>
         </div>
+
       </div>
     </div>
   );
