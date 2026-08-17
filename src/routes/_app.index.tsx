@@ -154,7 +154,9 @@ function Dashboard() {
           </ActionCard>
 
           <ActionCard
+            id="leave-requests"
             title="Leave requests"
+
             hint={`${pendingLeaves} awaiting review`}
             cta={{ label: "Review all", to: "/communication" }}
           >
