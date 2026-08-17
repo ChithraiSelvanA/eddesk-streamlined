@@ -91,7 +91,7 @@ function Security() {
         description="Sign-in rules, two-step verification, sessions and audit trail."
       />
 
-      <div className="mx-auto grid max-w-[1400px] grid-cols-1 gap-4 px-4 py-4 sm:py-5 sm:px-6 md:px-8 md:py-6 lg:grid-cols-3">
+      <div className="mx-auto grid max-w-[1400px] grid-cols-1 gap-3 px-3 py-3 pb-28 sm:gap-4 sm:px-4 sm:py-4 sm:pb-24 md:px-6 md:py-5 md:pb-8 lg:grid-cols-3 lg:px-8 lg:py-6">
         <div className="space-y-4 lg:col-span-2">
           <section className="card-soft p-4 sm:p-5">
             <div className="mb-1 flex items-center gap-2">
