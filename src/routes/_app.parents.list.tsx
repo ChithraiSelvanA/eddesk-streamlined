@@ -6,7 +6,15 @@ import { AvatarMono } from "@/components/app/avatar-mono";
 import { StatusPill } from "@/components/app/status-pill";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Download, ChevronRight, Bus } from "lucide-react";
+import { Download, ChevronRight, Bus, Wallet, MessageSquare, Users, CalendarPlus } from "lucide-react";
+
+const groupIcons: Record<string, typeof Users> = {
+  "pending-dues": Wallet,
+  "unread-chats": MessageSquare,
+  "multiple-children": Users,
+  "bus-children": Bus,
+  "new-parents": CalendarPlus,
+};
 
 type ListSearch = { group: string };
 
