@@ -27,6 +27,7 @@ export function DateField({
         <PopoverTrigger asChild>
           <Button
             variant="outline"
+            aria-label={date ? `${label} ${format(date, "dd MMM yyyy")}` : label}
             className={cn(
               "w-full justify-start text-left font-normal h-9 px-3",
               !date && "text-muted-foreground"
