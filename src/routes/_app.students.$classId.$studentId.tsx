@@ -111,7 +111,7 @@ function StudentProfile() {
           <AvatarMono name={s.name} hue={s.avatarHue} size={48} className="shrink-0 md:h-[72px] md:w-[72px]" />
           <div className="min-w-0 flex-1">
             <div className="flex flex-wrap items-center gap-1.5 md:gap-2">
-              <h2 className="w-full truncate text-[17px] font-semibold tracking-tight md:w-auto md:text-xl">{s.name}</h2>
+              <h2 className="hidden truncate text-[17px] font-semibold tracking-tight md:block md:text-xl">{s.name}</h2>
               <StatusPill tone="info">{s.gender === "M" ? "Male" : "Female"}</StatusPill>
               <StatusPill tone={s.feeStatus === "paid" ? "success" : s.feeStatus === "due" ? "warning" : "danger"}>
                 {s.feeStatus === "paid" ? "Fees paid" : `Fees ${s.feeStatus} · ₹${s.feeDue.toLocaleString()}`}
