@@ -306,10 +306,10 @@ function Fees() {
       </div>
 
       <div className="mx-auto max-w-[1400px] px-4 py-5 pb-24 sm:px-6 md:px-8 md:py-6 space-y-6 md:pb-6">
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
           <Stat title="Collected this month" value={`₹${collectedThisMonth.toLocaleString()}`} icon={<Wallet className="h-4 w-4" />} trend="+12%" />
           <Stat title="Pending" value={`₹${pendingTotal.toLocaleString()}`} icon={<Wallet className="h-4 w-4" />} trend="-8%" tone="warn" />
-          <Stat title="Students with dues" value={String(pending.length)} icon={<Wallet className="h-4 w-4" />} />
+          <Stat title="Students with dues" value={String(pending.length)} icon={<Wallet className="h-4 w-4" />} className="col-span-2 sm:col-span-1" />
         </div>
 
         <Tabs value={tab} onValueChange={setTab}>
@@ -324,7 +324,7 @@ function Fees() {
 
           <TabsContent value="pending" className="mt-4 md:mt-6">
             <div className="card-soft overflow-hidden">
-              <div className="grid grid-cols-[1fr_1fr_140px_120px_100px] gap-3 border-b border-border/60 px-5 py-2.5 text-xs font-medium uppercase tracking-wider text-muted-foreground">
+              <div className="hidden md:grid grid-cols-[1fr_1fr_140px_120px_100px] gap-3 border-b border-border/60 px-5 py-2.5 text-xs font-medium uppercase tracking-wider text-muted-foreground">
                 <span>Student</span><span>Class</span><span>Amount</span><span>Status</span><span className="text-right">Action</span>
               </div>
               {pending.map(s => (
@@ -332,16 +332,24 @@ function Fees() {
                   key={s.id}
                   to="/students/$classId/$studentId"
                   params={{ classId: s.classId, studentId: s.id }}
-                  className="grid grid-cols-[1fr_1fr_140px_120px_100px] items-center gap-3 border-b border-border/40 px-5 py-3 text-sm last:border-0 hover:bg-muted/50"
+                  className="flex flex-col gap-2 border-b border-border/40 px-4 py-3 text-sm last:border-0 hover:bg-muted/50 active:bg-muted/60 md:grid md:grid-cols-[1fr_1fr_140px_120px_100px] md:items-center md:gap-3 md:px-5"
                 >
                   <div className="flex items-center gap-3 min-w-0">
                     <AvatarMono name={s.name} hue={s.avatarHue} size={30} />
-                    <div className="min-w-0"><p className="truncate font-medium">{s.name}</p><p className="truncate text-xs text-muted-foreground">{s.admissionNo}</p></div>
+                    <div className="min-w-0">
+                      <p className="truncate font-medium">{s.name}</p>
+                      <p className="truncate text-xs text-muted-foreground">
+                        {s.admissionNo}
+                        <span className="md:hidden"> · {s.className}</span>
+                      </p>
+                    </div>
                   </div>
-                  <span className="text-muted-foreground">{s.className}</span>
-                  <span className="tabular-nums font-medium">₹{s.feeDue.toLocaleString()}</span>
-                  <StatusPill tone={s.feeStatus === "overdue" ? "danger" : "warning"}>{s.feeStatus}</StatusPill>
-                  <span className="text-right text-xs text-muted-foreground">Open profile →</span>
+                  <span className="hidden md:inline text-muted-foreground">{s.className}</span>
+                  <div className="flex items-center justify-between gap-3 md:contents">
+                    <span className="tabular-nums font-medium">₹{s.feeDue.toLocaleString()}</span>
+                    <StatusPill tone={s.feeStatus === "overdue" ? "danger" : "warning"}>{s.feeStatus}</StatusPill>
+                    <span className="hidden md:block text-right text-xs text-muted-foreground">Open profile →</span>
+                  </div>
                 </Link>
               ))}
               {pending.length === 0 && (
@@ -354,20 +362,30 @@ function Fees() {
 
           <TabsContent value="payments" className="mt-4 md:mt-6">
             <div className="card-soft overflow-hidden">
-              <div className="grid grid-cols-[140px_1fr_1fr_120px_140px] gap-3 border-b border-border/60 px-5 py-2.5 text-xs font-medium uppercase tracking-wider text-muted-foreground">
+              <div className="hidden md:grid grid-cols-[140px_1fr_1fr_120px_140px] gap-3 border-b border-border/60 px-5 py-2.5 text-xs font-medium uppercase tracking-wider text-muted-foreground">
                 <span>Receipt</span><span>Student</span><span>Method</span><span>Date</span><span className="text-right">Amount</span>
               </div>
               {payments.map(p => (
-                <div key={p.id} className="grid grid-cols-[140px_1fr_1fr_120px_140px] items-center gap-3 border-b border-border/40 px-5 py-3 text-sm last:border-0">
-                  <span className="font-mono text-xs text-muted-foreground">{p.receiptNo}</span>
-                  <div><p className="font-medium">{p.studentName}</p><p className="text-xs text-muted-foreground">{p.className}</p></div>
-                  <span className="text-muted-foreground">{p.method}</span>
-                  <span className="text-muted-foreground">{p.date}</span>
-                  <span className="text-right tabular-nums font-medium">₹{p.amount.toLocaleString()}</span>
+                <div key={p.id} className="flex flex-col gap-1.5 border-b border-border/40 px-4 py-3 text-sm last:border-0 md:grid md:grid-cols-[140px_1fr_1fr_120px_140px] md:items-center md:gap-3 md:px-5">
+                  <div className="flex items-center justify-between gap-3 md:contents">
+                    <span className="font-mono text-xs text-muted-foreground">{p.receiptNo}</span>
+                    <div className="min-w-0 md:block">
+                      <p className="truncate font-medium">{p.studentName}</p>
+                      <p className="truncate text-xs text-muted-foreground">{p.className}</p>
+                    </div>
+                  </div>
+                  <span className="hidden md:inline text-muted-foreground">{p.method}</span>
+                  <div className="flex items-center justify-between gap-3 md:contents">
+                    <span className="text-xs text-muted-foreground md:text-sm">
+                      <span className="md:hidden">{p.method.toUpperCase()} · </span>{p.date}
+                    </span>
+                    <span className="text-right tabular-nums font-medium">₹{p.amount.toLocaleString()}</span>
+                  </div>
                 </div>
               ))}
             </div>
           </TabsContent>
+
 
           <TabsContent value="receipts" className="mt-4 md:mt-6">
             <div className="card-soft p-6 text-sm text-muted-foreground">
@@ -401,15 +419,16 @@ function Fees() {
   );
 }
 
-function Stat({ title, value, icon, trend, tone = "neutral" }: { title: string; value: string; icon: React.ReactNode; trend?: string; tone?: "neutral" | "warn" }) {
+function Stat({ title, value, icon, trend, tone = "neutral", className }: { title: string; value: string; icon: React.ReactNode; trend?: string; tone?: "neutral" | "warn"; className?: string }) {
   return (
-    <div className="card-soft p-5">
+    <div className={"card-soft p-4 md:p-5 " + (className ?? "")}>
       <div className="flex items-center justify-between">
         <div className="grid h-8 w-8 place-items-center rounded-md bg-muted text-muted-foreground">{icon}</div>
         {trend && <span className={"text-xs font-medium " + (tone === "warn" ? "text-[oklch(0.4_0.1_75)]" : "text-[color:var(--color-success)]")}>{trend}</span>}
       </div>
-      <p className="mt-4 text-3xl font-semibold tracking-tight tabular-nums">{value}</p>
-      <p className="mt-1 text-sm text-foreground/70">{title}</p>
+      <p className="mt-3 text-xl font-semibold tracking-tight tabular-nums md:mt-4 md:text-3xl">{value}</p>
+      <p className="mt-1 text-xs text-foreground/70 md:text-sm">{title}</p>
     </div>
   );
 }
+
