@@ -274,11 +274,12 @@ function SectionTitle({ title }: { title: string }) {
   );
 }
 
-function ActionCard({ title, hint, cta, children }: {
-  title: string; hint?: string; cta?: { label: string; to: string }; children: React.ReactNode;
+function ActionCard({ id, title, hint, cta, children }: {
+  id?: string; title: string; hint?: string; cta?: { label: string; to: string }; children: React.ReactNode;
 }) {
   return (
-    <div className="card-soft flex flex-col">
+    <div id={id} className="card-soft flex flex-col scroll-mt-20">
+
       <div className="flex items-start justify-between gap-3 border-b border-border/60 px-5 py-3.5">
         <div>
           <h3 className="text-sm font-semibold">{title}</h3>
