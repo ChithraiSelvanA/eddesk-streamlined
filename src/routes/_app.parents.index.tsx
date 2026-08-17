@@ -267,6 +267,7 @@ function ParentsIndex() {
           </div>
         </section>
       </div>
+      <ParentsMobileNav />
     </div>
   );
 }

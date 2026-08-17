@@ -143,6 +143,7 @@ function FilteredParents() {
           })}
         </div>
       </div>
+      <ParentsMobileNav activeGroup={group} />
     </div>
   );
 }
