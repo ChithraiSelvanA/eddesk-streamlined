@@ -31,6 +31,10 @@ function AcademicLayout() {
 
 function AcademicHome() {
   const [tab, setTab] = useState("classes");
+  const [classes, setClasses] = useState<ClassRoom[]>(seedClasses.map((c) => ({ ...c })));
+
+  const upsertClass = (c: ClassRoom) =>
+    setClasses((cur) => (cur.some((x) => x.id === c.id) ? cur.map((x) => (x.id === c.id ? c : x)) : [...cur, c]));
 
   return (
     <div>
@@ -40,8 +44,8 @@ function AcademicHome() {
         description="Academic year 2025–26 · Term 1"
         actions={
           <>
-            <Button variant="outline" size="sm"><CalendarClock className="h-4 w-4" /> Timetable</Button>
-            <Button size="sm"><Plus className="h-4 w-4" /> Add class</Button>
+            <Button variant="outline" size="sm" onClick={() => setTab("timetable")}><CalendarClock className="h-4 w-4" /> Timetable</Button>
+            <ClassDialog onSave={upsertClass} />
           </>
         }
       />
@@ -51,6 +55,7 @@ function AcademicHome() {
           <TabsList className="bg-transparent p-0 gap-1 h-auto border-b border-border rounded-none w-full justify-start overflow-x-auto flex-nowrap">
             {[
               ["classes", "Classes", classes.length],
+
               ["subjects", "Subjects", subjects.length],
               ["teachers", "Teachers", teachers.length],
               ["timetable", "Timetable"],
