@@ -107,17 +107,17 @@ function StudentProfile() {
 
       <div className="mx-auto max-w-[1400px] px-3 py-4 sm:px-4 md:px-8 md:py-6">
         {/* Hero card */}
-        <div className="card-soft mb-4 flex flex-col gap-4 p-4 md:mb-6 md:flex-row md:items-center md:gap-5 md:p-6">
-          <AvatarMono name={s.name} hue={s.avatarHue} size={64} className="md:h-[72px] md:w-[72px]" />
+        <div className="card-soft mb-4 flex items-start gap-3 p-3.5 md:mb-6 md:items-center md:gap-5 md:p-6">
+          <AvatarMono name={s.name} hue={s.avatarHue} size={48} className="shrink-0 md:h-[72px] md:w-[72px]" />
           <div className="min-w-0 flex-1">
-            <div className="flex flex-wrap items-center gap-2">
-              <h2 className="text-lg font-semibold tracking-tight md:text-xl">{s.name}</h2>
+            <div className="flex flex-wrap items-center gap-1.5 md:gap-2">
+              <h2 className="w-full truncate text-[17px] font-semibold tracking-tight md:w-auto md:text-xl">{s.name}</h2>
               <StatusPill tone="info">{s.gender === "M" ? "Male" : "Female"}</StatusPill>
               <StatusPill tone={s.feeStatus === "paid" ? "success" : s.feeStatus === "due" ? "warning" : "danger"}>
                 {s.feeStatus === "paid" ? "Fees paid" : `Fees ${s.feeStatus} · ₹${s.feeDue.toLocaleString()}`}
               </StatusPill>
             </div>
-            <div className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2 text-sm md:grid-cols-4 md:gap-x-6">
+            <div className="mt-3 grid grid-cols-2 gap-x-3 gap-y-2.5 text-sm md:grid-cols-4 md:gap-x-6">
               <MiniField icon={<IdCard className="h-3.5 w-3.5" />} label="Admission" value={s.admissionNo} />
               <MiniField icon={<BookOpen className="h-3.5 w-3.5" />} label="Class" value={`${cls.name}-${cls.section}`} />
               <MiniField icon={<Cake className="h-3.5 w-3.5" />} label="Date of birth" value={s.dob} />
