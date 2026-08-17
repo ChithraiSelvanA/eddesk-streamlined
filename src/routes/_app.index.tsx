@@ -183,7 +183,9 @@ function Dashboard() {
         {/* Bottom row */}
         <section className="grid grid-cols-1 gap-6 lg:grid-cols-2">
           <ActionCard
+            id="recent-admissions"
             title="Recent admissions"
+
             hint="Last 5"
             cta={{ label: "All students", to: "/students" }}
           >
