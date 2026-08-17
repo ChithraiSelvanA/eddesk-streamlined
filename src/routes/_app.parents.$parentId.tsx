@@ -159,9 +159,10 @@ function ParentProfile() {
 
 function SmallStat({ label, value, tone = "neutral" }: { label: string; value: string; tone?: "neutral" | "warning" }) {
   return (
-    <div className="card-soft p-5">
+    <div className="card-soft p-3.5 sm:p-5">
       <p className="text-xs text-muted-foreground">{label}</p>
-      <p className={"mt-1 text-2xl font-semibold tabular-nums " + (tone === "warning" ? "text-[oklch(0.4_0.1_75)]" : "")}>{value}</p>
+      <p className={"mt-1 text-lg font-semibold tabular-nums sm:text-2xl " + (tone === "warning" ? "text-[oklch(0.4_0.1_75)]" : "")}>{value}</p>
+
     </div>
   );
 }
