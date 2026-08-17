@@ -18,12 +18,15 @@ export function NewAdmissionButton({
   variant = "default",
   label = "New admission",
   fab = false,
+  className,
 }: {
   size?: "sm" | "default";
   variant?: "default" | "outline";
   label?: string;
   fab?: boolean;
+  className?: string;
 }) {
+
   const [open, setOpen] = useState(false);
   const [q, setQ] = useState("");
   const navigate = useNavigate();
@@ -48,9 +51,10 @@ export function NewAdmissionButton({
             <Plus className="h-6 w-6" />
           </button>
         ) : (
-          <Button size={size} variant={variant}>
+          <Button size={size} variant={variant} className={className}>
             <Plus className="h-4 w-4" /> {label}
           </Button>
+
         )}
       </DialogTrigger>
 

@@ -11,7 +11,9 @@ import {
   pendingFeeStudents, chats, leaveRequests, recentAdmissions, events, students,
 } from "@/data/mock";
 import { NewAdmissionButton } from "@/components/app/new-admission-button";
+import { CreateNoticeDialog } from "@/components/app/communication-dialogs";
 import { MobileSectionNav, dashboardSections } from "@/components/app/mobile-section-nav";
+
 
 
 export const Route = createFileRoute("/_app/")({
@@ -40,12 +42,18 @@ function Dashboard() {
         title="Good morning, Rhea"
         description="Here's what needs your attention across Ridgeview Academy today."
         actions={
-          <>
-            <Button variant="outline" size="sm"><Megaphone className="h-4 w-4" /> Create notice</Button>
+          <div className="hidden md:flex items-center gap-2">
+            <CreateNoticeDialog
+              trigger={
+                <Button variant="outline" size="sm"><Megaphone className="h-4 w-4" /> Create notice</Button>
+              }
+              onCreate={() => {}}
+            />
             <NewAdmissionButton />
-          </>
+          </div>
         }
       />
+
 
       <div className="mx-auto max-w-[1400px] px-4 py-6 pb-28 sm:px-6 md:px-8 md:py-8 md:pb-8 space-y-8">
 
@@ -242,10 +250,32 @@ function Dashboard() {
         <div aria-hidden className="h-[65vh] md:hidden" />
       </div>
 
+      {/* Mobile sticky action bar */}
+      <div
+        className="fixed inset-x-0 bottom-14 z-50 md:hidden"
+        style={{ bottom: "calc(3.5rem + env(safe-area-inset-bottom))" }}
+      >
+        <div className="border-t border-border/70 bg-background/90 backdrop-blur-xl px-4 py-2 shadow-[0_-12px_30px_-6px_oklch(0.2_0.02_260/0.15)]">
+          <div className="flex items-center gap-2">
+            <CreateNoticeDialog
+              trigger={
+                <Button variant="outline" size="sm" className="flex-1">
+                  <Megaphone className="h-4 w-4" /> Create notice
+                </Button>
+              }
+              onCreate={() => {}}
+            />
+            <div className="flex-1">
+              <NewAdmissionButton size="sm" variant="default" label="New admission" className="w-full" />
+            </div>
+          </div>
+        </div>
+      </div>
 
-      <NewAdmissionButton fab label="New admission" />
       <MobileSectionNav items={dashboardSections} />
     </div>
+
+
 
   );
 }
