@@ -146,35 +146,43 @@ function StudentList() {
               key={s.id}
               to="/students/$classId/$studentId"
               params={{ classId: cls.id, studentId: s.id }}
-              className="group flex flex-col gap-1 border-b border-border/40 px-3 py-3 text-sm last:border-0 hover:bg-muted/50 sm:px-4 md:grid md:grid-cols-[60px_1fr_140px_1fr_120px_80px_32px] md:items-center md:gap-3 md:px-5 md:py-2.5"
+              className="group block border-b border-border/40 px-3 py-2.5 text-sm last:border-0 active:bg-muted/60 hover:bg-muted/50 sm:px-4 md:grid md:grid-cols-[60px_1fr_140px_1fr_120px_80px_32px] md:items-center md:gap-3 md:px-5 md:py-2.5"
             >
-              <div className="flex items-center justify-between gap-2 md:contents">
-                <div className="flex min-w-0 items-center gap-3 md:contents">
-                  <span className="hidden text-muted-foreground tabular-nums md:block">{s.rollNo}</span>
-                  <div className="flex min-w-0 items-center gap-2 md:gap-3">
-                    <AvatarMono name={s.name} hue={s.avatarHue} size={28} />
-                    <span className="truncate font-medium">{s.name}</span>
-                  </div>
+              {/* Mobile compact row */}
+              <div className="flex items-center gap-3 md:hidden">
+                <AvatarMono name={s.name} hue={s.avatarHue} size={40} />
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-[15px] font-medium leading-tight">{s.name}</p>
+                  <p className="truncate text-[11px] text-muted-foreground">
+                    Roll {s.rollNo} · {s.admissionNo}
+                  </p>
+                  <p className="truncate text-[11px] text-muted-foreground/80">
+                    {s.parentName} · {s.parentMobile}
+                  </p>
                 </div>
-                <ChevronRight className="h-4 w-4 text-muted-foreground md:hidden" />
+                <div className="flex shrink-0 flex-col items-end gap-1">
+                  <StatusPill tone={s.feeStatus === "paid" ? "success" : s.feeStatus === "due" ? "warning" : "danger"}>
+                    {s.feeStatus === "paid" ? "Paid" : `₹${s.feeDue.toLocaleString()}`}
+                  </StatusPill>
+                  <span className="text-[11px] tabular-nums text-muted-foreground">{s.attendance}% att.</span>
+                </div>
+                <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground" />
               </div>
-              <div className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-xs text-muted-foreground md:contents md:text-sm">
-                <span className="md:hidden">Roll</span>
-                <span className="tabular-nums md:hidden">{s.rollNo}</span>
-                <span className="md:hidden">Adm.</span>
-                <span className="truncate">{s.admissionNo}</span>
-                <span className="md:hidden">Parent</span>
-                <div className="min-w-0">
-                  <p className="truncate">{s.parentName}</p>
-                  <p className="truncate text-[10px] text-muted-foreground/80 md:hidden">{s.parentMobile}</p>
-                </div>
-                <span className="md:hidden">Fees</span>
+
+              {/* Desktop grid cells */}
+              <span className="hidden text-muted-foreground tabular-nums md:block">{s.rollNo}</span>
+              <div className="hidden min-w-0 items-center gap-3 md:flex">
+                <AvatarMono name={s.name} hue={s.avatarHue} size={28} />
+                <span className="truncate font-medium">{s.name}</span>
+              </div>
+              <span className="hidden truncate md:block">{s.admissionNo}</span>
+              <span className="hidden truncate md:block">{s.parentName}</span>
+              <div className="hidden md:block">
                 <StatusPill tone={s.feeStatus === "paid" ? "success" : s.feeStatus === "due" ? "warning" : "danger"}>
                   {s.feeStatus === "paid" ? "Paid" : `₹${s.feeDue.toLocaleString()}`}
                 </StatusPill>
-                <span className="md:hidden">Att.</span>
-                <span className="text-xs tabular-nums md:text-right md:text-sm md:text-foreground">{s.attendance}%</span>
               </div>
+              <span className="hidden tabular-nums md:block md:text-right">{s.attendance}%</span>
               <ChevronRight className="hidden h-4 w-4 text-muted-foreground md:block" />
             </Link>
           ))}
