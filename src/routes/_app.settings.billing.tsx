@@ -45,24 +45,26 @@ function Billing() {
   const [autoRenew, setAutoRenew] = useState(true);
   const [gstin, setGstin] = useState("32ABCDE1234F1Z5");
   const [billingEmail, setBillingEmail] = useState("accounts@greenwood.edu.in");
+  const [saved, setSaved] = useState(false);
   const current = PLANS.find((p) => p.id === plan)!;
 
+  const handleSave = () => {
+    setSaved(true);
+    toast.success("Billing details saved");
+    setTimeout(() => setSaved(false), 2000);
+  };
+
   return (
-    <div>
+    <div className="pb-28 sm:pb-0">
       <PageHeader
         crumbs={[{ label: "Settings", to: "/settings" }, { label: "Billing" }]}
         title="Billing"
         description="Your plan, seats, payment method and invoices."
-        actions={
-          <Button onClick={() => toast.success("Billing details saved")}>
-            <Check className="mr-2 h-4 w-4" /> Save details
-          </Button>
-        }
       />
 
-      <div className="mx-auto grid max-w-[1400px] grid-cols-1 gap-4 px-4 py-4 sm:py-5 sm:px-6 md:px-8 md:py-6 lg:grid-cols-3">
+      <div className="mx-auto grid max-w-[1400px] grid-cols-1 gap-4 px-3 py-3 sm:px-6 sm:py-5 md:px-8 md:py-6 lg:grid-cols-3">
         <div className="space-y-4 lg:col-span-2">
-          <section className="card-soft p-4 sm:p-5">
+          <section className="card-soft p-3 sm:p-4 md:p-5">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <div className="flex items-center gap-2">
@@ -76,14 +78,14 @@ function Billing() {
                 <Switch checked={autoRenew} onCheckedChange={(v) => { setAutoRenew(v); toast.info(v ? "Auto-renew on" : "Auto-renew off"); }} />
               </div>
             </div>
-            <Separator className="my-5" />
+            <Separator className="my-4 md:my-5" />
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
               {PLANS.map((p) => {
                 const active = p.id === plan;
                 return (
                   <div
                     key={p.id}
-                    className={`rounded-lg border p-4 ${active ? "border-foreground/40 bg-muted/50" : "border-border/70"}`}
+                    className={`rounded-lg border p-3 sm:p-4 ${active ? "border-foreground/40 bg-muted/50" : "border-border/70"}`}
                   >
                     <p className="text-sm font-medium">{p.name}</p>
                     <p className="mt-1 text-lg font-semibold">{inr(p.price)}<span className="text-xs font-normal text-muted-foreground">/mo</span></p>
@@ -97,7 +99,7 @@ function Billing() {
                     </ul>
                     <Button
                       variant={active ? "secondary" : "outline"}
-                      className="mt-4 w-full"
+                      className="mt-3 w-full sm:mt-4"
                       disabled={active}
                       onClick={() => { setPlan(p.id); toast.success(`Switched to the ${p.name} plan`); }}
                     >
@@ -109,17 +111,17 @@ function Billing() {
             </div>
           </section>
 
-          <section className="card-soft p-4 sm:p-5">
-            <h2 className="mb-4 text-sm font-medium">Invoices</h2>
+          <section className="card-soft p-3 sm:p-4 md:p-5">
+            <h2 className="mb-3 text-sm font-medium sm:mb-4">Invoices</h2>
             <div className="divide-y divide-border/70">
               {invoices.map((i) => (
-                <div key={i.id} className="flex flex-col gap-1 py-3 sm:flex-row sm:items-center sm:justify-between">
+                <div key={i.id} className="flex flex-col gap-2 py-3 sm:flex-row sm:items-center sm:justify-between">
                   <div>
                     <p className="text-sm font-medium">{i.id}</p>
                     <p className="text-xs text-muted-foreground">{i.date}</p>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <span className="text-sm">{inr(i.amount)}</span>
+                  <div className="flex items-center justify-between gap-3 sm:justify-start">
+                    <span className="text-sm font-medium">{inr(i.amount)}</span>
                     <Badge variant="secondary">{i.status}</Badge>
                     <Button variant="ghost" size="sm" onClick={() => toast.success(`${i.id} downloaded`)}>
                       <Download className="h-4 w-4" />
@@ -132,8 +134,8 @@ function Billing() {
         </div>
 
         <div className="space-y-4">
-          <section className="card-soft p-4 sm:p-5">
-            <div className="mb-4 flex items-center gap-2">
+          <section className="card-soft p-3 sm:p-4 md:p-5">
+            <div className="mb-3 flex items-center gap-2 sm:mb-4">
               <CreditCard className="h-4 w-4 text-muted-foreground" />
               <h2 className="text-sm font-medium">Payment method</h2>
             </div>
@@ -146,12 +148,12 @@ function Billing() {
             </Button>
           </section>
 
-          <section className="card-soft p-4 sm:p-5">
-            <div className="mb-4 flex items-center gap-2">
+          <section className="card-soft p-3 sm:p-4 md:p-5">
+            <div className="mb-3 flex items-center gap-2 sm:mb-4">
               <Users className="h-4 w-4 text-muted-foreground" />
               <h2 className="text-sm font-medium">Usage this month</h2>
             </div>
-            <dl className="space-y-2 text-sm">
+            <dl className="grid grid-cols-2 gap-2 text-sm sm:grid-cols-1 sm:space-y-2">
               <div className="flex justify-between"><dt className="text-muted-foreground">Students</dt><dd>842</dd></div>
               <div className="flex justify-between"><dt className="text-muted-foreground">Staff seats</dt><dd>18</dd></div>
               <div className="flex justify-between"><dt className="text-muted-foreground">SMS sent</dt><dd>3,420</dd></div>
@@ -159,9 +161,9 @@ function Billing() {
             </dl>
           </section>
 
-          <section className="card-soft p-4 sm:p-5">
-            <h2 className="mb-4 text-sm font-medium">Billing details</h2>
-            <div className="space-y-4">
+          <section className="card-soft p-3 sm:p-4 md:p-5">
+            <h2 className="mb-3 text-sm font-medium sm:mb-4">Billing details</h2>
+            <div className="space-y-3 sm:space-y-4">
               <div className="space-y-1.5">
                 <Label className="text-xs font-medium text-muted-foreground">Billing email</Label>
                 <Input value={billingEmail} onChange={(e) => setBillingEmail(e.target.value)} />
@@ -172,6 +174,19 @@ function Billing() {
               </div>
             </div>
           </section>
+        </div>
+      </div>
+
+      <div className="fixed bottom-0 left-0 right-0 z-40 border-t border-border/70 bg-background/95 p-3 backdrop-blur sm:static sm:mt-6 sm:border-t-0 sm:bg-transparent sm:p-0 sm:backdrop-blur-none">
+        <div className="mx-auto max-w-[1400px] sm:px-6 md:px-8">
+          <Button
+            className="w-full sm:w-auto"
+            disabled={saved}
+            onClick={handleSave}
+          >
+            {saved ? <Check className="mr-2 h-4 w-4" /> : null}
+            {saved ? "Saved" : "Save details"}
+          </Button>
         </div>
       </div>
     </div>
