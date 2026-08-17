@@ -214,7 +214,7 @@ function ParentsIndex() {
         </section>
 
         {/* Advanced search — smart groups */}
-        <section className="mt-8">
+        <section className="mt-6 md:mt-8">
           <div className="flex flex-wrap items-end justify-between gap-2">
             <div>
               <h2 className="text-sm font-medium">Advanced search</h2>
@@ -223,7 +223,7 @@ function ParentsIndex() {
             <span className="text-xs text-muted-foreground">Academic year {CURRENT_YEAR}</span>
           </div>
 
-          <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-3 grid grid-cols-1 gap-2.5 sm:mt-4 sm:grid-cols-2 sm:gap-3 lg:grid-cols-3">
             {parentGroupDefs.map(g => {
               const list = parents.filter(g.match);
               const Icon = groupIcons[g.id] ?? Users;
@@ -233,22 +233,23 @@ function ParentsIndex() {
                   key={g.id}
                   to="/parents/list"
                   search={{ group: g.id }}
-                  className="card-soft group flex flex-col p-5 transition-shadow hover:shadow-[var(--shadow-elevated)]"
+                  className="card-soft group flex flex-col p-4 transition-shadow hover:shadow-[var(--shadow-elevated)] sm:p-5"
                 >
                   <div className="flex items-start justify-between">
                     <div className="grid h-9 w-9 place-items-center rounded-lg bg-muted text-foreground/70">
                       <Icon className="h-4 w-4" />
                     </div>
-                    <span className="text-2xl font-semibold tabular-nums tracking-tight">{list.length}</span>
+                    <span className="text-xl font-semibold tabular-nums tracking-tight sm:text-2xl">{list.length}</span>
                   </div>
-                  <h3 className="mt-4 text-sm font-medium">{g.label}</h3>
+                  <h3 className="mt-3 text-sm font-medium sm:mt-4">{g.label}</h3>
                   <p className="mt-0.5 text-xs text-muted-foreground">{g.hint}</p>
-                  <div className="mt-4 flex -space-x-2">
+                  <div className="mt-3 flex -space-x-2 sm:mt-4">
                     {preview.map(p => (
                       <div key={p.id} className="rounded-full ring-2 ring-[var(--color-card)]">
                         <AvatarMono name={p.name} hue={200} size={24} />
                       </div>
                     ))}
+
                     {list.length > preview.length && (
                       <div className="grid h-6 w-6 place-items-center rounded-full bg-muted text-[10px] font-medium text-muted-foreground ring-2 ring-[var(--color-card)]">
                         +{list.length - preview.length}
