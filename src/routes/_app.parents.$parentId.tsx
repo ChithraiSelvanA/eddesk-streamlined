@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { StatusPill } from "@/components/app/status-pill";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { MobileTabNav } from "@/components/app/mobile-tab-nav";
+import { RecordPaymentDialog } from "@/components/app/record-payment-dialog";
 import { Phone, Mail, MessageSquare, Wallet, ChevronRight, Users, Inbox } from "lucide-react";
 
 
@@ -32,6 +33,7 @@ function ParentProfile() {
   const children = allStudents.filter(s => p.childIds.includes(s.id));
   const parentChats = chats.filter(c => c.parentName === p.name);
   const [tab, setTab] = useState("children");
+  const payFor = children.find(c => (c.feeDue ?? 0) > 0) ?? children[0];
 
   return (
     <div>
