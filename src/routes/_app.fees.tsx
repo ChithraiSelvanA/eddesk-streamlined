@@ -63,7 +63,7 @@ function exportTab(tab: string, pending: PendingStudent[], payments: Payment[]) 
     filename = tab === "payments" ? "payments.csv" : "receipts.csv";
   } else {
     csv = [
-      "Report,Period",
+      ["Report", "Period"],
       ["Collection summary", "This term"],
       ["Class-wise dues", "Live"],
       ["Overdue students", "> 30 days"],
