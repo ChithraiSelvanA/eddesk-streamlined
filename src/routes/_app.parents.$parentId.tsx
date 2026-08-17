@@ -31,6 +31,7 @@ function ParentProfile() {
   const { p } = Route.useLoaderData();
   const children = allStudents.filter(s => p.childIds.includes(s.id));
   const parentChats = chats.filter(c => c.parentName === p.name);
+  const [tab, setTab] = useState("children");
 
   return (
     <div>
@@ -39,35 +40,41 @@ function ParentProfile() {
         title={p.name}
         description={`${p.occupation} · ${p.mobile}`}
         actions={
-          <>
+          <div className="hidden items-center gap-2 md:flex">
             <Button variant="outline" size="sm"><MessageSquare className="h-4 w-4" /> Message</Button>
             <Button size="sm"><Wallet className="h-4 w-4" /> Record payment</Button>
-          </>
+          </div>
         }
       />
 
-      <div className="mx-auto max-w-[1400px] px-4 py-5 sm:px-6 md:px-8 md:py-6">
-        <div className="card-soft mb-6 flex flex-col gap-5 p-6 md:flex-row md:items-center">
-          <AvatarMono name={p.name} hue={200} size={72} />
+      <div className="sticky top-14 z-30 flex items-center gap-2 border-b border-border bg-surface/95 p-2 backdrop-blur md:hidden">
+        <Button variant="outline" className="h-10 flex-1 text-xs"><MessageSquare className="h-4 w-4" /> Message</Button>
+        <Button className="h-10 flex-1 text-xs"><Wallet className="h-4 w-4" /> Record payment</Button>
+      </div>
+
+      <div className="mx-auto max-w-[1400px] px-3 py-4 pb-24 sm:px-6 md:px-8 md:py-6 md:pb-6">
+        <div className="card-soft mb-4 flex flex-col gap-4 p-4 sm:p-6 md:mb-6 md:flex-row md:items-center md:gap-5">
+          <AvatarMono name={p.name} hue={200} size={72} className="h-14 w-14 md:h-[72px] md:w-[72px]" />
           <div className="flex-1">
             <div className="flex flex-wrap items-center gap-2">
-              <h2 className="text-xl font-semibold tracking-tight">{p.name}</h2>
+              <h2 className="text-lg font-semibold tracking-tight md:text-xl">{p.name}</h2>
               {p.pendingTotal > 0 ? (
                 <StatusPill tone="warning">₹{p.pendingTotal.toLocaleString()} pending</StatusPill>
               ) : (
                 <StatusPill tone="success">All dues cleared</StatusPill>
               )}
             </div>
-            <div className="mt-3 flex flex-wrap gap-4 text-sm text-muted-foreground">
-              <span className="flex items-center gap-1.5"><Phone className="h-3.5 w-3.5" /> {p.mobile}</span>
-              <span className="flex items-center gap-1.5"><Mail className="h-3.5 w-3.5" /> {p.email}</span>
+            <div className="mt-2.5 flex flex-col gap-1.5 text-sm text-muted-foreground md:mt-3 md:flex-row md:flex-wrap md:gap-4">
+              <a href={`tel:${p.mobile}`} className="flex items-center gap-1.5"><Phone className="h-3.5 w-3.5" /> {p.mobile}</a>
+              <a href={`mailto:${p.email}`} className="flex items-center gap-1.5 truncate"><Mail className="h-3.5 w-3.5 shrink-0" /> <span className="truncate">{p.email}</span></a>
             </div>
           </div>
         </div>
 
-        <Tabs defaultValue="children">
-          <TabsList className="bg-transparent p-0 gap-1 h-auto border-b border-border rounded-none w-full justify-start overflow-x-auto flex-nowrap">
+        <Tabs value={tab} onValueChange={setTab} id="parent-tabs">
+          <TabsList className="hidden md:flex bg-transparent p-0 gap-1 h-auto border-b border-border rounded-none w-full justify-start overflow-x-auto flex-nowrap">
             {[["children","Children"],["chats","Chats"],["requests","Requests"],["payments","Payment summary"]].map(([v,l]) => (
+
               <TabsTrigger key={v} value={v}
                 className="rounded-none border-b-2 border-transparent bg-transparent shrink-0 px-3 pb-2.5 pt-1 text-sm text-muted-foreground data-[state=active]:border-foreground data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none">
                 {l}
