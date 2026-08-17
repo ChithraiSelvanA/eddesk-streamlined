@@ -26,10 +26,12 @@ export function ClassDialog({
   mode = "add",
   classRoom,
   onSave,
+  className,
 }: {
   mode?: "add" | "edit";
   classRoom?: ClassRoom;
   onSave: (c: ClassRoom) => void;
+  className?: string;
 }) {
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState<ClassRoom>(
