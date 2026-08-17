@@ -172,8 +172,13 @@ function ParentsIndex() {
                             {p.mobile} · {kids.map(k => `${k.name} (${k.className})`).join(", ") || "No students linked"}
                           </p>
                         </div>
-                        {p.pendingTotal > 0 && <StatusPill tone="warning">₹{p.pendingTotal.toLocaleString()} due</StatusPill>}
-                        <ArrowRight className="h-4 w-4 text-muted-foreground" />
+                        {p.pendingTotal > 0 && (
+                          <span className="hidden shrink-0 sm:block">
+                            <StatusPill tone="warning">₹{p.pendingTotal.toLocaleString()} due</StatusPill>
+                          </span>
+                        )}
+                        <ArrowRight className="h-4 w-4 shrink-0 text-muted-foreground" />
+
                       </Link>
                     );
                   })}
