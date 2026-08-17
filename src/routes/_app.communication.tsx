@@ -7,7 +7,8 @@ import { Button } from "@/components/ui/button";
 import { StatusPill } from "@/components/app/status-pill";
 import { CreateNoticeDialog, NewEventDialog } from "@/components/app/communication-dialogs";
 import { ChatPanel } from "@/components/app/chat-panel";
-import { Megaphone, Plus, Bell, Calendar } from "lucide-react";
+import { MobileTabNav } from "@/components/app/mobile-tab-nav";
+import { Megaphone, Plus, Bell, Calendar, MessageSquare, Inbox } from "lucide-react";
 
 
 export const Route = createFileRoute("/_app/communication")({
@@ -23,6 +24,7 @@ export const Route = createFileRoute("/_app/communication")({
 });
 
 function Communication() {
+  const [tab, setTab] = useState("notices");
   const [notices, setNotices] = useState<Notice[]>(seedNotices);
   const [events, setEvents] = useState<EventItem[]>(seedEvents);
 
@@ -37,7 +39,7 @@ function Communication() {
         title="Communication"
         description="Notices, events, chat and requests — one clean workspace."
         actions={
-          <>
+          <div className="hidden items-center gap-2 md:flex">
             <NewEventDialog
               onCreate={upsertEvent}
               trigger={<Button variant="outline" size="sm"><Calendar className="h-4 w-4" /> New event</Button>}
@@ -46,14 +48,25 @@ function Communication() {
               onCreate={addNotice}
               trigger={<Button size="sm"><Megaphone className="h-4 w-4" /> Create notice</Button>}
             />
-          </>
+          </div>
         }
       />
 
+      <div className="sticky top-14 z-30 flex items-center gap-2 border-b border-border bg-background/95 p-2 backdrop-blur md:hidden">
+        <NewEventDialog
+          onCreate={upsertEvent}
+          trigger={<Button variant="outline" size="sm" className="flex-1"><Calendar className="h-4 w-4" /> New event</Button>}
+        />
+        <CreateNoticeDialog
+          onCreate={addNotice}
+          trigger={<Button size="sm" className="flex-1"><Megaphone className="h-4 w-4" /> Create notice</Button>}
+        />
+      </div>
 
-      <div className="mx-auto max-w-[1400px] px-4 py-5 sm:px-6 md:px-8 md:py-6">
-        <Tabs defaultValue="notices">
-          <TabsList className="bg-transparent p-0 gap-1 h-auto border-b border-border rounded-none w-full justify-start overflow-x-auto flex-nowrap">
+
+      <div className="mx-auto max-w-[1400px] px-4 py-5 pb-24 sm:px-6 md:px-8 md:py-6 md:pb-6">
+        <Tabs id="comm-panel" value={tab} onValueChange={setTab}>
+          <TabsList className="hidden md:flex bg-transparent p-0 gap-1 h-auto border-b border-border rounded-none w-full justify-start overflow-x-auto flex-nowrap">
             {[["notices","Notice board"],["events","Events"],["chat","Chat"],["requests","Requests"],["notifications","Notifications"]].map(([v,l]) => (
               <TabsTrigger key={v} value={v}
                 className="rounded-none border-b-2 border-transparent bg-transparent shrink-0 px-3 pb-2.5 pt-1 text-sm text-muted-foreground data-[state=active]:border-foreground data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none">
@@ -62,7 +75,7 @@ function Communication() {
             ))}
           </TabsList>
 
-          <TabsContent value="notices" className="mt-6">
+          <TabsContent value="notices" className="mt-4 md:mt-6">
             <div className="grid grid-cols-1 gap-3 lg:grid-cols-2">
               {notices.map(n => (
                 <div key={n.id} className="card-soft p-5">
@@ -90,7 +103,7 @@ function Communication() {
             </div>
           </TabsContent>
 
-          <TabsContent value="events" className="mt-6">
+          <TabsContent value="events" className="mt-4 md:mt-6">
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {events.map(e => (
                 <div key={e.id} className="card-soft p-5">
@@ -120,12 +133,12 @@ function Communication() {
             </div>
           </TabsContent>
 
-          <TabsContent value="chat" className="mt-6">
+          <TabsContent value="chat" className="mt-4 md:mt-6">
             <ChatPanel />
           </TabsContent>
 
 
-          <TabsContent value="requests" className="mt-6">
+          <TabsContent value="requests" className="mt-4 md:mt-6">
             <div className="card-soft">
               {leaveRequests.map(l => (
                 <div key={l.id} className="flex flex-wrap items-center gap-4 border-b border-border/40 px-5 py-4 last:border-0">
@@ -143,7 +156,7 @@ function Communication() {
             </div>
           </TabsContent>
 
-          <TabsContent value="notifications" className="mt-6">
+          <TabsContent value="notifications" className="mt-4 md:mt-6">
             <div className="card-soft">
               {[
                 ["Fee reminder sent", "SMS delivered to 42 parents", "Today"],
@@ -160,6 +173,19 @@ function Communication() {
           </TabsContent>
         </Tabs>
       </div>
+
+      <MobileTabNav
+        items={[
+          { value: "notices", label: "Notices", icon: <Megaphone className="h-4 w-4" /> },
+          { value: "events", label: "Events", icon: <Calendar className="h-4 w-4" /> },
+          { value: "chat", label: "Chat", icon: <MessageSquare className="h-4 w-4" /> },
+          { value: "requests", label: "Requests", icon: <Inbox className="h-4 w-4" /> },
+          { value: "notifications", label: "Alerts", icon: <Bell className="h-4 w-4" /> },
+        ]}
+        value={tab}
+        onChange={setTab}
+        scrollTargetId="comm-panel"
+      />
     </div>
   );
 }
