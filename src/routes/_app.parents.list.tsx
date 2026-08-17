@@ -6,7 +6,15 @@ import { AvatarMono } from "@/components/app/avatar-mono";
 import { StatusPill } from "@/components/app/status-pill";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Download, ChevronRight, Bus } from "lucide-react";
+import { Download, ChevronRight, Bus, Wallet, MessageSquare, Users, CalendarPlus } from "lucide-react";
+
+const groupIcons: Record<string, typeof Users> = {
+  "pending-dues": Wallet,
+  "unread-chats": MessageSquare,
+  "multiple-children": Users,
+  "bus-children": Bus,
+  "new-parents": CalendarPlus,
+};
 
 type ListSearch = { group: string };
 
@@ -56,20 +64,26 @@ function FilteredParents() {
         <span className="shrink-0 pr-1 text-xs text-muted-foreground">{list.length}/{base.length}</span>
       </div>
 
-      <div className="mx-auto max-w-[1400px] px-3 py-4 sm:px-6 md:px-8 md:py-6">
-        <div className="-mx-3 mb-3 flex gap-2 overflow-x-auto px-3 pb-1 [scrollbar-width:none] md:mx-0 md:mb-4 md:flex-wrap md:px-0 [&::-webkit-scrollbar]:hidden">
-          {parentGroupDefs.map(g => (
-            <Link
-              key={g.id}
-              to="/parents/list"
-              search={{ group: g.id }}
-              className={`shrink-0 rounded-full border px-3 py-1.5 text-xs ${
-                g.id === group ? "border-foreground bg-foreground text-[color:var(--color-background)]" : "border-border bg-surface hover:bg-muted"
-              }`}
-            >
-              {g.label}
-            </Link>
-          ))}
+      <div className="mx-auto max-w-[1400px] px-3 pb-24 pt-2 sm:px-6 md:px-8 md:py-6 md:pb-6">
+        <div className="sticky top-28 z-30 -mx-3 mb-3 border-b border-border bg-surface/95 px-3 py-2 backdrop-blur md:static md:mx-0 md:mb-4 md:border-0 md:bg-transparent md:p-0 md:backdrop-blur-none">
+          <div className="flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none] md:flex-wrap md:pb-0 [&::-webkit-scrollbar]:hidden">
+            {parentGroupDefs.map(g => {
+              const Icon = groupIcons[g.id] ?? Users;
+              return (
+                <Link
+                  key={g.id}
+                  to="/parents/list"
+                  search={{ group: g.id }}
+                  className={`shrink-0 inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs ${
+                    g.id === group ? "border-foreground bg-foreground text-[color:var(--color-background)]" : "border-border bg-surface hover:bg-muted"
+                  }`}
+                >
+                  <Icon className="h-3.5 w-3.5" />
+                  {g.label}
+                </Link>
+              );
+            })}
+          </div>
         </div>
 
         <div className="mb-3 flex flex-wrap items-center gap-2 md:mb-4">
@@ -94,7 +108,7 @@ function FilteredParents() {
                 key={p.id}
                 to="/parents/$parentId"
                 params={{ parentId: p.id }}
-                className="flex flex-col gap-2.5 border-b border-border/40 px-4 py-3.5 text-sm last:border-0 hover:bg-muted/50 md:grid md:grid-cols-[1fr_150px_1.4fr_120px_100px_32px] md:items-center md:gap-3 md:px-5 md:py-2.5"
+                className="flex flex-col gap-2 border-b border-border/40 px-3 py-3 text-sm last:border-0 hover:bg-muted/50 md:grid md:grid-cols-[1fr_150px_1.4fr_120px_100px_32px] md:items-center md:gap-3 md:px-5 md:py-2.5"
               >
                 <div className="flex min-w-0 items-center gap-3">
                   <AvatarMono name={p.name} hue={200} size={36} />
@@ -142,6 +156,36 @@ function FilteredParents() {
           })}
         </div>
       </div>
+
+      <nav
+        aria-label="Parent groups"
+        className="fixed inset-x-0 bottom-0 z-40 md:hidden"
+        style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
+      >
+        <div className="border-t border-border/70 bg-background/85 backdrop-blur-xl">
+          <div className="flex gap-1 overflow-x-auto px-2 py-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            {parentGroupDefs.map(g => {
+              const Icon = groupIcons[g.id] ?? Users;
+              const on = g.id === group;
+              return (
+                <Link
+                  key={g.id}
+                  to="/parents/list"
+                  search={{ group: g.id }}
+                  aria-current={on ? "page" : undefined}
+                  className={
+                    "flex shrink-0 flex-col items-center gap-1 rounded-xl px-3 py-2 text-[10px] font-medium transition-colors min-w-[4.5rem] " +
+                    (on ? "bg-muted text-foreground" : "text-muted-foreground active:bg-muted/60")
+                  }
+                >
+                  <Icon className={`h-4 w-4 ${on ? "text-foreground" : ""}`} />
+                  <span className="whitespace-nowrap">{g.label}</span>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+      </nav>
     </div>
   );
 }
