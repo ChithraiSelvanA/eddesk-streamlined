@@ -51,9 +51,10 @@ export function NewAdmissionButton({
             <Plus className="h-6 w-6" />
           </button>
         ) : (
-          <Button size={size} variant={variant}>
+          <Button size={size} variant={variant} className={className}>
             <Plus className="h-4 w-4" /> {label}
           </Button>
+
         )}
       </DialogTrigger>
 
