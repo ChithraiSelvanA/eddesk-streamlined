@@ -156,36 +156,6 @@ function FilteredParents() {
           })}
         </div>
       </div>
-
-      <nav
-        aria-label="Parent groups"
-        className="fixed inset-x-0 bottom-0 z-40 md:hidden"
-        style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
-      >
-        <div className="border-t border-border/70 bg-background/85 backdrop-blur-xl">
-          <div className="flex gap-1 overflow-x-auto px-2 py-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            {parentGroupDefs.map(g => {
-              const Icon = groupIcons[g.id] ?? Users;
-              const on = g.id === group;
-              return (
-                <Link
-                  key={g.id}
-                  to="/parents/list"
-                  search={{ group: g.id }}
-                  aria-current={on ? "page" : undefined}
-                  className={
-                    "flex shrink-0 flex-col items-center gap-1 rounded-xl px-3 py-2 text-[10px] font-medium transition-colors min-w-[4.5rem] " +
-                    (on ? "bg-muted text-foreground" : "text-muted-foreground active:bg-muted/60")
-                  }
-                >
-                  <Icon className={`h-4 w-4 ${on ? "text-foreground" : ""}`} />
-                  <span className="whitespace-nowrap">{g.label}</span>
-                </Link>
-              );
-            })}
-          </div>
-        </div>
-      </nav>
     </div>
   );
 }
