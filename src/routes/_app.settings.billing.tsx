@@ -60,9 +60,9 @@ function Billing() {
         }
       />
 
-      <div className="mx-auto grid max-w-[1400px] grid-cols-1 gap-4 px-4 py-5 sm:px-6 md:px-8 md:py-6 lg:grid-cols-3">
+      <div className="mx-auto grid max-w-[1400px] grid-cols-1 gap-4 px-4 py-4 sm:py-5 sm:px-6 md:px-8 md:py-6 lg:grid-cols-3">
         <div className="space-y-4 lg:col-span-2">
-          <section className="card-soft p-5">
+          <section className="card-soft p-4 sm:p-5">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <div className="flex items-center gap-2">
@@ -109,7 +109,7 @@ function Billing() {
             </div>
           </section>
 
-          <section className="card-soft p-5">
+          <section className="card-soft p-4 sm:p-5">
             <h2 className="mb-4 text-sm font-medium">Invoices</h2>
             <div className="divide-y divide-border/70">
               {invoices.map((i) => (
@@ -132,7 +132,7 @@ function Billing() {
         </div>
 
         <div className="space-y-4">
-          <section className="card-soft p-5">
+          <section className="card-soft p-4 sm:p-5">
             <div className="mb-4 flex items-center gap-2">
               <CreditCard className="h-4 w-4 text-muted-foreground" />
               <h2 className="text-sm font-medium">Payment method</h2>
@@ -146,7 +146,7 @@ function Billing() {
             </Button>
           </section>
 
-          <section className="card-soft p-5">
+          <section className="card-soft p-4 sm:p-5">
             <div className="mb-4 flex items-center gap-2">
               <Users className="h-4 w-4 text-muted-foreground" />
               <h2 className="text-sm font-medium">Usage this month</h2>
@@ -159,7 +159,7 @@ function Billing() {
             </dl>
           </section>
 
-          <section className="card-soft p-5">
+          <section className="card-soft p-4 sm:p-5">
             <h2 className="mb-4 text-sm font-medium">Billing details</h2>
             <div className="space-y-4">
               <div className="space-y-1.5">

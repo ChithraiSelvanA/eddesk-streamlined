@@ -97,9 +97,9 @@ function Branding() {
         }
       />
 
-      <div className="mx-auto grid max-w-[1400px] grid-cols-1 gap-4 px-4 py-5 sm:px-6 md:px-8 md:py-6 lg:grid-cols-3">
+      <div className="mx-auto grid max-w-[1400px] grid-cols-1 gap-4 px-4 py-4 sm:py-5 sm:px-6 md:px-8 md:py-6 lg:grid-cols-3">
         <div className="space-y-4 lg:col-span-2">
-          <section className="card-soft p-5">
+          <section className="card-soft p-4 sm:p-5">
             <div className="mb-4 flex items-center gap-2">
               <Palette className="h-4 w-4 text-muted-foreground" />
               <h2 className="text-sm font-medium">Accent colour</h2>
@@ -121,7 +121,7 @@ function Branding() {
             </div>
           </section>
 
-          <section className="card-soft p-5">
+          <section className="card-soft p-4 sm:p-5">
             <h2 className="mb-4 text-sm font-medium">Logo & identity</h2>
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
               <div
@@ -153,7 +153,7 @@ function Branding() {
             </div>
           </section>
 
-          <section className="card-soft p-5">
+          <section className="card-soft p-4 sm:p-5">
             <h2 className="mb-4 text-sm font-medium">Receipt template</h2>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <Field label="Layout">
@@ -199,7 +199,7 @@ function Branding() {
         </div>
 
         <div className="space-y-4">
-          <section className="card-soft p-5">
+          <section className="card-soft p-4 sm:p-5">
             <h2 className="mb-3 text-sm font-medium">Receipt preview</h2>
             <div className={`border border-border/70 p-4 ${form.roundedCorners ? "rounded-lg" : "rounded-none"}`}>
               <div className="flex items-center gap-3">

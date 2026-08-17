@@ -248,7 +248,7 @@ function StaffAccess() {
         }
       />
 
-      <div className="mx-auto max-w-[1400px] space-y-6 px-4 py-5 sm:px-6 md:px-8 md:py-6">
+      <div className="mx-auto max-w-[1400px] space-y-6 px-4 py-4 sm:py-5 sm:px-6 md:px-8 md:py-6">
         <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
           {counts.map(({ role, n }) => (
             <button
@@ -310,13 +310,15 @@ function StaffAccess() {
                 {m.lastActive}
               </div>
 
-              <StatusPill tone={statusTone(m.status) as never}>
-                {m.status === "active" ? "Active" : m.status === "invited" ? "Invited" : "Disabled"}
-              </StatusPill>
+              <div className="self-start sm:self-auto">
+                <StatusPill tone={statusTone(m.status) as never}>
+                  {m.status === "active" ? "Active" : m.status === "invited" ? "Invited" : "Disabled"}
+                </StatusPill>
+              </div>
 
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2">
                 <Select value={m.role} onValueChange={(v) => setRole(m.id, v as Role)}>
-                  <SelectTrigger className="h-8 w-full bg-surface text-xs sm:w-[150px]">
+                  <SelectTrigger className="h-8 min-w-[8rem] flex-1 bg-surface text-xs sm:w-[150px] sm:flex-none">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -350,7 +352,7 @@ function StaffAccess() {
         </div>
 
         <div className="grid grid-cols-1 gap-3 lg:grid-cols-3">
-          <div className="card-soft p-5 lg:col-span-2">
+          <div className="card-soft p-4 sm:p-5 lg:col-span-2">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div>
                 <h2 className="text-sm font-semibold">Role permissions</h2>
