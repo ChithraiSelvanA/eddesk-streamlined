@@ -112,20 +112,19 @@ function ExportButton({
   );
 }
 
-function RecordPaymentButton({
+function RecordPaymentDialogInline({
   pendingStudents,
   onRecord,
-  className,
   preselectStudentId,
-  autoOpen,
+  open,
+  setOpen,
 }: {
   pendingStudents: PendingStudent[];
   onRecord: (record: { student: PendingStudent; amount: number; method: string; note: string }) => void;
-  className?: string;
   preselectStudentId?: string;
-  autoOpen?: boolean;
+  open: boolean;
+  setOpen: (v: boolean) => void;
 }) {
-  const [open, setOpen] = useState(Boolean(autoOpen));
   const [studentId, setStudentId] = useState(preselectStudentId ?? "");
   const [amount, setAmount] = useState("");
   const [method, setMethod] = useState("upi");
@@ -165,11 +164,6 @@ function RecordPaymentButton({
 
   return (
     <Dialog open={open} onOpenChange={(v) => { setOpen(v); if (!v) reset(); }}>
-      <DialogTrigger asChild>
-        <Button size="sm" className={className}>
-          <Receipt className="h-4 w-4" /> Record payment
-        </Button>
-      </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>Record payment</DialogTitle>
@@ -264,6 +258,7 @@ function Fees() {
     return base;
   });
   const [payments, setPayments] = useState<Payment[]>(() => [...recentPayments]);
+  const [payOpen, setPayOpen] = useState(Boolean(search.pay));
 
   const pendingTotal = pending.reduce((a, s) => a + s.feeDue, 0);
   const collectedThisMonth = payments.reduce((a, p) => a + p.amount, 0);
@@ -311,15 +306,27 @@ function Fees() {
         actions={
           <div className="hidden items-center gap-2 md:flex">
             <ExportButton tab={tab} pending={pending} payments={payments} />
-            <RecordPaymentButton pendingStudents={pending} onRecord={handleRecord} preselectStudentId={search.pay} autoOpen={Boolean(search.pay)} />
+            <Button size="sm" onClick={() => setPayOpen(true)}>
+              <Receipt className="h-4 w-4" /> Record payment
+            </Button>
           </div>
         }
       />
 
       <div className="sticky top-14 z-30 flex items-center gap-2 border-b border-border bg-background/95 p-2 backdrop-blur md:hidden">
         <ExportButton tab={tab} pending={pending} payments={payments} className="flex-1" />
-        <RecordPaymentButton pendingStudents={pending} onRecord={handleRecord} className="flex-1" preselectStudentId={search.pay} />
+        <Button size="sm" className="h-10 flex-1" onClick={() => setPayOpen(true)}>
+          <Receipt className="h-4 w-4" /> Record payment
+        </Button>
       </div>
+
+      <RecordPaymentDialogInline
+        pendingStudents={pending}
+        onRecord={handleRecord}
+        preselectStudentId={search.pay}
+        open={payOpen}
+        setOpen={setPayOpen}
+      />
 
       <div className="mx-auto max-w-[1400px] px-4 py-5 pb-24 sm:px-6 md:px-8 md:py-6 space-y-6 md:pb-6">
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
