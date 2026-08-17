@@ -153,7 +153,7 @@ function RecordPaymentDialogInline({
       setError("Enter a valid amount greater than 0.");
       return;
     }
-    if (value > selected.feeDue) {
+    if (selected.feeDue > 0 && value > selected.feeDue) {
       setError("Amount is more than the pending due.");
       return;
     }
