@@ -51,9 +51,9 @@ function AcademicHome() {
         }
       />
 
-      <div className="mx-auto max-w-[1400px] px-4 py-5 sm:px-6 md:px-8 md:py-6">
+      <div className="mx-auto max-w-[1400px] px-4 pb-24 py-5 sm:px-6 md:px-8 md:py-6 md:pb-6">
         <Tabs value={tab} onValueChange={setTab}>
-          <TabsList className="sticky top-14 z-20 bg-background shadow-[0_1px_0_0_var(--color-border)] backdrop-blur md:static md:bg-transparent md:shadow-none p-0 gap-1 h-auto border-b border-border rounded-none w-full justify-start overflow-x-auto flex-nowrap">
+          <TabsList className="hidden md:flex p-0 gap-1 h-auto border-b border-border rounded-none w-full justify-start overflow-x-auto flex-nowrap">
             {[
               ["classes", "Classes", classes.length],
 
