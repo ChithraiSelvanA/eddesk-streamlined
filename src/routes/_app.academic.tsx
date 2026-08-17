@@ -87,28 +87,28 @@ function AcademicHome() {
             ))}
           </TabsList>
 
-          <TabsContent value="classes" className="mt-6">
+          <TabsContent value="classes" className="mt-4 md:mt-6">
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {classes.map(c => (
-                <div key={c.id} className="card-soft group p-5 transition-shadow hover:shadow-[var(--shadow-elevated)]">
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <p className="text-xs uppercase tracking-wider text-muted-foreground">{c.room}</p>
-                      <h3 className="mt-1 text-lg font-semibold tracking-tight">{c.name}–{c.section}</h3>
+                <div key={c.id} className="card-soft group p-4 transition-shadow hover:shadow-[var(--shadow-elevated)] md:p-5">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="min-w-0">
+                      <p className="truncate text-xs uppercase tracking-wider text-muted-foreground">{c.room}</p>
+                      <h3 className="mt-1 truncate text-base font-semibold tracking-tight md:text-lg">{c.name}–{c.section}</h3>
                     </div>
                     <StatusPill tone="neutral">
                       <Users className="h-3 w-3" /> {c.studentCount}
                     </StatusPill>
                   </div>
-                  <div className="mt-4 flex items-center justify-between text-sm">
-                    <span className="text-muted-foreground">Class teacher</span>
-                    <span className="font-medium">{c.teacher}</span>
+                  <div className="mt-3 flex items-center justify-between gap-3 text-sm md:mt-4">
+                    <span className="shrink-0 text-muted-foreground">Class teacher</span>
+                    <span className="truncate font-medium">{c.teacher}</span>
                   </div>
                   <div className="mt-2 flex items-center justify-between text-sm">
                     <span className="text-muted-foreground">Subjects</span>
                     <span className="font-medium">{c.subjects.length}</span>
                   </div>
-                  <div className="mt-4 flex items-center justify-between gap-2 border-t border-border/60 pt-3">
+                  <div className="mt-3 flex items-center justify-between gap-2 border-t border-border/60 pt-3 md:mt-4">
                     <Link
                       to="/academic/classes/$classId"
                       params={{ classId: c.id }}
@@ -125,41 +125,44 @@ function AcademicHome() {
             </div>
           </TabsContent>
 
-          <TabsContent value="subjects" className="mt-6">
+          <TabsContent value="subjects" className="mt-4 md:mt-6">
             <div className="card-soft overflow-hidden">
-              <div className="grid grid-cols-[1fr_100px_120px_80px] gap-4 border-b border-border/60 px-5 py-3 text-xs font-medium uppercase tracking-wider text-muted-foreground">
+              <div className="hidden md:grid grid-cols-[1fr_100px_120px_80px] gap-4 border-b border-border/60 px-5 py-3 text-xs font-medium uppercase tracking-wider text-muted-foreground">
                 <span>Subject</span><span>Code</span><span>Category</span><span className="text-right">Classes</span>
               </div>
               {subjects.map(s => {
                 const usedIn = classes.filter(c => c.subjects.includes(s.id)).length;
                 return (
-                  <div key={s.id} className="grid grid-cols-[1fr_100px_120px_80px] items-center gap-4 border-b border-border/40 px-5 py-3 last:border-0 hover:bg-muted/50">
-                    <div className="flex items-center gap-3">
-                      <div className="grid h-8 w-8 place-items-center rounded-md bg-muted text-muted-foreground"><BookOpen className="h-4 w-4" /></div>
-                      <span className="text-sm font-medium">{s.name}</span>
+                  <div key={s.id} className="flex items-center gap-3 border-b border-border/40 px-4 py-3 last:border-0 hover:bg-muted/50 md:grid md:grid-cols-[1fr_100px_120px_80px] md:items-center md:gap-4 md:px-5">
+                    <div className="flex min-w-0 flex-1 items-center gap-3">
+                      <div className="grid h-8 w-8 shrink-0 place-items-center rounded-md bg-muted text-muted-foreground"><BookOpen className="h-4 w-4" /></div>
+                      <div className="min-w-0">
+                        <span className="block truncate text-sm font-medium">{s.name}</span>
+                        <span className="text-xs text-muted-foreground md:hidden">{s.code} · {usedIn} classes</span>
+                      </div>
                     </div>
-                    <span className="text-sm text-muted-foreground">{s.code}</span>
+                    <span className="hidden text-sm text-muted-foreground md:inline">{s.code}</span>
                     <StatusPill tone={s.category === "Core" ? "info" : "neutral"}>{s.category}</StatusPill>
-                    <span className="text-right text-sm tabular-nums">{usedIn}</span>
+                    <span className="hidden text-right text-sm tabular-nums md:inline">{usedIn}</span>
                   </div>
                 );
               })}
             </div>
           </TabsContent>
 
-          <TabsContent value="teachers" className="mt-6">
+          <TabsContent value="teachers" className="mt-4 md:mt-6">
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {teachers.map(t => (
-                <div key={t.id} className="card-soft p-5">
+                <div key={t.id} className="card-soft p-4 md:p-5">
                   <div className="flex items-center gap-3">
-                    <AvatarMono name={t.name} hue={t.avatarHue} size={44} />
+                    <AvatarMono name={t.name} hue={t.avatarHue} size={40} />
                     <div className="min-w-0">
                       <p className="truncate font-medium">{t.name}</p>
                       <p className="truncate text-xs text-muted-foreground">{t.email}</p>
                     </div>
                   </div>
-                  <div className="mt-4 space-y-1.5 text-sm">
-                    <div className="flex justify-between"><span className="text-muted-foreground">Teaches</span><span className="font-medium">{t.subjects.join(", ")}</span></div>
+                  <div className="mt-3 space-y-1.5 text-sm md:mt-4">
+                    <div className="flex justify-between gap-3"><span className="shrink-0 text-muted-foreground">Teaches</span><span className="truncate font-medium">{t.subjects.join(", ")}</span></div>
                     <div className="flex justify-between"><span className="text-muted-foreground">Classes</span><span className="font-medium">{t.classes.length}</span></div>
                   </div>
                 </div>
@@ -167,35 +170,36 @@ function AcademicHome() {
             </div>
           </TabsContent>
 
-          <TabsContent value="timetable" className="mt-6">
-            <div className="card-soft p-6">
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <Calendar className="h-4 w-4" />
+          <TabsContent value="timetable" className="mt-4 md:mt-6">
+            <div className="card-soft p-4 md:p-6">
+              <div className="flex items-start gap-2 text-xs text-muted-foreground md:text-sm">
+                <Calendar className="mt-0.5 h-4 w-4 shrink-0" />
                 Master timetable · Grade 5-A shown as a preview. Open a class to edit.
               </div>
               <MiniTimetable />
             </div>
           </TabsContent>
 
-          <TabsContent value="holidays" className="mt-6">
+          <TabsContent value="holidays" className="mt-4 md:mt-6">
             <div className="card-soft">
               {holidays.map(h => (
-                <div key={h.id} className="flex items-center gap-4 border-b border-border/40 px-5 py-3 last:border-0">
-                  <div className="grid h-10 w-10 place-items-center rounded-md bg-muted text-center">
+                <div key={h.id} className="flex items-center gap-3 border-b border-border/40 px-4 py-3 last:border-0 md:gap-4 md:px-5">
+                  <div className="grid h-10 w-10 shrink-0 place-items-center rounded-md bg-muted text-center">
                     <div>
                       <p className="text-[10px] uppercase text-muted-foreground">{h.date.split(" ")[0]}</p>
                       <p className="text-sm font-semibold">{h.date.split(" ")[1]}</p>
                     </div>
                   </div>
-                  <div className="flex-1">
-                    <p className="text-sm font-medium">{h.name}</p>
-                    <p className="text-xs text-muted-foreground">{h.type}</p>
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate text-sm font-medium">{h.name}</p>
+                    <p className="truncate text-xs text-muted-foreground md:hidden">{h.type}</p>
                   </div>
                   <StatusPill tone="info">{h.type}</StatusPill>
                 </div>
               ))}
             </div>
           </TabsContent>
+
         </Tabs>
       </div>
 
