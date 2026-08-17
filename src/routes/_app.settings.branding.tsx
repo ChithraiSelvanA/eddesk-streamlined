@@ -84,27 +84,16 @@ function Branding() {
         crumbs={[{ label: "Settings", to: "/settings" }, { label: "Branding" }]}
         title="Branding"
         description="Colours, logo and how printed receipts look."
-        actions={
-          <>
-            <Button variant="outline" onClick={() => { setForm(initial); setSaved(true); toast.info("Branding reset"); }}>
-              Reset
-            </Button>
-            <Button onClick={() => { setSaved(true); toast.success("Branding saved", { description: `${accent.label} accent · ${form.receiptTemplate} receipt` }); }}>
-              {saved ? <Check className="mr-2 h-4 w-4" /> : null}
-              {saved ? "Saved" : "Save changes"}
-            </Button>
-          </>
-        }
       />
 
-      <div className="mx-auto grid max-w-[1400px] grid-cols-1 gap-4 px-4 py-4 sm:py-5 sm:px-6 md:px-8 md:py-6 lg:grid-cols-3">
+      <div className="mx-auto grid max-w-[1400px] grid-cols-1 gap-3 px-3 py-3 pb-28 sm:gap-4 sm:px-4 sm:py-4 sm:pb-24 md:px-6 md:py-5 md:pb-8 lg:grid-cols-3 lg:px-8 lg:py-6">
         <div className="space-y-4 lg:col-span-2">
-          <section className="card-soft p-4 sm:p-5">
+          <section className="card-soft p-3 sm:p-4 md:p-5">
             <div className="mb-4 flex items-center gap-2">
               <Palette className="h-4 w-4 text-muted-foreground" />
               <h2 className="text-sm font-medium">Accent colour</h2>
             </div>
-            <div className="flex flex-wrap gap-2">
+            <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap">
               {ACCENTS.map((a) => (
                 <button
                   key={a.id}
@@ -121,7 +110,7 @@ function Branding() {
             </div>
           </section>
 
-          <section className="card-soft p-4 sm:p-5">
+          <section className="card-soft p-3 sm:p-4 md:p-5">
             <h2 className="mb-4 text-sm font-medium">Logo & identity</h2>
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
               <div
@@ -130,7 +119,7 @@ function Branding() {
               >
                 {initials || "S"}
               </div>
-              <div className="flex flex-wrap gap-2">
+              <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap">
                 <Button variant="outline" onClick={() => toast.info("Logo upload will open your file picker on the live site.")}>
                   <ImagePlus className="mr-2 h-4 w-4" /> Upload logo
                 </Button>
@@ -153,7 +142,7 @@ function Branding() {
             </div>
           </section>
 
-          <section className="card-soft p-4 sm:p-5">
+          <section className="card-soft p-3 sm:p-4 md:p-5">
             <h2 className="mb-4 text-sm font-medium">Receipt template</h2>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <Field label="Layout">
@@ -199,7 +188,7 @@ function Branding() {
         </div>
 
         <div className="space-y-4">
-          <section className="card-soft p-4 sm:p-5">
+          <section className="card-soft p-3 sm:p-4 md:p-5">
             <h2 className="mb-3 text-sm font-medium">Receipt preview</h2>
             <div className={`border border-border/70 p-4 ${form.roundedCorners ? "rounded-lg" : "rounded-none"}`}>
               <div className="flex items-center gap-3">
@@ -233,6 +222,26 @@ function Branding() {
               Print sample
             </Button>
           </section>
+        </div>
+
+        <div className="col-span-full fixed md:sticky bottom-0 left-0 right-0 z-50 border-t border-border bg-surface/95 p-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] shadow-[0_-4px_20px_-5px_rgba(0,0,0,0.08)] backdrop-blur md:bottom-0 md:mt-5 md:rounded-lg md:border md:pb-3 md:shadow-sm md:backdrop-blur-none">
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              className="flex-1"
+              onClick={() => { setForm(initial); setSaved(true); toast.info("Branding reset"); }}
+            >
+              Reset
+            </Button>
+            <Button
+              className="flex-1"
+              disabled={saved}
+              onClick={() => { setSaved(true); toast.success("Branding saved", { description: `${accent.label} accent · ${form.receiptTemplate} receipt` }); }}
+            >
+              {saved ? <Check className="mr-2 h-4 w-4" /> : null}
+              {saved ? "Saved" : "Save changes"}
+            </Button>
+          </div>
         </div>
       </div>
     </div>
