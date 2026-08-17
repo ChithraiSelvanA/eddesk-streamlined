@@ -238,7 +238,11 @@ function Dashboard() {
           </ActionCard>
         </section>
       </div>
+
+      <NewAdmissionButton fab label="New admission" />
+      <MobileSectionNav items={dashboardSections} />
     </div>
+
   );
 }
 
