@@ -55,6 +55,21 @@ function Dashboard() {
       />
 
 
+      {/* Mobile sticky actions — pinned below the top bar */}
+      <div className="sticky top-14 z-40 border-b border-border/70 bg-background/90 backdrop-blur-xl px-4 py-2 md:hidden">
+        <div className="flex items-center gap-2">
+          <CreateNoticeDialog
+            trigger={
+              <Button variant="outline" size="sm" className="flex-1">
+                <Megaphone className="h-4 w-4" /> Create notice
+              </Button>
+            }
+            onCreate={() => {}}
+          />
+          <NewAdmissionButton size="sm" variant="default" label="New admission" className="flex-1" />
+        </div>
+      </div>
+
       <div className="mx-auto max-w-[1400px] px-4 py-6 pb-28 sm:px-6 md:px-8 md:py-8 md:pb-8 space-y-8">
 
         {/* At a glance */}
