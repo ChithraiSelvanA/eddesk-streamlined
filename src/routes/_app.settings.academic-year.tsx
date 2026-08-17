@@ -15,6 +15,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { holidays as seedHolidays } from "@/data/mock";
+import { DateField } from "@/components/app/date-field";
 import { Check, Plus, Trash2, CalendarDays } from "lucide-react";
 
 export const Route = createFileRoute("/_app/settings/academic-year")({
@@ -155,24 +156,24 @@ function AcademicYear() {
                   />
                 </Field>
                 <Field label="Session starts">
-                  <Input
-                    type="date"
+                  <DateField
+                    label=""
                     value={session.start}
-                    onChange={(e) => { setSession((s) => ({ ...s, start: e.target.value })); touch(); }}
+                    onChange={(v) => { setSession((s) => ({ ...s, start: v })); touch(); }}
                   />
                 </Field>
                 <Field label="Session ends">
-                  <Input
-                    type="date"
+                  <DateField
+                    label=""
                     value={session.end}
-                    onChange={(e) => { setSession((s) => ({ ...s, end: e.target.value })); touch(); }}
+                    onChange={(v) => { setSession((s) => ({ ...s, end: v })); touch(); }}
                   />
                 </Field>
                 <Field label="Result day">
-                  <Input
-                    type="date"
+                  <DateField
+                    label=""
                     value={session.resultDay}
-                    onChange={(e) => { setSession((s) => ({ ...s, resultDay: e.target.value })); touch(); }}
+                    onChange={(v) => { setSession((s) => ({ ...s, resultDay: v })); touch(); }}
                   />
                 </Field>
               </div>
@@ -204,12 +205,20 @@ function AcademicYear() {
                     </div>
                     <div className="flex-1">
                       <Field label="Starts">
-                        <Input type="date" value={t.start} onChange={(e) => setTerm(t.id, "start", e.target.value)} />
+                        <DateField
+                          label=""
+                          value={t.start}
+                          onChange={(v) => setTerm(t.id, "start", v)}
+                        />
                       </Field>
                     </div>
                     <div className="flex-1">
                       <Field label="Ends">
-                        <Input type="date" value={t.end} onChange={(e) => setTerm(t.id, "end", e.target.value)} />
+                        <DateField
+                          label=""
+                          value={t.end}
+                          onChange={(v) => setTerm(t.id, "end", v)}
+                        />
                       </Field>
                     </div>
                     <Button
