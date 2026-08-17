@@ -2,7 +2,8 @@ import { createFileRoute, Link, Outlet, useRouterState } from "@tanstack/react-r
 import { PageHeader } from "@/components/app/page-header";
 import { classes as seedClasses, subjects, teachers, holidays, type ClassRoom } from "@/data/mock";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, BookOpen, Users, Calendar, CalendarClock } from "lucide-react";
+import { ArrowRight, BookOpen, Users, Calendar, CalendarClock, GraduationCap, Library, UserSquare, CalendarHeart } from "lucide-react";
+import { MobileTabNav } from "@/components/app/mobile-tab-nav";
 import { StatusPill } from "@/components/app/status-pill";
 import { AvatarMono } from "@/components/app/avatar-mono";
 import { ClassDialog } from "@/components/app/class-dialog";
@@ -50,9 +51,9 @@ function AcademicHome() {
         }
       />
 
-      <div className="mx-auto max-w-[1400px] px-4 py-5 sm:px-6 md:px-8 md:py-6">
+      <div className="mx-auto max-w-[1400px] px-4 pb-24 py-5 sm:px-6 md:px-8 md:py-6 md:pb-6">
         <Tabs value={tab} onValueChange={setTab}>
-          <TabsList className="sticky top-14 z-20 bg-background shadow-[0_1px_0_0_var(--color-border)] backdrop-blur md:static md:bg-transparent md:shadow-none p-0 gap-1 h-auto border-b border-border rounded-none w-full justify-start overflow-x-auto flex-nowrap">
+          <TabsList className="hidden md:flex p-0 gap-1 h-auto border-b border-border rounded-none w-full justify-start overflow-x-auto flex-nowrap">
             {[
               ["classes", "Classes", classes.length],
 
@@ -185,6 +186,18 @@ function AcademicHome() {
           </TabsContent>
         </Tabs>
       </div>
+
+      <MobileTabNav
+        value={tab}
+        onChange={setTab}
+        items={[
+          { value: "classes", label: "Classes", icon: <GraduationCap className="h-[18px] w-[18px]" /> },
+          { value: "subjects", label: "Subjects", icon: <Library className="h-[18px] w-[18px]" /> },
+          { value: "teachers", label: "Teachers", icon: <UserSquare className="h-[18px] w-[18px]" /> },
+          { value: "timetable", label: "Timetable", icon: <CalendarClock className="h-[18px] w-[18px]" /> },
+          { value: "holidays", label: "Holidays", icon: <CalendarHeart className="h-[18px] w-[18px]" /> },
+        ]}
+      />
     </div>
   );
 }
