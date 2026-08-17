@@ -37,7 +37,7 @@ export function MobileSectionNav({ items }: { items: SectionItem[] }) {
     if (!el) return;
     setActive(id);
 
-    // find the nearest scrollable ancestor (falls back to the window)
+    // nearest scrollable ancestor, else the page itself
     let node: HTMLElement | null = el.parentElement;
     let scroller: HTMLElement | null = null;
     while (node && node !== document.body) {
@@ -50,21 +50,34 @@ export function MobileSectionNav({ items }: { items: SectionItem[] }) {
     }
 
     const offset = 72;
-    if (scroller) {
-      const top = el.getBoundingClientRect().top - scroller.getBoundingClientRect().top + scroller.scrollTop - offset;
-      scroller.scrollTo({ top: Math.max(top, 0), behavior: "smooth" });
-      return;
-    }
+    const read = () => (scroller ? scroller.scrollTop : window.scrollY);
+    const write = (y: number) => {
+      if (scroller) scroller.scrollTop = y;
+      else window.scrollTo(0, y);
+    };
+    const max = scroller
+      ? scroller.scrollHeight - scroller.clientHeight
+      : document.documentElement.scrollHeight - window.innerHeight;
 
-    const target = Math.max(el.getBoundingClientRect().top + window.scrollY - offset, 0);
-    window.scrollTo({ top: target, behavior: "smooth" });
-    // fallback for environments where window.scrollTo is a no-op
-    window.setTimeout(() => {
-      if (Math.abs(window.scrollY - target) > 8) {
-        el.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
-    }, 350);
+    const from = read();
+    const delta = scroller
+      ? el.getBoundingClientRect().top - scroller.getBoundingClientRect().top
+      : el.getBoundingClientRect().top;
+    const to = Math.min(Math.max(from + delta - offset, 0), Math.max(max, 0));
+    if (Math.abs(to - from) < 2) return;
+
+    // manual animation: native `behavior: "smooth"` is a no-op in some embedded/preview browsers
+    const duration = 420;
+    const start = performance.now();
+    const step = (now: number) => {
+      const t = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - t, 3);
+      write(from + (to - from) * eased);
+      if (t < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
   };
+
 
 
   return (
