@@ -1,12 +1,14 @@
 import { createFileRoute, Link, Outlet, useRouterState } from "@tanstack/react-router";
 import { PageHeader } from "@/components/app/page-header";
-import { classes, subjects, teachers, holidays } from "@/data/mock";
+import { classes as seedClasses, subjects, teachers, holidays, type ClassRoom } from "@/data/mock";
 import { Button } from "@/components/ui/button";
-import { Plus, ArrowRight, BookOpen, Users, Calendar, CalendarClock } from "lucide-react";
+import { ArrowRight, BookOpen, Users, Calendar, CalendarClock } from "lucide-react";
 import { StatusPill } from "@/components/app/status-pill";
 import { AvatarMono } from "@/components/app/avatar-mono";
+import { ClassDialog } from "@/components/app/class-dialog";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { useState } from "react";
+
 
 export const Route = createFileRoute("/_app/academic")({
   head: () => ({
