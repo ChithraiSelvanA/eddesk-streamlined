@@ -20,7 +20,11 @@ import { Route as AppSettingsIndexRouteImport } from './routes/_app.settings.ind
 import { Route as AppParentsIndexRouteImport } from './routes/_app.parents.index'
 import { Route as AppStudentsListRouteImport } from './routes/_app.students.list'
 import { Route as AppSettingsStaffRouteImport } from './routes/_app.settings.staff'
+import { Route as AppSettingsSecurityRouteImport } from './routes/_app.settings.security'
 import { Route as AppSettingsSchoolProfileRouteImport } from './routes/_app.settings.school-profile'
+import { Route as AppSettingsNotificationsRouteImport } from './routes/_app.settings.notifications'
+import { Route as AppSettingsBrandingRouteImport } from './routes/_app.settings.branding'
+import { Route as AppSettingsBillingRouteImport } from './routes/_app.settings.billing'
 import { Route as AppSettingsAcademicYearRouteImport } from './routes/_app.settings.academic-year'
 import { Route as AppParentsListRouteImport } from './routes/_app.parents.list'
 import { Route as AppParentsParentIdRouteImport } from './routes/_app.parents.$parentId'
@@ -82,12 +86,33 @@ const AppSettingsStaffRoute = AppSettingsStaffRouteImport.update({
   path: '/settings/staff',
   getParentRoute: () => AppRoute,
 } as any)
+const AppSettingsSecurityRoute = AppSettingsSecurityRouteImport.update({
+  id: '/settings/security',
+  path: '/settings/security',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppSettingsSchoolProfileRoute =
   AppSettingsSchoolProfileRouteImport.update({
     id: '/settings/school-profile',
     path: '/settings/school-profile',
     getParentRoute: () => AppRoute,
   } as any)
+const AppSettingsNotificationsRoute =
+  AppSettingsNotificationsRouteImport.update({
+    id: '/settings/notifications',
+    path: '/settings/notifications',
+    getParentRoute: () => AppRoute,
+  } as any)
+const AppSettingsBrandingRoute = AppSettingsBrandingRouteImport.update({
+  id: '/settings/branding',
+  path: '/settings/branding',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppSettingsBillingRoute = AppSettingsBillingRouteImport.update({
+  id: '/settings/billing',
+  path: '/settings/billing',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppSettingsAcademicYearRoute = AppSettingsAcademicYearRouteImport.update({
   id: '/settings/academic-year',
   path: '/settings/academic-year',
@@ -130,7 +155,11 @@ export interface FileRoutesByFullPath {
   '/parents/$parentId': typeof AppParentsParentIdRoute
   '/parents/list': typeof AppParentsListRoute
   '/settings/academic-year': typeof AppSettingsAcademicYearRoute
+  '/settings/billing': typeof AppSettingsBillingRoute
+  '/settings/branding': typeof AppSettingsBrandingRoute
+  '/settings/notifications': typeof AppSettingsNotificationsRoute
   '/settings/school-profile': typeof AppSettingsSchoolProfileRoute
+  '/settings/security': typeof AppSettingsSecurityRoute
   '/settings/staff': typeof AppSettingsStaffRoute
   '/students/list': typeof AppStudentsListRoute
   '/parents/': typeof AppParentsIndexRoute
@@ -149,7 +178,11 @@ export interface FileRoutesByTo {
   '/parents/$parentId': typeof AppParentsParentIdRoute
   '/parents/list': typeof AppParentsListRoute
   '/settings/academic-year': typeof AppSettingsAcademicYearRoute
+  '/settings/billing': typeof AppSettingsBillingRoute
+  '/settings/branding': typeof AppSettingsBrandingRoute
+  '/settings/notifications': typeof AppSettingsNotificationsRoute
   '/settings/school-profile': typeof AppSettingsSchoolProfileRoute
+  '/settings/security': typeof AppSettingsSecurityRoute
   '/settings/staff': typeof AppSettingsStaffRoute
   '/students/list': typeof AppStudentsListRoute
   '/parents': typeof AppParentsIndexRoute
@@ -170,7 +203,11 @@ export interface FileRoutesById {
   '/_app/parents/$parentId': typeof AppParentsParentIdRoute
   '/_app/parents/list': typeof AppParentsListRoute
   '/_app/settings/academic-year': typeof AppSettingsAcademicYearRoute
+  '/_app/settings/billing': typeof AppSettingsBillingRoute
+  '/_app/settings/branding': typeof AppSettingsBrandingRoute
+  '/_app/settings/notifications': typeof AppSettingsNotificationsRoute
   '/_app/settings/school-profile': typeof AppSettingsSchoolProfileRoute
+  '/_app/settings/security': typeof AppSettingsSecurityRoute
   '/_app/settings/staff': typeof AppSettingsStaffRoute
   '/_app/students/list': typeof AppStudentsListRoute
   '/_app/parents/': typeof AppParentsIndexRoute
@@ -191,7 +228,11 @@ export interface FileRouteTypes {
     | '/parents/$parentId'
     | '/parents/list'
     | '/settings/academic-year'
+    | '/settings/billing'
+    | '/settings/branding'
+    | '/settings/notifications'
     | '/settings/school-profile'
+    | '/settings/security'
     | '/settings/staff'
     | '/students/list'
     | '/parents/'
@@ -210,7 +251,11 @@ export interface FileRouteTypes {
     | '/parents/$parentId'
     | '/parents/list'
     | '/settings/academic-year'
+    | '/settings/billing'
+    | '/settings/branding'
+    | '/settings/notifications'
     | '/settings/school-profile'
+    | '/settings/security'
     | '/settings/staff'
     | '/students/list'
     | '/parents'
@@ -230,7 +275,11 @@ export interface FileRouteTypes {
     | '/_app/parents/$parentId'
     | '/_app/parents/list'
     | '/_app/settings/academic-year'
+    | '/_app/settings/billing'
+    | '/_app/settings/branding'
+    | '/_app/settings/notifications'
     | '/_app/settings/school-profile'
+    | '/_app/settings/security'
     | '/_app/settings/staff'
     | '/_app/students/list'
     | '/_app/parents/'
@@ -324,11 +373,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppSettingsStaffRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/settings/security': {
+      id: '/_app/settings/security'
+      path: '/settings/security'
+      fullPath: '/settings/security'
+      preLoaderRoute: typeof AppSettingsSecurityRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/settings/school-profile': {
       id: '/_app/settings/school-profile'
       path: '/settings/school-profile'
       fullPath: '/settings/school-profile'
       preLoaderRoute: typeof AppSettingsSchoolProfileRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/settings/notifications': {
+      id: '/_app/settings/notifications'
+      path: '/settings/notifications'
+      fullPath: '/settings/notifications'
+      preLoaderRoute: typeof AppSettingsNotificationsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/settings/branding': {
+      id: '/_app/settings/branding'
+      path: '/settings/branding'
+      fullPath: '/settings/branding'
+      preLoaderRoute: typeof AppSettingsBrandingRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/settings/billing': {
+      id: '/_app/settings/billing'
+      path: '/settings/billing'
+      fullPath: '/settings/billing'
+      preLoaderRoute: typeof AppSettingsBillingRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/settings/academic-year': {
@@ -397,7 +474,11 @@ interface AppRouteChildren {
   AppParentsParentIdRoute: typeof AppParentsParentIdRoute
   AppParentsListRoute: typeof AppParentsListRoute
   AppSettingsAcademicYearRoute: typeof AppSettingsAcademicYearRoute
+  AppSettingsBillingRoute: typeof AppSettingsBillingRoute
+  AppSettingsBrandingRoute: typeof AppSettingsBrandingRoute
+  AppSettingsNotificationsRoute: typeof AppSettingsNotificationsRoute
   AppSettingsSchoolProfileRoute: typeof AppSettingsSchoolProfileRoute
+  AppSettingsSecurityRoute: typeof AppSettingsSecurityRoute
   AppSettingsStaffRoute: typeof AppSettingsStaffRoute
   AppStudentsListRoute: typeof AppStudentsListRoute
   AppParentsIndexRoute: typeof AppParentsIndexRoute
@@ -416,7 +497,11 @@ const AppRouteChildren: AppRouteChildren = {
   AppParentsParentIdRoute: AppParentsParentIdRoute,
   AppParentsListRoute: AppParentsListRoute,
   AppSettingsAcademicYearRoute: AppSettingsAcademicYearRoute,
+  AppSettingsBillingRoute: AppSettingsBillingRoute,
+  AppSettingsBrandingRoute: AppSettingsBrandingRoute,
+  AppSettingsNotificationsRoute: AppSettingsNotificationsRoute,
   AppSettingsSchoolProfileRoute: AppSettingsSchoolProfileRoute,
+  AppSettingsSecurityRoute: AppSettingsSecurityRoute,
   AppSettingsStaffRoute: AppSettingsStaffRoute,
   AppStudentsListRoute: AppStudentsListRoute,
   AppParentsIndexRoute: AppParentsIndexRoute,
