@@ -3,14 +3,7 @@ import { PageHeader } from "@/components/app/page-header";
 import { classes, students, smartGroupDefs, CURRENT_YEAR } from "@/data/mock";
 import { Button } from "@/components/ui/button";
 import { NewAdmissionButton } from "@/components/app/new-admission-button";
-import { Search, ArrowRight, Users, Wallet, Bus, CalendarPlus, TrendingDown, AlertTriangle, LayoutGrid } from "lucide-react";
-import { MobileSectionNav, type SectionItem } from "@/components/app/mobile-section-nav";
-
-const studentSections: SectionItem[] = [
-  { id: "student-search", label: "Search", icon: <Search className="h-[18px] w-[18px]" /> },
-  { id: "smart-groups", label: "Groups", icon: <Users className="h-[18px] w-[18px]" /> },
-  { id: "browse-classes", label: "Classes", icon: <LayoutGrid className="h-[18px] w-[18px]" /> },
-];
+import { Search, ArrowRight, Users, Wallet, Bus, CalendarPlus, TrendingDown, AlertTriangle } from "lucide-react";
 
 import { AvatarMono } from "@/components/app/avatar-mono";
 import { useMemo, useState } from "react";
@@ -76,18 +69,9 @@ function StudentsIndex() {
         }
       />
 
-      {/* Mobile sticky actions — pinned below the top bar */}
-      <div className="sticky top-14 z-40 border-b border-border/70 bg-background/90 backdrop-blur-xl px-4 py-2 md:hidden">
-        <div className="flex items-center gap-2">
-          <Button variant="outline" size="sm" className="flex-1">Import CSV</Button>
-          <NewAdmissionButton size="sm" variant="default" label="New admission" className="flex-1" />
-        </div>
-      </div>
-
-      <div className="mx-auto max-w-[1400px] px-4 py-6 pb-28 sm:px-6 md:px-8 md:py-8 md:pb-8">
+      <div className="mx-auto max-w-[1400px] px-4 py-6 sm:px-6 md:px-8 md:py-8">
         {/* Normal search */}
-        <section id="student-search" className="card-soft scroll-mt-28 p-6">
-
+        <section className="card-soft p-6">
           <h2 className="text-sm font-medium">Normal search</h2>
           <p className="mt-1 text-xs text-muted-foreground">
             Choose what you're searching by. Names return a list of matches; an admission number opens the profile directly.
@@ -201,7 +185,7 @@ function StudentsIndex() {
 
 
         {/* Advanced search — smart groups */}
-        <section id="smart-groups" className="mt-8 scroll-mt-28">
+        <section className="mt-8">
           <div className="flex flex-wrap items-end justify-between gap-2">
             <div>
               <h2 className="text-sm font-medium">Advanced search</h2>
@@ -253,7 +237,7 @@ function StudentsIndex() {
         </section>
 
         {/* Browse by classroom */}
-        <section id="browse-classes" className="mt-8 scroll-mt-28">
+        <section className="mt-8">
           <h2 className="text-sm font-medium">Or browse by classroom</h2>
           <div className="mt-3 flex flex-wrap gap-2">
             {classes.map(c => (
@@ -271,8 +255,6 @@ function StudentsIndex() {
           </div>
         </section>
       </div>
-
-      <MobileSectionNav items={studentSections} />
     </div>
   );
 }
