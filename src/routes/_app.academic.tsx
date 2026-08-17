@@ -37,19 +37,28 @@ function AcademicHome() {
   const upsertClass = (c: ClassRoom) =>
     setClasses((cur) => (cur.some((x) => x.id === c.id) ? cur.map((x) => (x.id === c.id ? c : x)) : [...cur, c]));
 
+  const headerActions = (
+    <>
+      <Button variant="outline" size="sm" onClick={() => setTab("timetable")}><CalendarClock className="h-4 w-4" /> Timetable</Button>
+      <ClassDialog onSave={upsertClass} />
+    </>
+  );
+
   return (
     <div>
       <PageHeader
         crumbs={[{ label: "Academic" }]}
         title="Academic"
         description="Academic year 2025–26 · Term 1"
-        actions={
-          <>
-            <Button variant="outline" size="sm" onClick={() => setTab("timetable")}><CalendarClock className="h-4 w-4" /> Timetable</Button>
-            <ClassDialog onSave={upsertClass} />
-          </>
-        }
+        actions={<div className="hidden md:flex items-center gap-2">{headerActions}</div>}
       />
+
+      {/* Mobile sticky actions: Timetable + Add Class */}
+      <div className="sticky top-14 z-20 border-b border-border bg-background px-4 py-2 sm:px-6 md:hidden">
+        <div className="mx-auto flex max-w-[1400px] items-center justify-end gap-2">
+          {headerActions}
+        </div>
+      </div>
 
       <div className="mx-auto max-w-[1400px] px-4 pb-24 py-5 sm:px-6 md:px-8 md:py-6 md:pb-6">
         <Tabs value={tab} onValueChange={setTab}>
