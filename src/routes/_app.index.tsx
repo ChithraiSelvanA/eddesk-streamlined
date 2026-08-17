@@ -212,7 +212,9 @@ function Dashboard() {
           </ActionCard>
 
           <ActionCard
+            id="upcoming-events"
             title="Upcoming events"
+
             hint="Next 30 days"
             cta={{ label: "Open calendar", to: "/communication" }}
           >
