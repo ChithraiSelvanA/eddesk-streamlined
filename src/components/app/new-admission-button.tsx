@@ -18,12 +18,15 @@ export function NewAdmissionButton({
   variant = "default",
   label = "New admission",
   fab = false,
+  className,
 }: {
   size?: "sm" | "default";
   variant?: "default" | "outline";
   label?: string;
   fab?: boolean;
+  className?: string;
 }) {
+
   const [open, setOpen] = useState(false);
   const [q, setQ] = useState("");
   const navigate = useNavigate();
