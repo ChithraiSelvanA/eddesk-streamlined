@@ -57,6 +57,8 @@ function StudentsIndex() {
   const openStudent = (s: (typeof students)[number]) =>
     navigate({ to: "/students/$classId/$studentId", params: { classId: s.classId, studentId: s.id } });
 
+  const inputRef = useRef<HTMLInputElement>(null);
+
   return (
     <div>
       <PageHeader
@@ -64,14 +66,20 @@ function StudentsIndex() {
         title="Find a student"
         description={`${students.length.toLocaleString()} students · ${classes.length} classrooms. Search directly, or start from a smart group.`}
         actions={
-          <>
-            <Button variant="outline" size="sm">Import CSV</Button>
+          <div className="hidden items-center gap-2 md:flex">
+            <ImportCsvButton />
             <NewAdmissionButton />
-          </>
+          </div>
         }
       />
 
+      <div className="sticky top-14 z-30 flex items-center gap-2 border-b border-border bg-surface/95 p-2 backdrop-blur md:hidden">
+        <ImportCsvButton className="flex-1" />
+        <NewAdmissionButton className="flex-1" />
+      </div>
+
       <div className="mx-auto max-w-[1400px] px-4 py-6 sm:px-6 md:px-8 md:py-8">
+
         {/* Normal search */}
         <section className="card-soft p-6">
           <h2 className="text-sm font-medium">Normal search</h2>
