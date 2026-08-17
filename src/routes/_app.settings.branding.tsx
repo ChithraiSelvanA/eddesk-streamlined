@@ -84,17 +84,6 @@ function Branding() {
         crumbs={[{ label: "Settings", to: "/settings" }, { label: "Branding" }]}
         title="Branding"
         description="Colours, logo and how printed receipts look."
-        actions={
-          <>
-            <Button variant="outline" onClick={() => { setForm(initial); setSaved(true); toast.info("Branding reset"); }}>
-              Reset
-            </Button>
-            <Button onClick={() => { setSaved(true); toast.success("Branding saved", { description: `${accent.label} accent · ${form.receiptTemplate} receipt` }); }}>
-              {saved ? <Check className="mr-2 h-4 w-4" /> : null}
-              {saved ? "Saved" : "Save changes"}
-            </Button>
-          </>
-        }
       />
 
       <div className="mx-auto grid max-w-[1400px] grid-cols-1 gap-4 px-4 py-4 sm:py-5 sm:px-6 md:px-8 md:py-6 lg:grid-cols-3">
