@@ -78,7 +78,7 @@ function Communication() {
           <TabsContent value="notices" className="mt-4 md:mt-6">
             <div className="grid grid-cols-1 gap-3 lg:grid-cols-2">
               {notices.map(n => (
-                <div key={n.id} className="card-soft p-5">
+                <div key={n.id} className="card-soft p-4 sm:p-5">
                   <div className="flex items-start justify-between gap-3">
                     <div className="grid h-9 w-9 place-items-center rounded-md bg-muted"><Megaphone className="h-4 w-4 text-muted-foreground" /></div>
                     <StatusPill tone="info">{n.audience}</StatusPill>
@@ -106,7 +106,7 @@ function Communication() {
           <TabsContent value="events" className="mt-4 md:mt-6">
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {events.map(e => (
-                <div key={e.id} className="card-soft p-5">
+                <div key={e.id} className="card-soft p-4 sm:p-5">
                   <div className="flex items-start gap-4">
                     <div className="grid h-12 w-12 place-items-center rounded-lg bg-muted text-center leading-tight">
                       <div>
@@ -141,7 +141,7 @@ function Communication() {
           <TabsContent value="requests" className="mt-4 md:mt-6">
             <div className="card-soft">
               {leaveRequests.map(l => (
-                <div key={l.id} className="flex flex-wrap items-center gap-4 border-b border-border/40 px-5 py-4 last:border-0">
+                <div key={l.id} className="flex flex-wrap items-center gap-4 border-b border-border/40 px-4 py-4 sm:px-5 last:border-0">
                   <div className="min-w-0 flex-1">
                     <p className="text-sm font-medium">{l.studentName} · {l.className}</p>
                     <p className="text-xs text-muted-foreground">{l.reason} · {l.dates}</p>
@@ -163,7 +163,7 @@ function Communication() {
                 ["Attendance summary", "Emailed to Grade 5-A parents", "Yesterday"],
                 ["Event RSVPs", "38 confirmed for Science Exhibition", "2 days ago"],
               ].map(([t, s, w], i) => (
-                <div key={i} className="flex items-center gap-3 border-b border-border/40 px-5 py-3 last:border-0">
+                <div key={i} className="flex items-center gap-3 border-b border-border/40 px-4 py-3 sm:px-5 last:border-0">
                   <div className="grid h-9 w-9 place-items-center rounded-md bg-muted"><Bell className="h-4 w-4 text-muted-foreground" /></div>
                   <div className="flex-1"><p className="text-sm font-medium">{t}</p><p className="text-xs text-muted-foreground">{s}</p></div>
                   <span className="text-xs text-muted-foreground">{w}</span>
