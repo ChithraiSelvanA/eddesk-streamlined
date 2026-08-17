@@ -94,6 +94,8 @@ function Dashboard() {
         {/* Actionable cards row */}
         <section className="grid grid-cols-1 gap-6 lg:grid-cols-3">
           <ActionCard
+            id="pending-fees"
+
             title="Pending fees"
             hint={`${pendingFeeStudents.length} students · ₹${(totalPending / 1000).toFixed(1)}k due`}
             cta={{ label: "Open Fees", to: "/fees" }}
