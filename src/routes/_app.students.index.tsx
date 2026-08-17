@@ -3,7 +3,14 @@ import { PageHeader } from "@/components/app/page-header";
 import { classes, students, smartGroupDefs, CURRENT_YEAR } from "@/data/mock";
 import { Button } from "@/components/ui/button";
 import { NewAdmissionButton } from "@/components/app/new-admission-button";
-import { Search, ArrowRight, Users, Wallet, Bus, CalendarPlus, TrendingDown, AlertTriangle } from "lucide-react";
+import { Search, ArrowRight, Users, Wallet, Bus, CalendarPlus, TrendingDown, AlertTriangle, LayoutGrid } from "lucide-react";
+import { MobileSectionNav, type SectionItem } from "@/components/app/mobile-section-nav";
+
+const studentSections: SectionItem[] = [
+  { id: "student-search", label: "Search", icon: <Search className="h-[18px] w-[18px]" /> },
+  { id: "smart-groups", label: "Groups", icon: <Users className="h-[18px] w-[18px]" /> },
+  { id: "browse-classes", label: "Classes", icon: <LayoutGrid className="h-[18px] w-[18px]" /> },
+];
 
 import { AvatarMono } from "@/components/app/avatar-mono";
 import { useMemo, useState } from "react";
@@ -194,7 +201,7 @@ function StudentsIndex() {
 
 
         {/* Advanced search — smart groups */}
-        <section className="mt-8">
+        <section id="smart-groups" className="mt-8 scroll-mt-28">
           <div className="flex flex-wrap items-end justify-between gap-2">
             <div>
               <h2 className="text-sm font-medium">Advanced search</h2>
@@ -246,7 +253,7 @@ function StudentsIndex() {
         </section>
 
         {/* Browse by classroom */}
-        <section className="mt-8">
+        <section id="browse-classes" className="mt-8 scroll-mt-28">
           <h2 className="text-sm font-medium">Or browse by classroom</h2>
           <div className="mt-3 flex flex-wrap gap-2">
             {classes.map(c => (
@@ -264,6 +271,8 @@ function StudentsIndex() {
           </div>
         </section>
       </div>
+
+      <MobileSectionNav items={studentSections} />
     </div>
   );
 }
