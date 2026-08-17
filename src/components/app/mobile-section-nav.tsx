@@ -35,9 +35,37 @@ export function MobileSectionNav({ items }: { items: SectionItem[] }) {
   const go = (id: string) => {
     const el = document.getElementById(id);
     if (!el) return;
-    const top = el.getBoundingClientRect().top + window.scrollY - 68;
-    window.scrollTo({ top, behavior: "smooth" });
+    setActive(id);
+
+    // find the nearest scrollable ancestor (falls back to the window)
+    let node: HTMLElement | null = el.parentElement;
+    let scroller: HTMLElement | null = null;
+    while (node && node !== document.body) {
+      const style = getComputedStyle(node);
+      if (/(auto|scroll|overlay)/.test(style.overflowY) && node.scrollHeight > node.clientHeight) {
+        scroller = node;
+        break;
+      }
+      node = node.parentElement;
+    }
+
+    const offset = 72;
+    if (scroller) {
+      const top = el.getBoundingClientRect().top - scroller.getBoundingClientRect().top + scroller.scrollTop - offset;
+      scroller.scrollTo({ top: Math.max(top, 0), behavior: "smooth" });
+      return;
+    }
+
+    const target = Math.max(el.getBoundingClientRect().top + window.scrollY - offset, 0);
+    window.scrollTo({ top: target, behavior: "smooth" });
+    // fallback for environments where window.scrollTo is a no-op
+    window.setTimeout(() => {
+      if (Math.abs(window.scrollY - target) > 8) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }, 350);
   };
+
 
   return (
     <nav
