@@ -420,8 +420,8 @@ function TimelinePanel({ cls }: { cls: ReturnType<typeof getClass> & NonNullable
 function MiniField({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
   return (
     <div>
-      <div className="flex items-center gap-1 text-xs text-muted-foreground">{icon}<span>{label}</span></div>
-      <p className="mt-0.5 text-sm font-medium">{value}</p>
+      <div className="flex items-center gap-1 text-[11px] text-muted-foreground md:text-xs">{icon}<span className="truncate">{label}</span></div>
+      <p className="mt-0.5 truncate text-[13px] font-medium md:text-sm">{value}</p>
     </div>
   );
 }
@@ -440,7 +440,7 @@ function Panel({ title, action, children }: { title: string; action?: React.Reac
 
 function FieldRow({ label, value }: { label: string; value: string }) {
   return (
-    <div className="grid grid-cols-[110px_1fr] gap-3 py-1.5 text-sm md:grid-cols-[130px_1fr]">
+    <div className="grid grid-cols-[104px_1fr] gap-3 py-1.5 text-[13px] md:grid-cols-[130px_1fr] md:text-sm">
       <span className="text-muted-foreground">{label}</span>
       <span className="min-w-0 truncate font-medium">{value}</span>
     </div>
