@@ -57,7 +57,7 @@ function FilteredParents() {
         <span className="shrink-0 pr-1 text-xs text-muted-foreground">{list.length}/{base.length}</span>
       </div>
 
-      <div className="mx-auto max-w-[1400px] px-3 py-4 sm:px-6 md:px-8 md:py-6">
+      <div className="mx-auto max-w-[1400px] px-3 py-4 pb-24 sm:px-6 md:px-8 md:py-6 md:pb-6">
         <div className="-mx-3 mb-3 flex gap-2 overflow-x-auto px-3 pb-1 [scrollbar-width:none] md:mx-0 md:mb-4 md:flex-wrap md:px-0 [&::-webkit-scrollbar]:hidden">
           {parentGroupDefs.map(g => (
             <Link
