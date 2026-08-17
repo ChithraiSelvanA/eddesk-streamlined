@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageHeader } from "@/components/app/page-header";
-import { pendingFeeStudents, recentPayments, students } from "@/data/mock";
+import { pendingFeeStudents, recentPayments } from "@/data/mock";
 import { AvatarMono } from "@/components/app/avatar-mono";
 import { StatusPill } from "@/components/app/status-pill";
 import { Button } from "@/components/ui/button";
