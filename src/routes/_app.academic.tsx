@@ -55,8 +55,11 @@ function AcademicHome() {
 
       {/* Mobile sticky actions: Timetable + Add Class */}
       <div className="sticky top-14 z-20 border-b border-border bg-background px-4 py-2 sm:px-6 md:hidden">
-        <div className="mx-auto flex max-w-[1400px] items-center justify-end gap-2">
-          {headerActions}
+        <div className="mx-auto flex max-w-[1400px] items-center gap-2">
+          <Button variant="outline" size="sm" className="flex-1" onClick={() => setTab("timetable")}>
+            <CalendarClock className="h-4 w-4" /> Timetable
+          </Button>
+          <ClassDialog onSave={upsertClass} className="flex-1" />
         </div>
       </div>
 

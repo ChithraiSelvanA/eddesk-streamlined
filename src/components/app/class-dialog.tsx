@@ -26,10 +26,12 @@ export function ClassDialog({
   mode = "add",
   classRoom,
   onSave,
+  className,
 }: {
   mode?: "add" | "edit";
   classRoom?: ClassRoom;
   onSave: (c: ClassRoom) => void;
+  className?: string;
 }) {
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState<ClassRoom>(
@@ -79,11 +81,11 @@ export function ClassDialog({
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         {mode === "add" ? (
-          <Button size="sm">
+          <Button size="sm" className={className}>
             <Plus className="h-4 w-4" /> Add class
           </Button>
         ) : (
-          <Button variant="outline" size="sm">
+          <Button variant="outline" size="sm" className={className}>
             <Pencil className="h-3.5 w-3.5" /> Edit
           </Button>
         )}
