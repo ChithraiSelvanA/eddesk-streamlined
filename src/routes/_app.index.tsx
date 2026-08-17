@@ -251,7 +251,10 @@ function Dashboard() {
       </div>
 
       {/* Mobile sticky action bar */}
-      <div className="fixed inset-x-0 bottom-14 z-50 md:hidden">
+      <div
+        className="fixed inset-x-0 bottom-14 z-50 md:hidden"
+        style={{ bottom: "calc(3.5rem + env(safe-area-inset-bottom))" }}
+      >
         <div className="border-t border-border/70 bg-background/90 backdrop-blur-xl px-4 py-2 shadow-[0_-12px_30px_-6px_oklch(0.2_0.02_260/0.15)]">
           <div className="flex items-center gap-2">
             <CreateNoticeDialog
@@ -271,6 +274,7 @@ function Dashboard() {
 
       <MobileSectionNav items={dashboardSections} />
     </div>
+
 
 
   );
