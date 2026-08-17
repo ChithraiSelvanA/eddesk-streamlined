@@ -92,14 +92,14 @@ function ParentsIndex() {
         description={`${parents.length} parents linked to ${students.length} student accounts. Search directly, or start from a smart group.`}
       />
 
-      <div className="mx-auto max-w-[1400px] px-4 py-6 sm:px-6 md:px-8 md:py-8">
+      <div className="mx-auto max-w-[1400px] px-3 py-4 sm:px-6 md:px-8 md:py-8">
         {/* Normal search */}
-        <section className="card-soft p-6">
+        <section className="card-soft p-4 sm:p-5 md:p-6">
           <h2 className="text-sm font-medium">Normal search</h2>
           <p className="mt-1 text-xs text-muted-foreground">{active.hint}</p>
 
           <form
-            className="mt-4 flex max-w-2xl items-stretch overflow-hidden rounded-lg border border-border bg-surface focus-within:border-ring focus-within:ring-2 focus-within:ring-ring/20"
+            className="mt-3 flex max-w-2xl flex-col items-stretch overflow-hidden rounded-lg border border-border bg-surface focus-within:border-ring focus-within:ring-2 focus-within:ring-ring/20 sm:mt-4 sm:flex-row"
             onSubmit={(e) => {
               e.preventDefault();
               if (exactParent) openParent(exactParent.id);
@@ -111,7 +111,7 @@ function ParentsIndex() {
               value={mode}
               onChange={(e) => { setMode(e.target.value as Mode); setQ(""); }}
               aria-label="Search by"
-              className="h-11 shrink-0 border-r border-border bg-muted/60 px-3 text-sm text-foreground outline-none"
+              className="h-11 w-full shrink-0 border-b border-border bg-muted/60 px-3 text-sm text-foreground outline-none sm:w-auto sm:border-b-0 sm:border-r"
             >
               {modeOptions.map(m => (
                 <option key={m.value} value={m.value}>{m.label}</option>
@@ -120,14 +120,15 @@ function ParentsIndex() {
             <div className="relative min-w-0 flex-1">
               <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <Input
-                autoFocus
                 placeholder={active.placeholder}
                 value={q}
+                inputMode={mode === "mobile" ? "numeric" : "text"}
                 onChange={(e) => setQ(e.target.value)}
                 className="h-11 rounded-none border-0 bg-transparent pl-9 shadow-none focus-visible:ring-0"
               />
             </div>
           </form>
+
 
           {query && (
             <div className="mt-4 max-w-2xl overflow-hidden rounded-lg border border-border">
