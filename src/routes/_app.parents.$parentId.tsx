@@ -82,16 +82,16 @@ function ParentProfile() {
             ))}
           </TabsList>
 
-          <TabsContent value="children" className="mt-6">
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <TabsContent value="children" className="mt-4 md:mt-6">
+            <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 sm:gap-3">
               {children.map(s => (
                 <Link
                   key={s.id}
                   to="/students/$classId/$studentId"
                   params={{ classId: s.classId, studentId: s.id }}
-                  className="card-soft flex items-center gap-4 p-4 hover:shadow-[var(--shadow-elevated)]"
+                  className="card-soft flex items-center gap-3 p-3.5 hover:shadow-[var(--shadow-elevated)] sm:gap-4 sm:p-4"
                 >
-                  <AvatarMono name={s.name} hue={s.avatarHue} size={44} />
+                  <AvatarMono name={s.name} hue={s.avatarHue} size={44} className="h-10 w-10 sm:h-11 sm:w-11" />
                   <div className="min-w-0 flex-1">
                     <p className="truncate text-sm font-medium">{s.name}</p>
                     <p className="truncate text-xs text-muted-foreground">{s.className} · Roll {s.rollNo}</p>
@@ -99,21 +99,24 @@ function ParentProfile() {
                   <StatusPill tone={s.feeStatus === "paid" ? "success" : "warning"}>
                     {s.feeStatus === "paid" ? "Paid" : `₹${s.feeDue.toLocaleString()}`}
                   </StatusPill>
-                  <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                  <ChevronRight className="hidden h-4 w-4 shrink-0 text-muted-foreground sm:block" />
                 </Link>
               ))}
+              {children.length === 0 && (
+                <p className="card-soft p-5 text-sm text-muted-foreground">No students linked to this parent.</p>
+              )}
             </div>
           </TabsContent>
 
-          <TabsContent value="chats" className="mt-6">
+          <TabsContent value="chats" className="mt-4 md:mt-6">
             <div className="card-soft">
               {(parentChats.length ? parentChats : chats.slice(0, 2)).map(c => (
-                <div key={c.id} className="flex items-start gap-3 border-b border-border/40 px-5 py-3 last:border-0">
+                <div key={c.id} className="flex items-start gap-3 border-b border-border/40 px-4 py-3 last:border-0 md:px-5">
                   <AvatarMono name={c.parentName} hue={c.hue} size={36} />
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-center justify-between">
-                      <p className="text-sm font-medium">{c.parentName}</p>
-                      <span className="text-xs text-muted-foreground">{c.time}</span>
+                    <div className="flex items-center justify-between gap-2">
+                      <p className="truncate text-sm font-medium">{c.parentName}</p>
+                      <span className="shrink-0 text-xs text-muted-foreground">{c.time}</span>
                     </div>
                     <p className="truncate text-sm text-muted-foreground">{c.lastMessage}</p>
                   </div>
@@ -122,14 +125,14 @@ function ParentProfile() {
             </div>
           </TabsContent>
 
-          <TabsContent value="requests" className="mt-6">
-            <div className="card-soft p-6 text-sm text-muted-foreground">
+          <TabsContent value="requests" className="mt-4 md:mt-6">
+            <div className="card-soft p-4 text-sm text-muted-foreground sm:p-6">
               No open requests. Requests raised by parents will appear here for acknowledgement.
             </div>
           </TabsContent>
 
-          <TabsContent value="payments" className="mt-6">
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+          <TabsContent value="payments" className="mt-4 md:mt-6">
+            <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 sm:gap-3">
               <SmallStat label="Total billed" value={`₹${(48000).toLocaleString()}`} />
               <SmallStat label="Paid" value={`₹${(48000 - p.pendingTotal).toLocaleString()}`} />
               <SmallStat label="Pending" value={`₹${p.pendingTotal.toLocaleString()}`} tone={p.pendingTotal > 0 ? "warning" : "neutral"} />
@@ -137,9 +140,22 @@ function ParentProfile() {
           </TabsContent>
         </Tabs>
       </div>
+
+      <MobileTabNav
+        value={tab}
+        onChange={setTab}
+        scrollTargetId="parent-tabs"
+        items={[
+          { value: "children", label: "Children", icon: <Users className="h-[18px] w-[18px]" /> },
+          { value: "chats", label: "Chats", icon: <MessageSquare className="h-[18px] w-[18px]" /> },
+          { value: "requests", label: "Requests", icon: <Inbox className="h-[18px] w-[18px]" /> },
+          { value: "payments", label: "Fees", icon: <Wallet className="h-[18px] w-[18px]" /> },
+        ]}
+      />
     </div>
   );
 }
+
 
 function SmallStat({ label, value, tone = "neutral" }: { label: string; value: string; tone?: "neutral" | "warning" }) {
   return (
