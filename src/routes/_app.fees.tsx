@@ -312,7 +312,7 @@ function Fees() {
           <Stat title="Students with dues" value={String(pending.length)} icon={<Wallet className="h-4 w-4" />} className="col-span-2 sm:col-span-1" />
         </div>
 
-        <Tabs value={tab} onValueChange={setTab}>
+        <Tabs id="fees-panel" value={tab} onValueChange={setTab}>
           <TabsList className="hidden md:flex bg-transparent p-0 gap-1 h-auto border-b border-border rounded-none w-full justify-start overflow-x-auto flex-nowrap">
             {tabs.map((t) => (
               <TabsTrigger key={t.value} value={t.value}
@@ -414,7 +414,7 @@ function Fees() {
         </Tabs>
       </div>
 
-      <MobileTabNav items={tabs} value={tab} onChange={setTab} />
+      <MobileTabNav items={tabs} value={tab} onChange={setTab} scrollTargetId="fees-panel" />
     </div>
   );
 }

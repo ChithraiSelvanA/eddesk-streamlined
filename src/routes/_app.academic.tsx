@@ -64,7 +64,7 @@ function AcademicHome() {
       </div>
 
       <div className="mx-auto max-w-[1400px] px-4 pb-24 py-5 sm:px-6 md:px-8 md:py-6 md:pb-6">
-        <Tabs value={tab} onValueChange={setTab}>
+        <Tabs id="academic-panel" value={tab} onValueChange={setTab}>
           <TabsList className="hidden md:flex p-0 gap-1 h-auto border-b border-border rounded-none w-full justify-start overflow-x-auto flex-nowrap">
             {[
               ["classes", "Classes", classes.length],
@@ -202,6 +202,8 @@ function AcademicHome() {
       <MobileTabNav
         value={tab}
         onChange={setTab}
+        scrollTargetId="academic-panel"
+
         items={[
           { value: "classes", label: "Classes", icon: <GraduationCap className="h-[18px] w-[18px]" /> },
           { value: "subjects", label: "Subjects", icon: <Library className="h-[18px] w-[18px]" /> },
