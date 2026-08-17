@@ -1,4 +1,4 @@
-export function AvatarMono({ name, hue = 220, size = 36 }: { name: string; hue?: number; size?: number }) {
+export function AvatarMono({ name, hue = 220, size = 36, className }: { name: string; hue?: number; size?: number; className?: string }) {
   const initials = name
     .split(" ")
     .map((n) => n[0])
@@ -9,7 +9,7 @@ export function AvatarMono({ name, hue = 220, size = 36 }: { name: string; hue?:
   const fg = `oklch(0.35 0.08 ${hue})`;
   return (
     <div
-      className="inline-flex shrink-0 items-center justify-center rounded-full font-medium"
+      className={"inline-flex shrink-0 items-center justify-center rounded-full font-medium " + (className || "")}
       style={{ width: size, height: size, background: bg, color: fg, fontSize: size * 0.38 }}
     >
       {initials}
