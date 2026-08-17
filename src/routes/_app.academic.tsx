@@ -186,6 +186,18 @@ function AcademicHome() {
           </TabsContent>
         </Tabs>
       </div>
+
+      <MobileTabNav
+        value={tab}
+        onChange={setTab}
+        items={[
+          { value: "classes", label: "Classes", icon: <GraduationCap className="h-[18px] w-[18px]" /> },
+          { value: "subjects", label: "Subjects", icon: <Library className="h-[18px] w-[18px]" /> },
+          { value: "teachers", label: "Teachers", icon: <UserSquare className="h-[18px] w-[18px]" /> },
+          { value: "timetable", label: "Timetable", icon: <CalendarClock className="h-[18px] w-[18px]" /> },
+          { value: "holidays", label: "Holidays", icon: <CalendarHeart className="h-[18px] w-[18px]" /> },
+        ]}
+      />
     </div>
   );
 }
