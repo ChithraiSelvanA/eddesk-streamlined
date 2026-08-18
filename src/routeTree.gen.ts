@@ -17,6 +17,7 @@ import { Route as AppCommunicationRouteImport } from './routes/_app.communicatio
 import { Route as AppAcademicRouteImport } from './routes/_app.academic'
 import { Route as AppStudentsIndexRouteImport } from './routes/_app.students.index'
 import { Route as AppSettingsIndexRouteImport } from './routes/_app.settings.index'
+import { Route as AppReportsIndexRouteImport } from './routes/_app.reports.index'
 import { Route as AppParentsIndexRouteImport } from './routes/_app.parents.index'
 import { Route as AppStudentsListRouteImport } from './routes/_app.students.list'
 import { Route as AppSettingsStaffRouteImport } from './routes/_app.settings.staff'
@@ -26,6 +27,7 @@ import { Route as AppSettingsNotificationsRouteImport } from './routes/_app.sett
 import { Route as AppSettingsBrandingRouteImport } from './routes/_app.settings.branding'
 import { Route as AppSettingsBillingRouteImport } from './routes/_app.settings.billing'
 import { Route as AppSettingsAcademicYearRouteImport } from './routes/_app.settings.academic-year'
+import { Route as AppReportsDailyAttendanceRouteImport } from './routes/_app.reports.daily-attendance'
 import { Route as AppParentsListRouteImport } from './routes/_app.parents.list'
 import { Route as AppParentsParentIdRouteImport } from './routes/_app.parents.$parentId'
 import { Route as AppStudentsClassIdIndexRouteImport } from './routes/_app.students.$classId.index'
@@ -70,6 +72,11 @@ const AppSettingsIndexRoute = AppSettingsIndexRouteImport.update({
   id: '/settings/',
   path: '/settings/',
   getParentRoute: () => AppRoute,
+} as any)
+const AppReportsIndexRoute = AppReportsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppReportsRoute,
 } as any)
 const AppParentsIndexRoute = AppParentsIndexRouteImport.update({
   id: '/parents/',
@@ -118,6 +125,12 @@ const AppSettingsAcademicYearRoute = AppSettingsAcademicYearRouteImport.update({
   path: '/settings/academic-year',
   getParentRoute: () => AppRoute,
 } as any)
+const AppReportsDailyAttendanceRoute =
+  AppReportsDailyAttendanceRouteImport.update({
+    id: '/daily-attendance',
+    path: '/daily-attendance',
+    getParentRoute: () => AppReportsRoute,
+  } as any)
 const AppParentsListRoute = AppParentsListRouteImport.update({
   id: '/parents/list',
   path: '/parents/list',
@@ -151,9 +164,10 @@ export interface FileRoutesByFullPath {
   '/academic': typeof AppAcademicRouteWithChildren
   '/communication': typeof AppCommunicationRoute
   '/fees': typeof AppFeesRoute
-  '/reports': typeof AppReportsRoute
+  '/reports': typeof AppReportsRouteWithChildren
   '/parents/$parentId': typeof AppParentsParentIdRoute
   '/parents/list': typeof AppParentsListRoute
+  '/reports/daily-attendance': typeof AppReportsDailyAttendanceRoute
   '/settings/academic-year': typeof AppSettingsAcademicYearRoute
   '/settings/billing': typeof AppSettingsBillingRoute
   '/settings/branding': typeof AppSettingsBrandingRoute
@@ -163,6 +177,7 @@ export interface FileRoutesByFullPath {
   '/settings/staff': typeof AppSettingsStaffRoute
   '/students/list': typeof AppStudentsListRoute
   '/parents/': typeof AppParentsIndexRoute
+  '/reports/': typeof AppReportsIndexRoute
   '/settings/': typeof AppSettingsIndexRoute
   '/students/': typeof AppStudentsIndexRoute
   '/academic/classes/$classId': typeof AppAcademicClassesClassIdRoute
@@ -173,10 +188,10 @@ export interface FileRoutesByTo {
   '/academic': typeof AppAcademicRouteWithChildren
   '/communication': typeof AppCommunicationRoute
   '/fees': typeof AppFeesRoute
-  '/reports': typeof AppReportsRoute
   '/': typeof AppIndexRoute
   '/parents/$parentId': typeof AppParentsParentIdRoute
   '/parents/list': typeof AppParentsListRoute
+  '/reports/daily-attendance': typeof AppReportsDailyAttendanceRoute
   '/settings/academic-year': typeof AppSettingsAcademicYearRoute
   '/settings/billing': typeof AppSettingsBillingRoute
   '/settings/branding': typeof AppSettingsBrandingRoute
@@ -186,6 +201,7 @@ export interface FileRoutesByTo {
   '/settings/staff': typeof AppSettingsStaffRoute
   '/students/list': typeof AppStudentsListRoute
   '/parents': typeof AppParentsIndexRoute
+  '/reports': typeof AppReportsIndexRoute
   '/settings': typeof AppSettingsIndexRoute
   '/students': typeof AppStudentsIndexRoute
   '/academic/classes/$classId': typeof AppAcademicClassesClassIdRoute
@@ -198,10 +214,11 @@ export interface FileRoutesById {
   '/_app/academic': typeof AppAcademicRouteWithChildren
   '/_app/communication': typeof AppCommunicationRoute
   '/_app/fees': typeof AppFeesRoute
-  '/_app/reports': typeof AppReportsRoute
+  '/_app/reports': typeof AppReportsRouteWithChildren
   '/_app/': typeof AppIndexRoute
   '/_app/parents/$parentId': typeof AppParentsParentIdRoute
   '/_app/parents/list': typeof AppParentsListRoute
+  '/_app/reports/daily-attendance': typeof AppReportsDailyAttendanceRoute
   '/_app/settings/academic-year': typeof AppSettingsAcademicYearRoute
   '/_app/settings/billing': typeof AppSettingsBillingRoute
   '/_app/settings/branding': typeof AppSettingsBrandingRoute
@@ -211,6 +228,7 @@ export interface FileRoutesById {
   '/_app/settings/staff': typeof AppSettingsStaffRoute
   '/_app/students/list': typeof AppStudentsListRoute
   '/_app/parents/': typeof AppParentsIndexRoute
+  '/_app/reports/': typeof AppReportsIndexRoute
   '/_app/settings/': typeof AppSettingsIndexRoute
   '/_app/students/': typeof AppStudentsIndexRoute
   '/_app/academic/classes/$classId': typeof AppAcademicClassesClassIdRoute
@@ -227,6 +245,7 @@ export interface FileRouteTypes {
     | '/reports'
     | '/parents/$parentId'
     | '/parents/list'
+    | '/reports/daily-attendance'
     | '/settings/academic-year'
     | '/settings/billing'
     | '/settings/branding'
@@ -236,6 +255,7 @@ export interface FileRouteTypes {
     | '/settings/staff'
     | '/students/list'
     | '/parents/'
+    | '/reports/'
     | '/settings/'
     | '/students/'
     | '/academic/classes/$classId'
@@ -246,10 +266,10 @@ export interface FileRouteTypes {
     | '/academic'
     | '/communication'
     | '/fees'
-    | '/reports'
     | '/'
     | '/parents/$parentId'
     | '/parents/list'
+    | '/reports/daily-attendance'
     | '/settings/academic-year'
     | '/settings/billing'
     | '/settings/branding'
@@ -259,6 +279,7 @@ export interface FileRouteTypes {
     | '/settings/staff'
     | '/students/list'
     | '/parents'
+    | '/reports'
     | '/settings'
     | '/students'
     | '/academic/classes/$classId'
@@ -274,6 +295,7 @@ export interface FileRouteTypes {
     | '/_app/'
     | '/_app/parents/$parentId'
     | '/_app/parents/list'
+    | '/_app/reports/daily-attendance'
     | '/_app/settings/academic-year'
     | '/_app/settings/billing'
     | '/_app/settings/branding'
@@ -283,6 +305,7 @@ export interface FileRouteTypes {
     | '/_app/settings/staff'
     | '/_app/students/list'
     | '/_app/parents/'
+    | '/_app/reports/'
     | '/_app/settings/'
     | '/_app/students/'
     | '/_app/academic/classes/$classId'
@@ -352,6 +375,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppSettingsIndexRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/reports/': {
+      id: '/_app/reports/'
+      path: '/'
+      fullPath: '/reports/'
+      preLoaderRoute: typeof AppReportsIndexRouteImport
+      parentRoute: typeof AppReportsRoute
+    }
     '/_app/parents/': {
       id: '/_app/parents/'
       path: '/parents'
@@ -415,6 +445,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppSettingsAcademicYearRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/reports/daily-attendance': {
+      id: '/_app/reports/daily-attendance'
+      path: '/daily-attendance'
+      fullPath: '/reports/daily-attendance'
+      preLoaderRoute: typeof AppReportsDailyAttendanceRouteImport
+      parentRoute: typeof AppReportsRoute
+    }
     '/_app/parents/list': {
       id: '/_app/parents/list'
       path: '/parents/list'
@@ -465,11 +502,25 @@ const AppAcademicRouteWithChildren = AppAcademicRoute._addFileChildren(
   AppAcademicRouteChildren,
 )
 
+interface AppReportsRouteChildren {
+  AppReportsDailyAttendanceRoute: typeof AppReportsDailyAttendanceRoute
+  AppReportsIndexRoute: typeof AppReportsIndexRoute
+}
+
+const AppReportsRouteChildren: AppReportsRouteChildren = {
+  AppReportsDailyAttendanceRoute: AppReportsDailyAttendanceRoute,
+  AppReportsIndexRoute: AppReportsIndexRoute,
+}
+
+const AppReportsRouteWithChildren = AppReportsRoute._addFileChildren(
+  AppReportsRouteChildren,
+)
+
 interface AppRouteChildren {
   AppAcademicRoute: typeof AppAcademicRouteWithChildren
   AppCommunicationRoute: typeof AppCommunicationRoute
   AppFeesRoute: typeof AppFeesRoute
-  AppReportsRoute: typeof AppReportsRoute
+  AppReportsRoute: typeof AppReportsRouteWithChildren
   AppIndexRoute: typeof AppIndexRoute
   AppParentsParentIdRoute: typeof AppParentsParentIdRoute
   AppParentsListRoute: typeof AppParentsListRoute
@@ -492,7 +543,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppAcademicRoute: AppAcademicRouteWithChildren,
   AppCommunicationRoute: AppCommunicationRoute,
   AppFeesRoute: AppFeesRoute,
-  AppReportsRoute: AppReportsRoute,
+  AppReportsRoute: AppReportsRouteWithChildren,
   AppIndexRoute: AppIndexRoute,
   AppParentsParentIdRoute: AppParentsParentIdRoute,
   AppParentsListRoute: AppParentsListRoute,
