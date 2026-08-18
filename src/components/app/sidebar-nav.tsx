@@ -1,4 +1,5 @@
-import { Link, useRouterState } from "@tanstack/react-router";
+import { Link, useRouterState, useNavigate } from "@tanstack/react-router";
+import { toast } from "sonner";
 import {
   LayoutDashboard,
   GraduationCap,
@@ -9,6 +10,7 @@ import {
   BarChart3,
   Settings,
   Sparkles,
+  LogOut,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -68,16 +70,33 @@ export function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
   );
 }
 
-export function UserChip() {
+export function UserChip({ onNavigate }: { onNavigate?: () => void } = {}) {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    onNavigate?.();
+    toast.success("Signed out", { description: "You have been logged out of EdDesk One." });
+    navigate({ to: "/" });
+  };
+
   return (
     <div className="flex items-center gap-2 rounded-md px-2 py-1.5">
       <div className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-primary/10 text-xs font-medium text-primary">
         RM
       </div>
-      <div className="min-w-0 leading-tight">
+      <div className="min-w-0 flex-1 leading-tight">
         <p className="truncate text-xs font-medium">Rhea Malhotra</p>
         <p className="truncate text-[10px] text-muted-foreground">Administrator</p>
       </div>
+      <button
+        type="button"
+        aria-label="Log out"
+        title="Log out"
+        onClick={handleLogout}
+        className="grid h-8 w-8 shrink-0 place-items-center rounded-md text-muted-foreground transition-colors hover:bg-sidebar-accent hover:text-foreground"
+      >
+        <LogOut className="h-4 w-4" />
+      </button>
     </div>
   );
 }

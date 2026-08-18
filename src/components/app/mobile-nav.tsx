@@ -42,7 +42,7 @@ export function MobileNav() {
             <NavLinks onNavigate={() => setOpen(false)} />
           </nav>
           <div className="border-t border-border/70 p-3">
-            <UserChip />
+            <UserChip onNavigate={() => setOpen(false)} />
           </div>
         </SheetContent>
       </Sheet>
