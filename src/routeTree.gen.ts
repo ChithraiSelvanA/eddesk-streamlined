@@ -27,6 +27,7 @@ import { Route as AppSettingsNotificationsRouteImport } from './routes/_app.sett
 import { Route as AppSettingsBrandingRouteImport } from './routes/_app.settings.branding'
 import { Route as AppSettingsBillingRouteImport } from './routes/_app.settings.billing'
 import { Route as AppSettingsAcademicYearRouteImport } from './routes/_app.settings.academic-year'
+import { Route as AppReportsDailyAttendanceRouteImport } from './routes/_app.reports.daily-attendance'
 import { Route as AppParentsListRouteImport } from './routes/_app.parents.list'
 import { Route as AppParentsParentIdRouteImport } from './routes/_app.parents.$parentId'
 import { Route as AppStudentsClassIdIndexRouteImport } from './routes/_app.students.$classId.index'
@@ -124,6 +125,12 @@ const AppSettingsAcademicYearRoute = AppSettingsAcademicYearRouteImport.update({
   path: '/settings/academic-year',
   getParentRoute: () => AppRoute,
 } as any)
+const AppReportsDailyAttendanceRoute =
+  AppReportsDailyAttendanceRouteImport.update({
+    id: '/daily-attendance',
+    path: '/daily-attendance',
+    getParentRoute: () => AppReportsRoute,
+  } as any)
 const AppParentsListRoute = AppParentsListRouteImport.update({
   id: '/parents/list',
   path: '/parents/list',
@@ -160,6 +167,7 @@ export interface FileRoutesByFullPath {
   '/reports': typeof AppReportsRouteWithChildren
   '/parents/$parentId': typeof AppParentsParentIdRoute
   '/parents/list': typeof AppParentsListRoute
+  '/reports/daily-attendance': typeof AppReportsDailyAttendanceRoute
   '/settings/academic-year': typeof AppSettingsAcademicYearRoute
   '/settings/billing': typeof AppSettingsBillingRoute
   '/settings/branding': typeof AppSettingsBrandingRoute
@@ -183,6 +191,7 @@ export interface FileRoutesByTo {
   '/': typeof AppIndexRoute
   '/parents/$parentId': typeof AppParentsParentIdRoute
   '/parents/list': typeof AppParentsListRoute
+  '/reports/daily-attendance': typeof AppReportsDailyAttendanceRoute
   '/settings/academic-year': typeof AppSettingsAcademicYearRoute
   '/settings/billing': typeof AppSettingsBillingRoute
   '/settings/branding': typeof AppSettingsBrandingRoute
@@ -209,6 +218,7 @@ export interface FileRoutesById {
   '/_app/': typeof AppIndexRoute
   '/_app/parents/$parentId': typeof AppParentsParentIdRoute
   '/_app/parents/list': typeof AppParentsListRoute
+  '/_app/reports/daily-attendance': typeof AppReportsDailyAttendanceRoute
   '/_app/settings/academic-year': typeof AppSettingsAcademicYearRoute
   '/_app/settings/billing': typeof AppSettingsBillingRoute
   '/_app/settings/branding': typeof AppSettingsBrandingRoute
@@ -235,6 +245,7 @@ export interface FileRouteTypes {
     | '/reports'
     | '/parents/$parentId'
     | '/parents/list'
+    | '/reports/daily-attendance'
     | '/settings/academic-year'
     | '/settings/billing'
     | '/settings/branding'
@@ -258,6 +269,7 @@ export interface FileRouteTypes {
     | '/'
     | '/parents/$parentId'
     | '/parents/list'
+    | '/reports/daily-attendance'
     | '/settings/academic-year'
     | '/settings/billing'
     | '/settings/branding'
@@ -283,6 +295,7 @@ export interface FileRouteTypes {
     | '/_app/'
     | '/_app/parents/$parentId'
     | '/_app/parents/list'
+    | '/_app/reports/daily-attendance'
     | '/_app/settings/academic-year'
     | '/_app/settings/billing'
     | '/_app/settings/branding'
@@ -432,6 +445,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppSettingsAcademicYearRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/reports/daily-attendance': {
+      id: '/_app/reports/daily-attendance'
+      path: '/daily-attendance'
+      fullPath: '/reports/daily-attendance'
+      preLoaderRoute: typeof AppReportsDailyAttendanceRouteImport
+      parentRoute: typeof AppReportsRoute
+    }
     '/_app/parents/list': {
       id: '/_app/parents/list'
       path: '/parents/list'
@@ -483,10 +503,12 @@ const AppAcademicRouteWithChildren = AppAcademicRoute._addFileChildren(
 )
 
 interface AppReportsRouteChildren {
+  AppReportsDailyAttendanceRoute: typeof AppReportsDailyAttendanceRoute
   AppReportsIndexRoute: typeof AppReportsIndexRoute
 }
 
 const AppReportsRouteChildren: AppReportsRouteChildren = {
+  AppReportsDailyAttendanceRoute: AppReportsDailyAttendanceRoute,
   AppReportsIndexRoute: AppReportsIndexRoute,
 }
 
