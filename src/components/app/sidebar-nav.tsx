@@ -1,4 +1,5 @@
-import { Link, useRouterState } from "@tanstack/react-router";
+import { Link, useRouterState, useNavigate } from "@tanstack/react-router";
+import { toast } from "sonner";
 import {
   LayoutDashboard,
   GraduationCap,
@@ -9,6 +10,7 @@ import {
   BarChart3,
   Settings,
   Sparkles,
+  LogOut,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
