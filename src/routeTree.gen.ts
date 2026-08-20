@@ -28,6 +28,7 @@ import { Route as AppSettingsBrandingRouteImport } from './routes/_app.settings.
 import { Route as AppSettingsBillingRouteImport } from './routes/_app.settings.billing'
 import { Route as AppSettingsAcademicYearRouteImport } from './routes/_app.settings.academic-year'
 import { Route as AppReportsDailyAttendanceRouteImport } from './routes/_app.reports.daily-attendance'
+import { Route as AppReportsChronicAbsenteesRouteImport } from './routes/_app.reports.chronic-absentees'
 import { Route as AppParentsListRouteImport } from './routes/_app.parents.list'
 import { Route as AppParentsParentIdRouteImport } from './routes/_app.parents.$parentId'
 import { Route as AppStudentsClassIdIndexRouteImport } from './routes/_app.students.$classId.index'
@@ -131,6 +132,12 @@ const AppReportsDailyAttendanceRoute =
     path: '/daily-attendance',
     getParentRoute: () => AppReportsRoute,
   } as any)
+const AppReportsChronicAbsenteesRoute =
+  AppReportsChronicAbsenteesRouteImport.update({
+    id: '/chronic-absentees',
+    path: '/chronic-absentees',
+    getParentRoute: () => AppReportsRoute,
+  } as any)
 const AppParentsListRoute = AppParentsListRouteImport.update({
   id: '/parents/list',
   path: '/parents/list',
@@ -167,6 +174,7 @@ export interface FileRoutesByFullPath {
   '/reports': typeof AppReportsRouteWithChildren
   '/parents/$parentId': typeof AppParentsParentIdRoute
   '/parents/list': typeof AppParentsListRoute
+  '/reports/chronic-absentees': typeof AppReportsChronicAbsenteesRoute
   '/reports/daily-attendance': typeof AppReportsDailyAttendanceRoute
   '/settings/academic-year': typeof AppSettingsAcademicYearRoute
   '/settings/billing': typeof AppSettingsBillingRoute
@@ -191,6 +199,7 @@ export interface FileRoutesByTo {
   '/': typeof AppIndexRoute
   '/parents/$parentId': typeof AppParentsParentIdRoute
   '/parents/list': typeof AppParentsListRoute
+  '/reports/chronic-absentees': typeof AppReportsChronicAbsenteesRoute
   '/reports/daily-attendance': typeof AppReportsDailyAttendanceRoute
   '/settings/academic-year': typeof AppSettingsAcademicYearRoute
   '/settings/billing': typeof AppSettingsBillingRoute
@@ -218,6 +227,7 @@ export interface FileRoutesById {
   '/_app/': typeof AppIndexRoute
   '/_app/parents/$parentId': typeof AppParentsParentIdRoute
   '/_app/parents/list': typeof AppParentsListRoute
+  '/_app/reports/chronic-absentees': typeof AppReportsChronicAbsenteesRoute
   '/_app/reports/daily-attendance': typeof AppReportsDailyAttendanceRoute
   '/_app/settings/academic-year': typeof AppSettingsAcademicYearRoute
   '/_app/settings/billing': typeof AppSettingsBillingRoute
@@ -245,6 +255,7 @@ export interface FileRouteTypes {
     | '/reports'
     | '/parents/$parentId'
     | '/parents/list'
+    | '/reports/chronic-absentees'
     | '/reports/daily-attendance'
     | '/settings/academic-year'
     | '/settings/billing'
@@ -269,6 +280,7 @@ export interface FileRouteTypes {
     | '/'
     | '/parents/$parentId'
     | '/parents/list'
+    | '/reports/chronic-absentees'
     | '/reports/daily-attendance'
     | '/settings/academic-year'
     | '/settings/billing'
@@ -295,6 +307,7 @@ export interface FileRouteTypes {
     | '/_app/'
     | '/_app/parents/$parentId'
     | '/_app/parents/list'
+    | '/_app/reports/chronic-absentees'
     | '/_app/reports/daily-attendance'
     | '/_app/settings/academic-year'
     | '/_app/settings/billing'
@@ -452,6 +465,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppReportsDailyAttendanceRouteImport
       parentRoute: typeof AppReportsRoute
     }
+    '/_app/reports/chronic-absentees': {
+      id: '/_app/reports/chronic-absentees'
+      path: '/chronic-absentees'
+      fullPath: '/reports/chronic-absentees'
+      preLoaderRoute: typeof AppReportsChronicAbsenteesRouteImport
+      parentRoute: typeof AppReportsRoute
+    }
     '/_app/parents/list': {
       id: '/_app/parents/list'
       path: '/parents/list'
@@ -503,11 +523,13 @@ const AppAcademicRouteWithChildren = AppAcademicRoute._addFileChildren(
 )
 
 interface AppReportsRouteChildren {
+  AppReportsChronicAbsenteesRoute: typeof AppReportsChronicAbsenteesRoute
   AppReportsDailyAttendanceRoute: typeof AppReportsDailyAttendanceRoute
   AppReportsIndexRoute: typeof AppReportsIndexRoute
 }
 
 const AppReportsRouteChildren: AppReportsRouteChildren = {
+  AppReportsChronicAbsenteesRoute: AppReportsChronicAbsenteesRoute,
   AppReportsDailyAttendanceRoute: AppReportsDailyAttendanceRoute,
   AppReportsIndexRoute: AppReportsIndexRoute,
 }
