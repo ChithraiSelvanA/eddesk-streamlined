@@ -27,6 +27,7 @@ import { Route as AppSettingsNotificationsRouteImport } from './routes/_app.sett
 import { Route as AppSettingsBrandingRouteImport } from './routes/_app.settings.branding'
 import { Route as AppSettingsBillingRouteImport } from './routes/_app.settings.billing'
 import { Route as AppSettingsAcademicYearRouteImport } from './routes/_app.settings.academic-year'
+import { Route as AppReportsLeaveSummaryRouteImport } from './routes/_app.reports.leave-summary'
 import { Route as AppReportsDailyAttendanceRouteImport } from './routes/_app.reports.daily-attendance'
 import { Route as AppReportsChronicAbsenteesRouteImport } from './routes/_app.reports.chronic-absentees'
 import { Route as AppParentsListRouteImport } from './routes/_app.parents.list'
@@ -126,6 +127,11 @@ const AppSettingsAcademicYearRoute = AppSettingsAcademicYearRouteImport.update({
   path: '/settings/academic-year',
   getParentRoute: () => AppRoute,
 } as any)
+const AppReportsLeaveSummaryRoute = AppReportsLeaveSummaryRouteImport.update({
+  id: '/leave-summary',
+  path: '/leave-summary',
+  getParentRoute: () => AppReportsRoute,
+} as any)
 const AppReportsDailyAttendanceRoute =
   AppReportsDailyAttendanceRouteImport.update({
     id: '/daily-attendance',
@@ -176,6 +182,7 @@ export interface FileRoutesByFullPath {
   '/parents/list': typeof AppParentsListRoute
   '/reports/chronic-absentees': typeof AppReportsChronicAbsenteesRoute
   '/reports/daily-attendance': typeof AppReportsDailyAttendanceRoute
+  '/reports/leave-summary': typeof AppReportsLeaveSummaryRoute
   '/settings/academic-year': typeof AppSettingsAcademicYearRoute
   '/settings/billing': typeof AppSettingsBillingRoute
   '/settings/branding': typeof AppSettingsBrandingRoute
@@ -201,6 +208,7 @@ export interface FileRoutesByTo {
   '/parents/list': typeof AppParentsListRoute
   '/reports/chronic-absentees': typeof AppReportsChronicAbsenteesRoute
   '/reports/daily-attendance': typeof AppReportsDailyAttendanceRoute
+  '/reports/leave-summary': typeof AppReportsLeaveSummaryRoute
   '/settings/academic-year': typeof AppSettingsAcademicYearRoute
   '/settings/billing': typeof AppSettingsBillingRoute
   '/settings/branding': typeof AppSettingsBrandingRoute
@@ -229,6 +237,7 @@ export interface FileRoutesById {
   '/_app/parents/list': typeof AppParentsListRoute
   '/_app/reports/chronic-absentees': typeof AppReportsChronicAbsenteesRoute
   '/_app/reports/daily-attendance': typeof AppReportsDailyAttendanceRoute
+  '/_app/reports/leave-summary': typeof AppReportsLeaveSummaryRoute
   '/_app/settings/academic-year': typeof AppSettingsAcademicYearRoute
   '/_app/settings/billing': typeof AppSettingsBillingRoute
   '/_app/settings/branding': typeof AppSettingsBrandingRoute
@@ -257,6 +266,7 @@ export interface FileRouteTypes {
     | '/parents/list'
     | '/reports/chronic-absentees'
     | '/reports/daily-attendance'
+    | '/reports/leave-summary'
     | '/settings/academic-year'
     | '/settings/billing'
     | '/settings/branding'
@@ -282,6 +292,7 @@ export interface FileRouteTypes {
     | '/parents/list'
     | '/reports/chronic-absentees'
     | '/reports/daily-attendance'
+    | '/reports/leave-summary'
     | '/settings/academic-year'
     | '/settings/billing'
     | '/settings/branding'
@@ -309,6 +320,7 @@ export interface FileRouteTypes {
     | '/_app/parents/list'
     | '/_app/reports/chronic-absentees'
     | '/_app/reports/daily-attendance'
+    | '/_app/reports/leave-summary'
     | '/_app/settings/academic-year'
     | '/_app/settings/billing'
     | '/_app/settings/branding'
@@ -458,6 +470,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppSettingsAcademicYearRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/reports/leave-summary': {
+      id: '/_app/reports/leave-summary'
+      path: '/leave-summary'
+      fullPath: '/reports/leave-summary'
+      preLoaderRoute: typeof AppReportsLeaveSummaryRouteImport
+      parentRoute: typeof AppReportsRoute
+    }
     '/_app/reports/daily-attendance': {
       id: '/_app/reports/daily-attendance'
       path: '/daily-attendance'
@@ -525,12 +544,14 @@ const AppAcademicRouteWithChildren = AppAcademicRoute._addFileChildren(
 interface AppReportsRouteChildren {
   AppReportsChronicAbsenteesRoute: typeof AppReportsChronicAbsenteesRoute
   AppReportsDailyAttendanceRoute: typeof AppReportsDailyAttendanceRoute
+  AppReportsLeaveSummaryRoute: typeof AppReportsLeaveSummaryRoute
   AppReportsIndexRoute: typeof AppReportsIndexRoute
 }
 
 const AppReportsRouteChildren: AppReportsRouteChildren = {
   AppReportsChronicAbsenteesRoute: AppReportsChronicAbsenteesRoute,
   AppReportsDailyAttendanceRoute: AppReportsDailyAttendanceRoute,
+  AppReportsLeaveSummaryRoute: AppReportsLeaveSummaryRoute,
   AppReportsIndexRoute: AppReportsIndexRoute,
 }
 
