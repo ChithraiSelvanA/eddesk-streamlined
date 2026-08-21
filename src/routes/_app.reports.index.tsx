@@ -23,7 +23,7 @@ const groups: { id: string; title: string; items: ReportItem[] }[] = [
     title: "Attendance",
     items: [
       { title: "Daily attendance", hint: "Class-wise breakdown", to: "/reports/daily-attendance" },
-      { title: "Chronic absentees", hint: "> 5 absences this month" },
+      { title: "Chronic absentees", hint: "Repeat absences & risk tiers", to: "/reports/chronic-absentees" },
       { title: "Leave summary", hint: "Approved / declined" },
     ],
   },
